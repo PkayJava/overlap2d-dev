@@ -49,7 +49,7 @@ patch('01bf8053731f17d53aab3dba58d0bce20d92ac6d','git/overlap2d/src/com/uwsoft/e
 patch('3a0b864092249936f8e9bc1a9c1c73adb276eeea','git/overlap2d/src/com/uwsoft/editor/view/ItemControlMediator.java','source/overlap2d/src/com/uwsoft/editor/view/ItemControlMediator.java');
 patch('0b7eb22bd15130a40a52e79a3d58fb3a9792f8b9','git/overlap2d/src/com/uwsoft/editor/Main.java','source/overlap2d/src/com/uwsoft/editor/Main.java');
 patch('e70fe99e3468b55ef95272a86bc9a88500106255','git/overlap2d/src/com/uwsoft/editor/proxy/FontManager.java','source/overlap2d/src/com/uwsoft/editor/proxy/FontManager.java');
-
+patch('','git/overlap2d/src/com/uwsoft/editor/splash/SplashStarter.java','source/overlap2d/src/com/uwsoft/editor/splash/SplashStarter.java');
 
 /**
 patch('','git/overlap2d/src/','source/overlap2d/src/');

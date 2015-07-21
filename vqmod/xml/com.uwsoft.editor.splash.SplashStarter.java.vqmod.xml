@@ -7,7 +7,7 @@
     <version>1.0</version>
     <vqmver>2.5.2</vqmver>
     <author>Socheat KHAUV</author>
-    <file name="git/overlap2d/src/com.uwsoft.editor.splash.SplashStarter.java">
+    <file name="git/overlap2d/src/com/uwsoft/editor/splash/SplashStarter.java">
         <operation>
             <search position="replace"><![CDATA[if (SystemUtils.IS_OS_MAC_OSX || SystemUtils.IS_OS_MAC) {]]></search>
             <add><![CDATA[if (SystemUtils.IS_OS_MAC_OSX || SystemUtils.IS_OS_MAC || SystemUtils.IS_OS_UNIX) {]]></add>

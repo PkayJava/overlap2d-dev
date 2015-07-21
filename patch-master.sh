@@ -37,22 +37,22 @@ if [ ! -d "$Overlap2D_Home" ]; then
     cd $Git_Home
     git clone $Overlap2D_Git
     cd $Overlap2D_Home
-    git checkout mvc-ashley
+    git checkout master
 else
     cd $Overlap2D_Home
     git pull
-    git checkout mvc-ashley
+    git checkout master
 fi
 
 if [ ! -d "$Overlap2D_Runtime_Home" ]; then
     cd $Git_Home
     git clone $Overlap2D_Runtime_Git
     cd $Overlap2D_Runtime_Home
-    git checkout dev-ashley
+    git checkout master
 else
     cd $Overlap2D_Runtime_Home
     git pull
-    git checkout dev-ashley
+    git checkout master
 fi
 
 if [ ! -d "$VisUI_Home" ]; then
