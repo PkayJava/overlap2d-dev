@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://github.com/vqmod/vqmod"
+        xsi:schemaLocation="https://github.com/vqmod/vqmod https://raw.githubusercontent.com/vqmod/vqmod/master/vqmod.xsd">
+    <id>com.uwsoft.editor.renderer.components.CompositeTransformComponent</id>
+    <version>1.0</version>
+    <vqmver>2.5.2</vqmver>
+    <author>Socheat KHAUV</author>
+    <file name="git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/CompositeTransformComponent.java">
+        <operation>
+            <search position="replace"><![CDATA[public class CompositeTransformComponent extends Component {]]></search>
+            <add><![CDATA[public class CompositeTransformComponent implements Component {]]></add>
+        </operation>
+    </file>
+</modification>

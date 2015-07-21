@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://github.com/vqmod/vqmod"
+        xsi:schemaLocation="https://github.com/vqmod/vqmod https://raw.githubusercontent.com/vqmod/vqmod/master/vqmod.xsd">
+    <id>com.uwsoft.editor.renderer.spine.SpineReflectionHelper</id>
+    <version>1.0</version>
+    <vqmver>2.5.2</vqmver>
+    <author>Socheat KHAUV</author>
+    <!--
+    <file name="git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/spine/SpineReflectionHelper.java">
+        <operation>
+            <search position="replace"><![CDATA[public Object skeletonRendererObject;]]></search>
+            <add><![CDATA[public com.esotericsoftware.spine.SkeletonRenderer skeletonRendererObject;]]></add>
+        </operation>
+        <operation>
+            <search position="replace"><![CDATA[skeletonRendererConstructorAccess.newInstance();]]></search>
+            <add><![CDATA[new com.esotericsoftware.spine.SkeletonRenderer();]]></add>
+        </operation>
+        <operation>
+            <search position="before"><![CDATA[public SpineReflectionHelper(){]]></search>
+            <add><![CDATA[    public SpineReflectionHelper(){
+        this.isSpineAviable = true;
+        this.skeletonRendererObject = new com.esotericsoftware.spine.SkeletonRenderer();
+    }
+    /**]]></add>
+        </operation>
+        <operation>
+            <search position="after" offset="6"><![CDATA[catch (ReflectionException e) {]]></search>
+            <add><![CDATA[*/]]></add>
+        </operation>
+    </file>
+    -->
+</modification>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://github.com/vqmod/vqmod"
+        xsi:schemaLocation="https://github.com/vqmod/vqmod https://raw.githubusercontent.com/vqmod/vqmod/master/vqmod.xsd">
+    <id>com.uwsoft.editor.view.ItemControlMediator</id>
+    <version>1.0</version>
+    <vqmver>2.5.2</vqmver>
+    <author>Socheat KHAUV</author>
+    <file name="git/overlap2d/src/com/uwsoft/editor/view/ItemControlMediator.java">
+        <operation>
+            <search position="replace"><![CDATA[zIndexComponent.getzIndex()]]></search>
+            <add><![CDATA[zIndexComponent.zIndex]]></add>
+        </operation>
+        <operation>
+            <search position="replace"><![CDATA[zIndexComponent.setzIndex(setting);]]></search>
+            <add><![CDATA[zIndexComponent.zIndex = setting;]]></add>
+        </operation>
+    </file>
+</modification>

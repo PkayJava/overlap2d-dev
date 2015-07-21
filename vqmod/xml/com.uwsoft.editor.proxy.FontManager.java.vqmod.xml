@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://github.com/vqmod/vqmod"
+        xsi:schemaLocation="https://github.com/vqmod/vqmod https://raw.githubusercontent.com/vqmod/vqmod/master/vqmod.xsd">
+    <id>com.uwsoft.editor.proxy.FontManager</id>
+    <version>1.0</version>
+    <vqmver>2.5.2</vqmver>
+    <author>Socheat KHAUV</author>
+    <file name="git/overlap2d/src/com/uwsoft/editor/proxy/FontManager.java">
+        <operation>
+            <search position="after"><![CDATA[File fontDirectory = new File(paths[i]);]]></search>
+            <add><![CDATA[            if (!fontDirectory.exists() || !fontDirectory.isDirectory()) {
+                continue;
+            }]]></add>
+        </operation>
+    </file>
+</modification>

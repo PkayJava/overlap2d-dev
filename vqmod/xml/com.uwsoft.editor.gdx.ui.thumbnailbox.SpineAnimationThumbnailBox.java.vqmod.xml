@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://github.com/vqmod/vqmod"
+        xsi:schemaLocation="https://github.com/vqmod/vqmod https://raw.githubusercontent.com/vqmod/vqmod/master/vqmod.xsd">
+    <id>com.uwsoft.editor.gdx.ui.thumbnailbox.SpineAnimationThumbnailBox</id>
+    <version>1.0</version>
+    <vqmver>2.5.2</vqmver>
+    <author>Socheat KHAUV</author>
+    <!--
+    <file name="git/overlap2d/src/com/uwsoft/editor/gdx/ui/thumbnailbox/SpineAnimationThumbnailBox.java">
+        <operation>
+            <search position="replace"><![CDATA[animThumb.setAnimation(animThumb.skeletonData.getAnimations().get(0).getName());]]></search>
+            <add><![CDATA[animThumb.setAnimation(animThumb.getAnimations().get(0).getName());]]></add>
+        </operation>
+    </file>
+    -->
+</modification>

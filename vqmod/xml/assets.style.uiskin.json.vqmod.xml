@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://github.com/vqmod/vqmod"
+        xsi:schemaLocation="https://github.com/vqmod/vqmod https://raw.githubusercontent.com/vqmod/vqmod/master/vqmod.xsd">
+    <id>assets.style.uiskin.json</id>
+    <version>1.0</version>
+    <vqmver>2.5.2</vqmver>
+    <author>Socheat KHAUV</author>
+    <file name="git/overlap2d/assets/style/uiskin.json">
+        <operation>
+            <search position="before"><![CDATA["com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane$TabbedPaneStyle": {]]></search>
+            <add><![CDATA[  "com.kotcrab.vis.ui.widget.file.FileChooserStyle": {
+    "default": {
+      "highlight": "list-selection",
+      "popupMenuStyleName": "default",
+      "iconArrowLeft": "icon-arrow-left",
+      "iconArrowRight": "icon-arrow-right",
+      "iconFolder": "icon-folder",
+      "iconFolderParent": "icon-folder-parent",
+      "iconDrive": "icon-drive"
+    }
+  },
+  "com.kotcrab.vis.ui.widget.color.ColorPickerStyle": {
+    "default": {
+      "white": "white",
+      "alphaBar10px": "alpha-bar-10px",
+      "alphaBar25px": "alpha-bar-25px",
+      "alphaBar25pxShifted": "alpha-bar-25px-shifted",
+      "barSelector": "color-picker-bar-selector",
+      "cross": "color-picker-cross",
+      "verticalSelector": "color-picker-selector-vertical",
+      "horizontalSelector": "color-picker-selector-horizontal"
+    }
+  },]]></add>
+        </operation>
+    </file>
+</modification>

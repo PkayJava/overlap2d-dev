@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://github.com/vqmod/vqmod"
+        xsi:schemaLocation="https://github.com/vqmod/vqmod https://raw.githubusercontent.com/vqmod/vqmod/master/vqmod.xsd">
+    <id>com.uwsoft.editor.gdx.ui.ExpandableUIBox</id>
+    <version>1.0</version>
+    <vqmver>2.5.2</vqmver>
+    <author>Socheat KHAUV</author>
+    <!--
+    <file name="git/overlap2d/src/com/uwsoft/editor/gdx/ui/ExpandableUIBox.java">
+        <operation>
+            <search position="before"><![CDATA[protected abstract void expand();]]></search>
+            <add><![CDATA[
+    protected Image newImageExpand(){
+        return new Image(stage.textureManager.getEditorAsset("expand16"));
+    }
+            ]]></add>
+        </operation>
+        <operation>
+            <search position="replace"><![CDATA[= new Image(stage.textureManager.getEditorAsset("expand16"));]]></search>
+            <add><![CDATA[= newImageExpand();]]></add>
+        </operation>
+    </file>
+    -->
+</modification>
