@@ -2,3 +2,7 @@
 /git/
 /source/
 /target/
+/overlap2d.iml
+/.idea/
+/.settings/
+/.classpath

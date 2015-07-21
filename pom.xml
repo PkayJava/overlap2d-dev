@@ -185,6 +185,7 @@
 								<source>source/overlap2d/src</source>
 								<source>source/ashley/ashley/src</source>
 								<source>source/overlap2d-runtime-libgdx/src</source>
+								<source>source/overlap2d-runtime-libgdx/extensions/spine/src</source>
 								<source>source/VisEditor/UI/src</source>
 								<source>source/spine-runtimes/spine-libgdx/spine-libgdx/src</source>
 							</sources>
@@ -222,8 +223,6 @@
 					<encoding>${project.build.sourceEncoding}</encoding>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
-					<showWarnings>true</showWarnings>
-					<showDeprecation>true</showDeprecation>
 				</configuration>
 			</plugin>
 		</plugins>

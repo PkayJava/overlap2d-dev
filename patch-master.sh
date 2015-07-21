@@ -8,12 +8,12 @@ Source_Home="$PROJECT_HOME/source"
 VisUI_Git="https://github.com/kotcrab/VisEditor.git"
 VisUI_Home="$Git_Home/VisEditor"
 
-# Overlap2D_Git="https://github.com/UnderwaterApps/overlap2d.git"
-Overlap2D_Git="https://github.com/azakhary/overlap2d.git"
+Overlap2D_Git="https://github.com/UnderwaterApps/overlap2d.git"
+# Overlap2D_Git="https://github.com/azakhary/overlap2d.git"
 Overlap2D_Home="$Git_Home/overlap2d"
 
-# Overlap2D_Runtime_Git="https://github.com/UnderwaterApps/overlap2d-runtime-libgdx.git"
-Overlap2D_Runtime_Git="https://github.com/azakhary/overlap2d-runtime-libgdx.git"
+Overlap2D_Runtime_Git="https://github.com/UnderwaterApps/overlap2d-runtime-libgdx.git"
+# Overlap2D_Runtime_Git="https://github.com/azakhary/overlap2d-runtime-libgdx.git"
 Overlap2D_Runtime_Home="$Git_Home/overlap2d-runtime-libgdx"
 
 Ashley_Git="https://github.com/libgdx/ashley.git"

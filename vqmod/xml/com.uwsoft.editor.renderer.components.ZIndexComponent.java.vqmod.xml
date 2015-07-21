@@ -7,10 +7,10 @@
     <version>1.0</version>
     <vqmver>2.5.2</vqmver>
     <author>Socheat KHAUV</author>
-    <file name="git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/ZindexComponent.java">
+    <file name="git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/ZIndexComponent.java">
         <operation>
-            <search position="replace"><![CDATA[public class ZindexComponent extends Component {]]></search>
-            <add><![CDATA[public class ZindexComponent implements Component {]]></add>
+            <search position="replace"><![CDATA[public class ZIndexComponent extends Component {]]></search>
+            <add><![CDATA[public class ZIndexComponent implements Component {]]></add>
         </operation>
     </file>
 </modification>
