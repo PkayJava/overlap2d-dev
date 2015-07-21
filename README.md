@@ -10,3 +10,5 @@ It is basically will pull the latest update from github,
 4. https://github.com/libgdx/ashley.git
 5. https://github.com/EsotericSoftware/spine-runtimes.git
 
+sh ./patch-master.sh
+mvn clean install && java -jar target/overlap2d-jar-with-dependencies.jar
