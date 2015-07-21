@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="https://github.com/vqmod/vqmod"
+	xsi:schemaLocation="https://github.com/vqmod/vqmod https://raw.githubusercontent.com/vqmod/vqmod/master/vqmod.xsd">
+	<id>com.puremvc.patterns.mediator.SimpleMediator</id>
+	<version>1.0</version>
+	<vqmver>2.5.2</vqmver>
+	<author>Socheat KHAUV</author>
+	<file
+		name="git/overlap2d/src/com/puremvc/patterns/mediator/SimpleMediator.java">
+		<operation>
+			<search position="after"><![CDATA[public void handleNotification(Notification notification) {]]></search>
+			<add><![CDATA[        if (!com.uwsoft.editor.Overlap2D.RENDER.equals(notification.getName())) {
+            if (notification.getBody() == null) {
+                com.badlogic.gdx.Gdx.app.log(getClass().getSimpleName(), "handleNotification => " + notification.getName() + " type " + notification.getType());
+            } else {
+                if (notification.getBody() instanceof int[]) {
+                    int[] body = (int[]) notification.getBody();
+                    com.badlogic.gdx.Gdx.app.log(getClass().getSimpleName(), "handleNotification => " + notification.getName() + " type " + notification.getType() + " body " + org.apache.commons.lang3.StringUtils.join(body, ','));
+                } else if (notification.getBody() instanceof long[]) {
+                    long[] body = (long[]) notification.getBody();
+                    com.badlogic.gdx.Gdx.app.log(getClass().getSimpleName(), "handleNotification => " + notification.getName() + " type " + notification.getType() + " body " + org.apache.commons.lang3.StringUtils.join(body, ','));
+                } else if (notification.getBody() instanceof double[]) {
+                    double[] body = (double[]) notification.getBody();
+                    com.badlogic.gdx.Gdx.app.log(getClass().getSimpleName(), "handleNotification => " + notification.getName() + " type " + notification.getType() + " body " + org.apache.commons.lang3.StringUtils.join(body, ','));
+                } else if (notification.getBody() instanceof float[]) {
+                    float[] body = (float[]) notification.getBody();
+                    com.badlogic.gdx.Gdx.app.log(getClass().getSimpleName(), "handleNotification => " + notification.getName() + " type " + notification.getType() + " body " + org.apache.commons.lang3.StringUtils.join(body, ','));
+                } else if (notification.getBody() instanceof byte[]) {
+                    byte[] body = (byte[]) notification.getBody();
+                    com.badlogic.gdx.Gdx.app.log(getClass().getSimpleName(), "handleNotification => " + notification.getName() + " type " + notification.getType() + " body " + org.apache.commons.lang3.StringUtils.join(body, ','));
+                } else if (notification.getBody() instanceof short[]) {
+                    short[] body = (short[]) notification.getBody();
+                    com.badlogic.gdx.Gdx.app.log(getClass().getSimpleName(), "handleNotification => " + notification.getName() + " type " + notification.getType() + " body " + org.apache.commons.lang3.StringUtils.join(body, ','));
+                } else if (notification.getBody() instanceof Number) {
+                    com.badlogic.gdx.Gdx.app.log(getClass().getSimpleName(), "handleNotification => " + notification.getName() + " type " + notification.getType() + " body " + String.valueOf((Number) notification.getBody()));
+                } else if (notification.getBody() instanceof String[]) {
+                    String[] body = (String[]) notification.getBody();
+                    com.badlogic.gdx.Gdx.app.log(getClass().getSimpleName(), "handleNotification => " + notification.getName() + " type " + notification.getType() + " body " + org.apache.commons.lang3.StringUtils.join(body, ','));
+                } else if (notification.getBody() instanceof String) {
+                    String body = (String) notification.getBody();
+                    com.badlogic.gdx.Gdx.app.log(getClass().getSimpleName(), "handleNotification => " + notification.getName() + " type " + notification.getType() + " body " + body);
+                } else {
+                    com.badlogic.gdx.Gdx.app.log(getClass().getSimpleName(), "handleNotification => " + notification.getName() + " type " + notification.getType() + " body " + notification.getBody().getClass().getSimpleName());
+                }
+            }
+        }]]></add>
+		</operation>
+	</file>
+</modification>

@@ -42,6 +42,7 @@ patch('01bf8053731f17d53aab3dba58d0bce20d92ac6d','git/overlap2d/src/com/uwsoft/e
 patch('0b7eb22bd15130a40a52e79a3d58fb3a9792f8b9','git/overlap2d/src/com/uwsoft/editor/Main.java','source/overlap2d/src/com/uwsoft/editor/Main.java');
 patch('e70fe99e3468b55ef95272a86bc9a88500106255','git/overlap2d/src/com/uwsoft/editor/proxy/FontManager.java','source/overlap2d/src/com/uwsoft/editor/proxy/FontManager.java');
 patch('2106ea44c36f5da6277e9f5289b6f8bfb6847eed','git/overlap2d/src/com/uwsoft/editor/splash/SplashStarter.java','source/overlap2d/src/com/uwsoft/editor/splash/SplashStarter.java');
+patch('146842d7908a0e60ce32cc54505dc1a87859429b','git/overlap2d/src/com/puremvc/patterns/mediator/SimpleMediator.java','source/overlap2d/src/com/puremvc/patterns/mediator/SimpleMediator.java');
 
 patch('78d8cf8bf6205043174f834ef85f8939b7c29415','git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/ZIndexComponent.java','source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/ZIndexComponent.java');
 patch('fbf1b49ac6ec0077ac0e5ae114e0f62b3b3f4185','git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/LayerMapComponent.java','source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/LayerMapComponent.java');
