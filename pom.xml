@@ -137,7 +137,7 @@
                 <includes>
                     <include>**/*.atlas</include>
                     <include>**/*.png</include>
-                    <include>**/*.vert</include>                    
+                    <include>**/*.vert</include>
                     <include>**/*.frag</include>
                 </includes>
             </resource>
@@ -153,6 +153,10 @@
             </resource>
             <resource>
                 <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.atlas</include>
+                    <include>**/*.png</include>
+                </includes>
             </resource>
         </resources>
         <plugins>

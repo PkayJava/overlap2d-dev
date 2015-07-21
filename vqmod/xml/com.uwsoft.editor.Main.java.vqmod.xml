@@ -16,5 +16,9 @@
             <search position="replace"><![CDATA[String output = "style";]]></search>
             <add><![CDATA[String output = "source/overlap2d/assets/style";]]></add>
         </operation>
+        <operation>
+        	<search position="replace" offset="7"><![CDATA[this should not be happening when in release mode]]></search>
+            <add><![CDATA[*/]]></add>
+        </operation>
     </file>
 </modification>

@@ -16,6 +16,9 @@ recurse_copy(getcwd().'/git/overlap2d/style', getcwd(). '/source/overlap2d/asset
 
 copy(getcwd().'/git/VisEditor/UI/assets-raw/icon-folder-parent.png', getcwd().'/source/overlap2d/assets/art/textures/icon-folder-parent.png');
 
+copy(getcwd().'/src/main/resources/style/uiskin.atlas', getcwd().'/source/overlap2d/assets/style/uiskin.atlas');
+copy(getcwd().'/src/main/resources/style/uiskin.png', getcwd().'/source/overlap2d/assets/style/uiskin.png');
+
 patch('83c8b5e1c74e6a2fe429c4216955b3ba259e83d2','git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/TransformComponent.java','source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/TransformComponent.java');
 patch('92ee7e6edd6d66f01aeb054320fe05cd5b2803c1','git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/NodeComponent.java','source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/NodeComponent.java');
 patch('48419a2bb5f64a78d81fc3577ac8c7da917a4c16','git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/ParentNodeComponent.java','source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/ParentNodeComponent.java');
