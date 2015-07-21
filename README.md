@@ -1,4 +1,4 @@
-# Overlap2d for Experiment  Development
+# overlap2d for development experimental
 
 In the moment script support only linux,
 
