@@ -24,5 +24,13 @@
             <search position="replace"><![CDATA[if (!(SystemUtils.IS_OS_MAC_OSX || SystemUtils.IS_OS_MAC)) {]]></search>
             <add><![CDATA[if (!(SystemUtils.IS_OS_MAC_OSX || SystemUtils.IS_OS_MAC || SystemUtils.IS_OS_UNIX)) {]]></add>
         </operation>
+        <operation>
+            <search position="replace"><![CDATA[String output = "splash";]]></search>
+            <add><![CDATA[String output = "source/overlap2d/assets/style";]]></add>
+        </operation>
+        <operation>
+            <search position="replace"><![CDATA[String output = "style";]]></search>
+            <add><![CDATA[String output = "source/overlap2d/assets/style";]]></add>
+        </operation>
     </file>
 </modification>
