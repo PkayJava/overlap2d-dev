@@ -41,7 +41,6 @@ patch('debf1b4a899a0d431a14f39bad69ebce0614834d','git/overlap2d/src/com/uwsoft/e
 patch('7617bbeeb880b3828b74751647857e5919dd247e','git/overlap2d/src/com/uwsoft/editor/view/ui/widget/components/color/CustomColorPicker.java','source/overlap2d/src/com/uwsoft/editor/view/ui/widget/components/color/CustomColorPicker.java');
 patch('01bf8053731f17d53aab3dba58d0bce20d92ac6d','git/overlap2d/src/com/uwsoft/editor/view/ui/widget/components/color/ColorChannelWidget.java','source/overlap2d/src/com/uwsoft/editor/view/ui/widget/components/color/ColorChannelWidget.java');
 patch('e70fe99e3468b55ef95272a86bc9a88500106255','git/overlap2d/src/com/uwsoft/editor/proxy/FontManager.java','source/overlap2d/src/com/uwsoft/editor/proxy/FontManager.java');
-patch('2106ea44c36f5da6277e9f5289b6f8bfb6847eed','git/overlap2d/src/com/uwsoft/editor/splash/SplashStarter.java','source/overlap2d/src/com/uwsoft/editor/splash/SplashStarter.java');
 patch('146842d7908a0e60ce32cc54505dc1a87859429b','git/overlap2d/src/com/puremvc/patterns/mediator/SimpleMediator.java','source/overlap2d/src/com/puremvc/patterns/mediator/SimpleMediator.java');
 
 patch('78d8cf8bf6205043174f834ef85f8939b7c29415','git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/ZIndexComponent.java','source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/ZIndexComponent.java');
@@ -53,7 +52,10 @@ patch('5332f117601dafa03f81275bfec905bf6e3efb77','git/overlap2d-runtime-libgdx/s
 patch('fabb8614baa97558e8c1cc14db91a972f8caf90b','git/overlap2d-runtime-libgdx/extensions/spine/src/com/overlap2d/extensions/spine/SpineObjectComponent.java','source/overlap2d-runtime-libgdx/extensions/spine/src/com/overlap2d/extensions/spine/SpineObjectComponent.java');
 patch('cf51b58c1ea74a8e28f441f0ec13943e065e6c40','git/overlap2d-runtime-libgdx/extensions/spine/src/com/overlap2d/extensions/spine/SpineSystem.java','source/overlap2d-runtime-libgdx/extensions/spine/src/com/overlap2d/extensions/spine/SpineSystem.java');
 patch('3e81b61e76b2209535f42386249c80c857dcb344','git/overlap2d-runtime-libgdx/extensions/spine/src/com/overlap2d/extensions/spine/SpineDrawableLogic.java','source/overlap2d-runtime-libgdx/extensions/spine/src/com/overlap2d/extensions/spine/SpineDrawableLogic.java');
-patch('01e4dee5c3184b8cd6cef218e96901d9fb265789','git/overlap2d/src/com/uwsoft/editor/Main.java','source/overlap2d/src/com/uwsoft/editor/Main.java');
+
+patch('ccbcf33f384d1d25ae1f6c88d1a57d1aa55c24b2','git/overlap2d/src/com/uwsoft/editor/splash/SplashStarter.java','source/overlap2d/src/com/uwsoft/editor/splash/SplashStarter.java');
+patch('b9c8128aa32ce8827f312b598a65aee2a80f415e','git/overlap2d/src/com/uwsoft/editor/Main.java','source/overlap2d/src/com/uwsoft/editor/Main.java');
+patch('387cb7fb7414e774a8904cc4d3dd47efed868d27','git/overlap2d/assets/style/uiskin.json','source/overlap2d/assets/style/uiskin.json');
 
 /**
 
