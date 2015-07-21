@@ -9,18 +9,6 @@
     <author>Socheat KHAUV</author>
     <file name="git/overlap2d/src/com/uwsoft/editor/Main.java">
         <operation>
-            <search position="replace"><![CDATA[String input = "../art/textures";]]></search>
-            <add><![CDATA[String input = Main.class.getClassLoader().getResource("art/textures").getPath();]]></add>
-        </operation>
-        <operation>
-            <search position="replace"><![CDATA[String input = "../art/splash_textures";]]></search>
-            <add><![CDATA[String input = Main.class.getClassLoader().getResource("art/splash_textures").getPath();]]></add>
-        </operation>
-        <operation>
-            <search position="replace"><![CDATA[String logoPath = "../art/splash_textures/";]]></search>
-            <add><![CDATA[String logoPath = Main.class.getClassLoader().getResource("art/splash_textures/").getPath();]]></add>
-        </operation>
-        <operation>
             <search position="replace"><![CDATA[if (!(SystemUtils.IS_OS_MAC_OSX || SystemUtils.IS_OS_MAC)) {]]></search>
             <add><![CDATA[if (!(SystemUtils.IS_OS_MAC_OSX || SystemUtils.IS_OS_MAC || SystemUtils.IS_OS_UNIX)) {]]></add>
         </operation>

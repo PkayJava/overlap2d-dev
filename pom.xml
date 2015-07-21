@@ -147,9 +147,22 @@
             </resource>
             <resource>
                 <directory>source/VisEditor/Editor/assets</directory>
+                <includes>
+                    <include>**/*.atlas</include>
+                    <include>**/*.png</include>
+                    <include>**/*.vert</include>                    
+                    <include>**/*.frag</include>
+                </includes>
             </resource>
             <resource>
                 <directory>source/overlap2d/assets</directory>
+                <includes>
+                    <include>**/*.atlas</include>
+                    <include>**/*.png</include>
+                    <include>**/*.ttf</include>
+                    <include>**/*.fnt</include>
+                    <include>**/*.json</include>
+                </includes>
             </resource>
             <resource>
                 <directory>src/main/resources</directory>
