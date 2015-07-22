@@ -40,6 +40,9 @@
                 } else if (notification.getBody() instanceof String) {
                     String body = (String) notification.getBody();
                     com.badlogic.gdx.Gdx.app.log(getClass().getSimpleName(), "handleNotification => " + notification.getName() + " type " + notification.getType() + " body " + body);
+                } else if (notification.getBody() instanceof Boolean) {
+                    Boolean body = (Boolean) notification.getBody();
+                    com.badlogic.gdx.Gdx.app.log(getClass().getSimpleName(), "handleNotification => " + notification.getName() + " type " + notification.getType() + " body " + body);
                 } else {
                     com.badlogic.gdx.Gdx.app.log(getClass().getSimpleName(), "handleNotification => " + notification.getName() + " type " + notification.getType() + " body " + notification.getBody().getClass().getSimpleName());
                 }
