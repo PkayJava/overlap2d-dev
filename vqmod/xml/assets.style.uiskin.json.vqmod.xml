@@ -26,7 +26,6 @@
       "white": "white",
       "alphaBar10px": "alpha-bar-10px",
       "alphaBar25px": "alpha-bar-25px",
-      "alphaBar25pxShifted": "alpha-bar-25px-shifted",
       "barSelector": "color-picker-bar-selector",
       "cross": "color-picker-cross",
       "verticalSelector": "color-picker-selector-vertical",
