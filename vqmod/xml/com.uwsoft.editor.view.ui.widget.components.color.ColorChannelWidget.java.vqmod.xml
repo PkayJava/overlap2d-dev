@@ -10,11 +10,11 @@
     <file name="git/overlap2d/src/com/uwsoft/editor/view/ui/widget/components/color/ColorChannelWidget.java">
         <operation>
             <search position="replace"><![CDATA[return new AlphaChannelBar(texture, value, maxValue, barListener);]]></search>
-            <add><![CDATA[return new AlphaChannelBar(com.kotcrab.vis.ui.VisUI.getSkin().get(com.kotcrab.vis.ui.widget.color.ColorPickerStyle.class), texture, value, maxValue, barListener);]]></add>
+            <add><![CDATA[return new AlphaChannelBar(com.kotcrab.vis.ui.VisUI.getSkin().get(com.kotcrab.vis.ui.widget.color.ColorPickerStyle.class), com.kotcrab.vis.ui.VisUI.getSkin().get(com.kotcrab.vis.ui.Sizes.class), texture, value, maxValue, barListener);]]></add>
         </operation>
         <operation>
             <search position="replace"><![CDATA[return new ChannelBar(texture, value, maxValue, barListener);]]></search>
-            <add><![CDATA[return new ChannelBar(com.kotcrab.vis.ui.VisUI.getSkin().get(com.kotcrab.vis.ui.widget.color.ColorPickerStyle.class), texture, value, maxValue, barListener);]]></add>
+            <add><![CDATA[return new ChannelBar(com.kotcrab.vis.ui.VisUI.getSkin().get(com.kotcrab.vis.ui.widget.color.ColorPickerStyle.class), com.kotcrab.vis.ui.VisUI.getSkin().get(com.kotcrab.vis.ui.Sizes.class), texture, value, maxValue, barListener);]]></add>
         </operation>
     </file>
 </modification>

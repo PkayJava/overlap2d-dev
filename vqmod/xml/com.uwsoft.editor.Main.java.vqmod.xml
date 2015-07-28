@@ -17,7 +17,7 @@
             <add><![CDATA[String output = "source/overlap2d/assets/style";]]></add>
         </operation>
         <operation>
-        	<search position="replace" offset="7"><![CDATA[this should not be happening when in release mode]]></search>
+        	<search position="replace" offset="7"><![CDATA[String input = getLocalArtPath("textures");]]></search>
             <add><![CDATA[*/]]></add>
         </operation>
     </file>

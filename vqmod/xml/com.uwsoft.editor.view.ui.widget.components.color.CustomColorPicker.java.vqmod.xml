@@ -18,11 +18,11 @@
         </operation>
         <operation>
             <search position="replace"><![CDATA[palette = new Palette(paletteTexture, 0, 0, 100, new ChangeListener() {]]></search>
-            <add><![CDATA[palette = new Palette(com.kotcrab.vis.ui.VisUI.getSkin().get(com.kotcrab.vis.ui.widget.color.ColorPickerStyle.class), paletteTexture, 0, 0, 100, new ChangeListener() {]]></add>
+            <add><![CDATA[palette = new Palette(com.kotcrab.vis.ui.VisUI.getSkin().get(com.kotcrab.vis.ui.widget.color.ColorPickerStyle.class),com.kotcrab.vis.ui.VisUI.getSkin().get(com.kotcrab.vis.ui.Sizes.class) , paletteTexture, 0, 0, 100, new ChangeListener() {]]></add>
         </operation>
         <operation>
             <search position="replace"><![CDATA[verticalBar = new VerticalChannelBar(barTexture, 0, 360, new ChangeListener() {]]></search>
-            <add><![CDATA[verticalBar = new VerticalChannelBar(com.kotcrab.vis.ui.VisUI.getSkin().get(com.kotcrab.vis.ui.widget.color.ColorPickerStyle.class), barTexture, 0, 360, new ChangeListener() {]]></add>
+            <add><![CDATA[verticalBar = new VerticalChannelBar(com.kotcrab.vis.ui.VisUI.getSkin().get(com.kotcrab.vis.ui.widget.color.ColorPickerStyle.class), com.kotcrab.vis.ui.VisUI.getSkin().get(com.kotcrab.vis.ui.Sizes.class), barTexture, 0, 360, new ChangeListener() {]]></add>
         </operation>
     </file>
 </modification>

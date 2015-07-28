@@ -71,6 +71,24 @@
         </dependency>
 
         <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>19.0-rc1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sf.trove4j</groupId>
+            <artifactId>trove4j</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-classworlds</artifactId>
+            <version>2.5.2</version>
+        </dependency>
+
+        <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.4</version>
@@ -192,6 +210,7 @@
                             <sources>
                                 <source>src/main/generated</source>
                                 <source>source/overlap2d/src</source>
+                                <source>source/modular/src/main/java</source>
                                 <source>source/ashley/ashley/src</source>
                                 <source>source/overlap2d-runtime-libgdx/src</source>
                                 <source>source/overlap2d-runtime-libgdx/extensions/spine/src</source>

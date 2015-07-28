@@ -22,6 +22,9 @@ Ashley_Home="$Git_Home/ashley"
 Spine_Git="https://github.com/EsotericSoftware/spine-runtimes.git"
 Spine_Home="$Git_Home/spine-runtimes"
 
+Modular_Git=https://github.com/mountainblade/modular.git
+Modular_Home="$Git_Home/modular"
+
 mkdir -p $Git_Home
 mkdir -p $Source_Home
 
@@ -68,6 +71,14 @@ if [ ! -d "$Spine_Home" ]; then
     git clone $Spine_Git
 else
     cd $Spine_Home
+    git pull
+fi
+
+if [ ! -d "$Modular_Home" ]; then
+    cd $Git_Home
+    git clone $Modular_Git
+else
+    cd $Modular_Home
     git pull
 fi
 
