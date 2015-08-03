@@ -24,7 +24,7 @@ patch('83c8b5e1c74e6a2fe429c4216955b3ba259e83d2','git/overlap2d-runtime-libgdx/s
 patch('92ee7e6edd6d66f01aeb054320fe05cd5b2803c1','git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/NodeComponent.java','source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/NodeComponent.java');
 patch('48419a2bb5f64a78d81fc3577ac8c7da917a4c16','git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/ParentNodeComponent.java','source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/ParentNodeComponent.java');
 patch('36c88654cb3cfb5ac1d51d4efb95f5998daffe38','git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/PolygonComponent.java','source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/PolygonComponent.java');
-patch('9c02552700f8dfad54bd2dd800a6d8b55bebf1ab','git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/TextureRegionComponent.java','source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/TextureRegionComponent.java');
+patch('5865e4bfc70d7828cbd78e24c49f51efad2e31a8','git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/TextureRegionComponent.java','source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/TextureRegionComponent.java');
 patch('56fbc4a922d6f268af45eed8fff2ccc3cd387169','git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/physics/PhysicsBodyPropertiesComponent.java','source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/physics/PhysicsBodyPropertiesComponent.java');
 patch('5cdedd39b981d5c1e821657ec30369ae3bc6881a','git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/physics/PhysicsBodyComponent.java','source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/physics/PhysicsBodyComponent.java');
 patch('dc5eba20a1fa4bf1d4b07694405a561c3ff03aa6','git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/TintComponent.java','source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/TintComponent.java');
@@ -51,16 +51,15 @@ patch('fabb8614baa97558e8c1cc14db91a972f8caf90b','git/overlap2d-runtime-libgdx/e
 patch('cf51b58c1ea74a8e28f441f0ec13943e065e6c40','git/overlap2d-runtime-libgdx/extensions/spine/src/com/overlap2d/extensions/spine/SpineSystem.java','source/overlap2d-runtime-libgdx/extensions/spine/src/com/overlap2d/extensions/spine/SpineSystem.java');
 patch('3e81b61e76b2209535f42386249c80c857dcb344','git/overlap2d-runtime-libgdx/extensions/spine/src/com/overlap2d/extensions/spine/SpineDrawableLogic.java','source/overlap2d-runtime-libgdx/extensions/spine/src/com/overlap2d/extensions/spine/SpineDrawableLogic.java');
 patch('ccbcf33f384d1d25ae1f6c88d1a57d1aa55c24b2','git/overlap2d/src/com/uwsoft/editor/splash/SplashStarter.java','source/overlap2d/src/com/uwsoft/editor/splash/SplashStarter.java');
-patch('67e64c2c9cfc8058d2bc9a3b638b7683c4694ec1','git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/DimensionsComponent.java','source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/DimensionsComponent.java');
 patch('db248bbf472fccd9cc869fb372e0d7c186d5869a','git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/particle/ParticleComponent.java','source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/particle/ParticleComponent.java');
 patch('635d867355d488aeddf9ab944a0003cbfef073c3','git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/utils/MySkin.java','source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/utils/MySkin.java');
 patch('d69261de432d9d0e5c0149e95a403fa911581ff2','git/overlap2d/src/com/uwsoft/editor/proxy/FontManager.java','source/overlap2d/src/com/uwsoft/editor/proxy/FontManager.java');
 patch('245ee1698ce75636a02398f0ac69675bc28ba90d','git/overlap2d/src/com/uwsoft/editor/Main.java','source/overlap2d/src/com/uwsoft/editor/Main.java');
 patch('c926df7d611b9f96ce09c2ba4d5cde7d131aa991','git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/LayerMapComponent.java','source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/LayerMapComponent.java');
-
 patch('1b71044bb831c593e40c041e8ce55690775bae57','git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/MainItemComponent.java','source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/MainItemComponent.java');
-patch('41b6d78425fdcf9d83d75e67cff1c97a8f7b82d0','git/overlap2d/assets/style/uiskin.json','source/overlap2d/assets/style/uiskin.json');
+patch('285488b4568063e772694e724290d356002e9640','git/overlap2d/assets/style/uiskin.json','source/overlap2d/assets/style/uiskin.json');
 patch('f2b74be611b6afb43c2aba330ce579e031755773','git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/additional/ButtonComponent.java','source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/additional/ButtonComponent.java');
+patch('c03b158da832d1ba98011a598781b4a1d10a3371','git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/DimensionsComponent.java','source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/DimensionsComponent.java');
 
 /**
 
