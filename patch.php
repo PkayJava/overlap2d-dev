@@ -59,6 +59,7 @@ patch('1b71044bb831c593e40c041e8ce55690775bae57', 'git/overlap2d-runtime-libgdx/
 patch('285488b4568063e772694e724290d356002e9640', 'git/overlap2d/assets/style/uiskin.json', 'source/overlap2d/assets/style/uiskin.json');
 patch('f2b74be611b6afb43c2aba330ce579e031755773', 'git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/additional/ButtonComponent.java', 'source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/additional/ButtonComponent.java');
 patch('c03b158da832d1ba98011a598781b4a1d10a3371', 'git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/DimensionsComponent.java', 'source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/DimensionsComponent.java');
+patch('cc32e0b8283140e0ca35186bd51abd90ab01e1e0', 'git/overlap2d/src/com/uwsoft/editor/controller/BootstrapPlugins.java', 'source/overlap2d/src/com/uwsoft/editor/controller/BootstrapPlugins.java');
 
 recurse_copy(getcwd() . '/source/overlap2d/plugins/performance/src/com/overlap2d', getcwd() . '/source/overlap2d/src/com/overlap2d');
 
