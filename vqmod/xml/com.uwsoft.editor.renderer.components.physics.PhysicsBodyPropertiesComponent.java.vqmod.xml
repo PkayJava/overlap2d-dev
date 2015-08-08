@@ -7,10 +7,12 @@
     <version>1.0</version>
     <vqmver>2.5.2</vqmver>
     <author>Socheat KHAUV</author>
+<!--
     <file name="git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/physics/PhysicsBodyPropertiesComponent.java">
         <operation>
             <search position="replace"><![CDATA[public class PhysicsBodyPropertiesComponent extends Component {]]></search>
             <add><![CDATA[public class PhysicsBodyPropertiesComponent implements Component {]]></add>
         </operation>
     </file>
+-->
 </modification>
