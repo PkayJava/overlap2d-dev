@@ -10,7 +10,10 @@
     <file name="git/overlap2d/src/com/uwsoft/editor/controller/BootstrapPlugins.java">
         <operation>
         	<search position="after" offset="12"><![CDATA[ModuleManager manager = new DefaultModuleManager();]]></search>
-            <add><![CDATA[        loadedPlugins = manager.loadModules(new File(ClassLoader.getSystemResource(".").getPath()));
+            <add><![CDATA[        java.net.URL url = ClassLoader.getSystemResource(".");
+        String path = url.getPath();
+        File file = new File(path);
+        loadedPlugins = manager.loadModules(file);
         for (Module module : loadedPlugins) {
             try {
                 pluginManager.initPlugin((O2DPlugin) module.getClass().newInstance());
