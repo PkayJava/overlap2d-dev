@@ -62,6 +62,8 @@ patch('c03b158da832d1ba98011a598781b4a1d10a3371', 'git/overlap2d-runtime-libgdx/
 patch('cc32e0b8283140e0ca35186bd51abd90ab01e1e0', 'git/overlap2d/src/com/uwsoft/editor/controller/BootstrapPlugins.java', 'source/overlap2d/src/com/uwsoft/editor/controller/BootstrapPlugins.java');
 patch('72b6bdd77c3369dd2129bd288464bfb27a100b5d', 'git/overlap2d/src/com/uwsoft/editor/data/vo/EditorConfigVO.java', 'source/overlap2d/src/com/uwsoft/editor/data/vo/EditorConfigVO.java');
 patch('5343ff57092fdced5ab9f4487abafbb94da1d8fd', 'git/overlap2d/src/com/uwsoft/editor/data/vo/ProjectVO.java', 'source/overlap2d/src/com/uwsoft/editor/data/vo/ProjectVO.java');
+patch('a08e671def03491696e86095f9c18fb7b99f42ec', 'git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/data/SceneVO.java', 'source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/data/SceneVO.java');
+patch('cbf02d7efb2d19eec7fc8481b64119d3414c705d', 'git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/data/ProjectInfoVO.java', 'source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/data/ProjectInfoVO.java');
 
 recurse_copy(getcwd() . '/source/overlap2d/plugins/performance/src/com/overlap2d', getcwd() . '/source/overlap2d/src/com/overlap2d');
 
