@@ -12,5 +12,5 @@ It is basically will pull the latest update from github,
   <li>https://github.com/EsotericSoftware/spine-runtimes.git</li>
 </ol>
 
-sh ./patch-master.sh <br/>
-mvn clean install && java -jar target/overlap2d-jar-with-dependencies.jar
+sh ./build.sh <br/>
+sh ./run.sh <br/>
