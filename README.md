@@ -12,5 +12,6 @@ It is basically will pull the latest update from github,
   <li>https://github.com/EsotericSoftware/spine-runtimes.git</li>
 </ol>
 
+git reset --hard HEAD <br/>
 sh ./build.sh <br/>
 sh ./run.sh <br/>
