@@ -1,13 +1,10 @@
-package com.overlap2d.plugins.physic;
+package com.overlap2d.plugins.physics;
 
 import com.commons.UIDraggablePanel;
 
-/**
- * Created by socheat on 8/12/15.
- */
-public class PhysicPanel extends UIDraggablePanel {
+public class PhysicsPanel extends UIDraggablePanel {
 
-    public PhysicPanel() {
+    public PhysicsPanel() {
         super("Physic");
         addCloseButton();
     }
