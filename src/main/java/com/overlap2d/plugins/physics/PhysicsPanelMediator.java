@@ -25,10 +25,7 @@ public class PhysicsPanelMediator extends SimpleMediator<PhysicsPanel> {
     @Override
     public String[] listNotificationInterests() {
         return new String[]{
-                SCENE_LOADED,
-                NEW_ITEM_ADDED,
-                ACTION_DELETE,
-                PerformancePlugin.PANEL_OPEN
+                PhysicsPlugin.PANEL_OPEN
         };
     }
 
@@ -36,11 +33,7 @@ public class PhysicsPanelMediator extends SimpleMediator<PhysicsPanel> {
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
         switch (notification.getName()) {
-            case SCENE_LOADED:
-                viewComponent.initView();
-                Engine engine = physicsPlugin.getEngine();
-                break;
-            case PerformancePlugin.PANEL_OPEN:
+            case PhysicsPlugin.PANEL_OPEN:
                 viewComponent.show(physicsPlugin.getUiStage());
                 break;
         }
