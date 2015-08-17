@@ -8,9 +8,5 @@
     <vqmver>2.5.2</vqmver>
     <author>Socheat KHAUV</author>
     <file name="git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/ScissorComponent.java">
-        <operation>
-            <search position="replace"><![CDATA[public class ScissorComponent extends Component {]]></search>
-            <add><![CDATA[public class ScissorComponent implements Component {]]></add>
-        </operation>
     </file>
 </modification>

@@ -8,9 +8,5 @@
     <vqmver>2.5.2</vqmver>
     <author>Socheat KHAUV</author>
     <file name="git/overlap2d-runtime-libgdx/extensions/spine/src/com/overlap2d/extensions/spine/SpineObjectComponent.java">
-        <operation>
-            <search position="replace"><![CDATA[public class SpineObjectComponent extends Component {]]></search>
-            <add><![CDATA[public class SpineObjectComponent implements Component {]]></add>
-        </operation>
     </file>
 </modification>
