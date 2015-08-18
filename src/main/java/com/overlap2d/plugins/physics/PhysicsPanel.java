@@ -1,15 +1,15 @@
 package com.overlap2d.plugins.physics;
 
 import com.commons.UIDraggablePanel;
-import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisTable;
+import com.kotcrab.vis.ui.widget.VisTextButton;
+import com.uwsoft.editor.event.ButtonToNotificationListener;
+import com.uwsoft.editor.renderer.scene2d.ButtonClickListener;
+import com.uwsoft.editor.view.menu.Overlap2DMenuBar;
 
 public class PhysicsPanel extends UIDraggablePanel {
 
     private VisTable mainTable;
-
-    private VisLabel entitiesCount;
-    private VisLabel fpsLbl;
 
     public PhysicsPanel() {
         super("Physics");
@@ -20,26 +20,15 @@ public class PhysicsPanel extends UIDraggablePanel {
         add(mainTable).width(222);
     }
 
-    public void initLockView() {
-        mainTable.clear();
-
-        mainTable.add(new VisLabel("no scenes open")).right();
-    }
-
     public void initView() {
         mainTable.clear();
 
-        entitiesCount = new VisLabel();
-        fpsLbl = new VisLabel();
+        VisTextButton exportButton = new VisTextButton("Export");
+//        exportButton.addListener()
+        mainTable.add(exportButton).row();
 
+        exportButton.addListener(new ButtonToNotificationListener(Overlap2DMenuBar.EXPORT));
 
-        mainTable.add(new VisLabel("Entity count: ")).right();
-        mainTable.add(entitiesCount).left().padLeft(4);
-        mainTable.row();
-
-        mainTable.add(new VisLabel("FPS: ")).right();
-        mainTable.add(fpsLbl).left().padLeft(4);
-        mainTable.row();
         pack();
     }
 
