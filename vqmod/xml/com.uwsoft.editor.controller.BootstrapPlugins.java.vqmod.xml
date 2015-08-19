@@ -9,7 +9,7 @@
     <author>Socheat KHAUV</author>
     <file name="git/overlap2d/src/com/uwsoft/editor/controller/BootstrapPlugins.java">
         <operation>
-        	<search position="after" offset="12"><![CDATA[ModuleManager manager = new DefaultModuleManager();]]></search>
+        	<search position="after" offset="11"><![CDATA[ModuleManager manager = new DefaultModuleManager();]]></search>
             <add><![CDATA[        loadedPlugins = manager.loadModules("com.overlap2d.plugins");
         for (Module module : loadedPlugins) {
             try {

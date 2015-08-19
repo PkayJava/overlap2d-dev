@@ -22,11 +22,7 @@ public class PhysicsPlugin extends O2DPluginAdapter {
     @Override
     public void initPlugin() {
         facade.registerMediator(physicsPanelMediator);
-    }
-
-    @Override
-    public void initMenuItems(MenuConnector menuConnector) {
-        menuConnector.addMenuItem(WINDOWS_MENU, "Physics", PANEL_OPEN);
+        pluginAPI.addMenuItem(WINDOWS_MENU, "Physics", PANEL_OPEN);
     }
 
 }

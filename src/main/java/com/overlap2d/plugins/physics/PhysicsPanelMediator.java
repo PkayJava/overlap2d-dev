@@ -54,7 +54,7 @@ public class PhysicsPanelMediator extends SimpleMediator<PhysicsPanel> {
         super.handleNotification(notification);
         switch (notification.getName()) {
             case PhysicsPlugin.PANEL_OPEN:
-                viewComponent.show(physicsPlugin.getUiStage());
+                viewComponent.show(physicsPlugin.getStage());
                 break;
             case Overlap2DMenuBar.EXPORT:
                 ProjectManager projectManager = facade.retrieveProxy(ProjectManager.NAME);
