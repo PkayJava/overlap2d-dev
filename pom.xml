@@ -148,7 +148,7 @@
 
     <build>
         <resources>
-            <!-- <resource> <directory>source/VisEditor/UI/assets-raw</directory>
+            <!-- <resource> <directory>source/VisEditor/UI/asset-raw</directory>
                 </resource> -->
             <resource>
                 <directory>source/VisEditor/UI/src</directory>

@@ -10,12 +10,7 @@ recurse_copy(getcwd() . '/git/overlap2d-runtime-libgdx', getcwd() . '/source/ove
 recurse_copy(getcwd() . '/git/VisEditor', getcwd() . '/source/VisEditor');
 recurse_copy(getcwd() . '/git/spine-runtimes', getcwd() . '/source/spine-runtimes');
 recurse_copy(getcwd() . '/git/ashley', getcwd() . '/source/ashley');
-// recurse_copy(getcwd().'/', getcwd(). '/source/overlap2d/art/textures');
 recurse_copy(getcwd() . '/git/overlap2d/art', getcwd() . '/source/overlap2d/assets/art');
-// recurse_copy(getcwd().'/git/overlap2d/splash', getcwd(). '/source/overlap2d/assets/splash');
-// recurse_copy(getcwd().'/git/overlap2d/style', getcwd(). '/source/overlap2d/assets/style');
-
-// copy(getcwd().'/git/VisEditor/UI/assets-raw/icon-folder-parent.png', getcwd().'/source/overlap2d/assets/art/textures/icon-folder-parent.png');
 
 copy(getcwd() . '/src/main/resources/style/uiskin.atlas', getcwd() . '/source/overlap2d/assets/style/uiskin.atlas');
 copy(getcwd() . '/src/main/resources/style/uiskin.png', getcwd() . '/source/overlap2d/assets/style/uiskin.png');
@@ -59,13 +54,14 @@ patch('a8478275821b551fc4838751d684face35dadb45', 'git/overlap2d-runtime-libgdx/
 patch('285488b4568063e772694e724290d356002e9640', 'git/overlap2d/assets/style/uiskin.json', 'source/overlap2d/assets/style/uiskin.json');
 patch('0d79ff76abf99f97ffd11ceea73da3b27b87e069', 'git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/additional/ButtonComponent.java', 'source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/additional/ButtonComponent.java');
 patch('5302644c5bc93d629e294cbcd93fc3f42ec61b97', 'git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/DimensionsComponent.java', 'source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/components/DimensionsComponent.java');
-patch('6ac919cff45abe61313e647cfa6b48f0196bb5df', 'git/overlap2d/src/com/uwsoft/editor/controller/BootstrapPlugins.java', 'source/overlap2d/src/com/uwsoft/editor/controller/BootstrapPlugins.java');
+patch('87b803fa68faecec4048da44681a6bb5d7c509b6', 'git/overlap2d/src/com/uwsoft/editor/controller/BootstrapPlugins.java', 'source/overlap2d/src/com/uwsoft/editor/controller/BootstrapPlugins.java');
 patch('72b6bdd77c3369dd2129bd288464bfb27a100b5d', 'git/overlap2d/src/com/uwsoft/editor/data/vo/EditorConfigVO.java', 'source/overlap2d/src/com/uwsoft/editor/data/vo/EditorConfigVO.java');
 patch('5343ff57092fdced5ab9f4487abafbb94da1d8fd', 'git/overlap2d/src/com/uwsoft/editor/data/vo/ProjectVO.java', 'source/overlap2d/src/com/uwsoft/editor/data/vo/ProjectVO.java');
 patch('a08e671def03491696e86095f9c18fb7b99f42ec', 'git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/data/SceneVO.java', 'source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/data/SceneVO.java');
 patch('cbf02d7efb2d19eec7fc8481b64119d3414c705d', 'git/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/data/ProjectInfoVO.java', 'source/overlap2d-runtime-libgdx/src/com/uwsoft/editor/renderer/data/ProjectInfoVO.java');
 
 recurse_copy(getcwd() . '/source/overlap2d/plugins/performance/src/com/overlap2d', getcwd() . '/source/overlap2d/src/com/overlap2d');
+recurse_copy(getcwd() . '/source/overlap2d/plugins/nine-patch/src/com/overlap2d', getcwd() . '/source/overlap2d/src/com/overlap2d');
 
 /**
  * patch('','git/overlap2d/src/','source/overlap2d/src/');
