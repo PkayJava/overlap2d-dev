@@ -1,5 +1,6 @@
 <?php
 
+// test
 function recurse_copy($source, $dest)
 {
     // Check for symlinks
