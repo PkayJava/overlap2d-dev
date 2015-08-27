@@ -9,7 +9,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <gdx.version>1.6.4</gdx.version>
+        <gdx.version>1.6.5</gdx.version>
         <java.version>1.8</java.version>
         <box2dlights.version>1.4</box2dlights.version>
     </properties>
@@ -154,6 +154,11 @@
                 <directory>source/VisEditor/UI/src</directory>
                 <includes>
                     <include>**/*.properties</include>
+                    <include>**/*.atlas</include>
+                    <include>**/*.png</include>
+                    <include>**/*.ttf</include>
+                    <include>**/*.fnt</include>
+                    <include>**/*.json</include>
                 </includes>
             </resource>
             <resource>
