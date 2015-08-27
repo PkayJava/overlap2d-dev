@@ -17,8 +17,15 @@ import java.util.HashMap;
  */
 public class UIPhysicsProperties extends UIRemovableProperties {
 
-    public static final String prefix = "com.uwsoft.editor.view.ui.properties.panels.UIPhysicsProperties";
-    public static final String CLOSE_CLICKED = prefix + ".CLOSE_CLICKED";
+    private static final String TAG;
+    public static final String NAME;
+    public static final String CLOSE_CLICKED;
+
+    static {
+        TAG = UIPhysicsProperties.class.getName();
+        NAME = TAG;
+        CLOSE_CLICKED = NAME + "." + "CLOSE_CLICKED";
+    }
 
     private HashMap<Integer, String> bodyTypes = new HashMap<>();
 
@@ -132,8 +139,8 @@ public class UIPhysicsProperties extends UIRemovableProperties {
     }
 
     public int getBodyType() {
-        for(Integer key: bodyTypes.keySet()) {
-            if(bodyTypes.get(key).equals(bodyTypeBox.getSelected())) {
+        for (Integer key : bodyTypes.keySet()) {
+            if (bodyTypes.get(key).equals(bodyTypeBox.getSelected())) {
                 return key;
             }
         }

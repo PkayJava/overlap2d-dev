@@ -40,8 +40,14 @@ import com.o2d.pkayjava.runtime.data.SceneVO;
  * Created by sargis on 3/25/15.
  */
 public class Overlap2DMenuBarMediator extends SimpleMediator<Overlap2DMenuBar> {
-    private static final String TAG = Overlap2DMenuBarMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = Overlap2DMenuBarMediator.class.getName();
+        NAME = TAG;
+    }
+
     private ProjectManager projectManager;
 
     public Overlap2DMenuBarMediator() {
@@ -88,7 +94,7 @@ public class Overlap2DMenuBarMediator extends SimpleMediator<Overlap2DMenuBar> {
         super.handleNotification(notification);
         String type = notification.getType();
 
-        if(notification.getName().equals(Overlap2DMenuBar.RECENT_LIST_MODIFIED)) {
+        if (notification.getName().equals(Overlap2DMenuBar.RECENT_LIST_MODIFIED)) {
             PreferencesManager prefs = PreferencesManager.getInstance();
             viewComponent.reInitRecent(prefs.getRecentHistory());
         }
@@ -97,114 +103,90 @@ public class Overlap2DMenuBarMediator extends SimpleMediator<Overlap2DMenuBar> {
             handleGeneralNotification(notification);
             return;
         }
-        switch (type) {
-            case Overlap2DMenuBar.FILE_MENU:
-                handleFileMenuNotification(notification);
-                break;
-            case Overlap2DMenuBar.EDIT_MENU:
-                handleEditMenuNotification(notification);
-                break;
-            default:
-                break;
+        if (Overlap2DMenuBar.FILE_MENU.equals(type)) {
+
+            handleFileMenuNotification(notification);
+        } else if (Overlap2DMenuBar.EDIT_MENU.equals(type)) {
+            handleEditMenuNotification(notification);
         }
     }
 
     private void handleGeneralNotification(Notification notification) {
-        switch (notification.getName()) {
-            case ProjectManager.PROJECT_OPENED:
-                onProjectOpened();
-                break;
+        if (ProjectManager.PROJECT_OPENED.equals(notification.getName())) {
+            onProjectOpened();
         }
     }
 
     private void handleEditMenuNotification(Notification notification) {
         Sandbox sandbox = Sandbox.getInstance();
-        switch (notification.getName()) {
-            case Overlap2DMenuBar.CUT:
-                facade.sendNotification(Sandbox.ACTION_CUT);
-                break;
-            case Overlap2DMenuBar.COPY:
-                facade.sendNotification(Sandbox.ACTION_COPY);
-                break;
-            case Overlap2DMenuBar.PAST:
-                facade.sendNotification(Sandbox.ACTION_PASTE);
-                break;
-            case Overlap2DMenuBar.UNDO:
-                CommandManager commandManager = facade.retrieveProxy(CommandManager.NAME);
-                commandManager.undoCommand();
-                break;
-            case Overlap2DMenuBar.REDO:
-                commandManager = facade.retrieveProxy(CommandManager.NAME);
-                commandManager.redoCommand();
-                break;
+        if (Overlap2DMenuBar.CUT.equals(notification.getName())) {
+            facade.sendNotification(Sandbox.ACTION_CUT);
+        } else if (Overlap2DMenuBar.COPY.equals(notification.getName())) {
+            facade.sendNotification(Sandbox.ACTION_COPY);
+        } else if (Overlap2DMenuBar.PAST.equals(notification.getName())) {
+            facade.sendNotification(Sandbox.ACTION_PASTE);
+        } else if (Overlap2DMenuBar.UNDO.equals(notification.getName())) {
+            CommandManager commandManager = facade.retrieveProxy(CommandManager.NAME);
+            commandManager.undoCommand();
+        } else if (Overlap2DMenuBar.REDO.equals(notification.getName())) {
+            CommandManager commandManager = facade.retrieveProxy(CommandManager.NAME);
+            commandManager = facade.retrieveProxy(CommandManager.NAME);
+            commandManager.redoCommand();
         }
     }
 
     private void handleFileMenuNotification(Notification notification) {
         Sandbox sandbox = Sandbox.getInstance();
-        switch (notification.getName()) {
-            case Overlap2DMenuBar.NEW_PROJECT:
-                break;
-            case Overlap2DMenuBar.OPEN_PROJECT:
-                showOpenProject();
-                break;
-            case Overlap2DMenuBar.SAVE_PROJECT:
-                SceneVO vo = sandbox.sceneVoFromItems();
-                projectManager.saveCurrentProject(vo);
-                break;
-            case Overlap2DMenuBar.IMPORT_TO_LIBRARY:
-                //showDialog("showImportDialog");
-                break;
-            case Overlap2DMenuBar.RECENT_PROJECTS:
-                recentProjectItemClicked(notification.getBody());
-                //showDialog("showImportDialog");
-                break;
-            case Overlap2DMenuBar.CLEAR_RECENTS:
-                clearRecents();
-                break;
-            case Overlap2DMenuBar.EXPORT:
-                projectManager.exportProject();
-                break;
-            case Overlap2DMenuBar.EXPORT_SETTINGS:
-                //showDialog("showExportDialog");
-                break;
-            case Overlap2DMenuBar.EXIT:
-                Gdx.app.exit();
-                break;
-            case Overlap2DMenuBar.NEW_SCENE:
-                DialogUtils.showInputDialog(sandbox.getUIStage(), "Create New Scene", "Scene Name : ", new InputDialogListener() {
-                    @Override
-                    public void finished(String input) {
-                        if (input == null || input.equals("")) {
-                            return;
+        if (Overlap2DMenuBar.NEW_PROJECT.equals(notification.getName())) {
+        } else if (Overlap2DMenuBar.OPEN_PROJECT.equals(notification.getName())) {
+            showOpenProject();
+        } else if (Overlap2DMenuBar.SAVE_PROJECT.equals(notification.getName())) {
+            SceneVO vo = sandbox.sceneVoFromItems();
+            projectManager.saveCurrentProject(vo);
+        } else if (Overlap2DMenuBar.IMPORT_TO_LIBRARY.equals(notification.getName())) {
+            //showDialog("showImportDialog");
+        } else if (Overlap2DMenuBar.RECENT_PROJECTS.equals(notification.getName())) {
+            recentProjectItemClicked(notification.getBody());
+            //showDialog("showImportDialog");
+        } else if (Overlap2DMenuBar.CLEAR_RECENTS.equals(notification.getName())) {
+            clearRecents();
+        } else if (Overlap2DMenuBar.EXPORT.equals(notification.getName())) {
+            projectManager.exportProject();
+        } else if (Overlap2DMenuBar.EXPORT_SETTINGS.equals(notification.getName())) {
+            //showDialog("showExportDialog");
+        } else if (Overlap2DMenuBar.EXIT.equals(notification.getName())) {
+            Gdx.app.exit();
+        } else if (Overlap2DMenuBar.NEW_SCENE.equals(notification.getName())) {
+            DialogUtils.showInputDialog(sandbox.getUIStage(), "Create New Scene", "Scene Name : ", new InputDialogListener() {
+                @Override
+                public void finished(String input) {
+                    if (input == null || input.equals("")) {
+                        return;
+                    }
+                    SceneDataManager sceneDataManager = facade.retrieveProxy(SceneDataManager.NAME);
+                    sceneDataManager.createNewScene(input);
+                    sandbox.loadScene(input);
+                    onScenesChanged();
+                }
+
+                @Override
+                public void canceled() {
+
+                }
+            });
+        } else if (Overlap2DMenuBar.SELECT_SCENE.equals(notification.getName())) {
+            sceneMenuItemClicked(notification.getBody());
+        } else if (Overlap2DMenuBar.DELETE_CURRENT_SCENE.equals(notification.getName())) {
+            DialogUtils.showConfirmDialog(sandbox.getUIStage(),
+                    "Delete Scene", "Do you realy want to delete '" + projectManager.currentProjectVO.lastOpenScene + "' scene?",
+                    new String[]{"Delete", "Cancel"}, new Integer[]{0, 1}, result -> {
+                        if (result == 0) {
+                            SceneDataManager sceneDataManager = facade.retrieveProxy(SceneDataManager.NAME);
+                            sceneDataManager.deleteCurrentScene();
+                            sandbox.loadScene("MainScene");
+                            onScenesChanged();
                         }
-                        SceneDataManager sceneDataManager = facade.retrieveProxy(SceneDataManager.NAME);
-                        sceneDataManager.createNewScene(input);
-                        sandbox.loadScene(input);
-                        onScenesChanged();
-                    }
-
-                    @Override
-                    public void canceled() {
-
-                    }
-                });
-                break;
-            case Overlap2DMenuBar.SELECT_SCENE:
-                sceneMenuItemClicked(notification.getBody());
-                break;
-            case Overlap2DMenuBar.DELETE_CURRENT_SCENE:
-                DialogUtils.showConfirmDialog(sandbox.getUIStage(),
-                        "Delete Scene", "Do you realy want to delete '" + projectManager.currentProjectVO.lastOpenScene + "' scene?",
-                        new String[]{"Delete", "Cancel"}, new Integer[]{0, 1}, result -> {
-                            if (result == 0) {
-                                SceneDataManager sceneDataManager = facade.retrieveProxy(SceneDataManager.NAME);
-                                sceneDataManager.deleteCurrentScene();
-                                sandbox.loadScene("MainScene");
-                                onScenesChanged();
-                            }
-                        });
-                break;
+                    });
         }
     }
 

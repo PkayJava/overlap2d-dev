@@ -26,33 +26,62 @@ import com.o2d.pkayjava.editor.proxy.EditorTextureManager;
 import com.puremvc.patterns.proxy.Proxy;
 
 public class Overlap2D extends ApplicationAdapter implements Proxy {
-    private static final String TAG = com.uwsoft.editor.Overlap2D.class.getCanonicalName();
-    public static final String NAME = TAG;
-    private static final String EVENT_PREFIX = "com.uwsoft.editor.Overlap2D";
-    public static final String PAUSE = EVENT_PREFIX + ".PAUSE";
-    public static final String RESUME = EVENT_PREFIX + ".RESUME";
-    public static final String RENDER = EVENT_PREFIX + ".RENDER";
-    public static final String RESIZE = EVENT_PREFIX + ".RESIZE";
-    public static final String DISPOSE = EVENT_PREFIX + ".DISPOSE";
-    public static final String CREATE = EVENT_PREFIX + ".CREATE_BTN_CLICKED";
+    private static final String TAG;
+    public static final String NAME;
+
+    public static final String PAUSE;
+    public static final String RESUME;
+    public static final String RENDER;
+    public static final String RESIZE;
+    public static final String DISPOSE;
+    public static final String CREATE;
 
     // tmp events
-    public static final String ZOOM_CHANGED = EVENT_PREFIX + ".ZOOM_CHANGED";
-    public static final String GRID_SIZE_CHANGED = EVENT_PREFIX + ".GRID_SIZE_CHANGED";
-    public static final String ITEM_DATA_UPDATED = EVENT_PREFIX + ".ITEM_DATA_UPDATED";
-    public static final String ITEM_PROPERTY_DATA_FINISHED_MODIFYING = EVENT_PREFIX + ".ITEM_PROPERTY_DATA_FINISHED_MODIFYING";
+    public static final String ZOOM_CHANGED;
+    public static final String GRID_SIZE_CHANGED;
+    public static final String ITEM_DATA_UPDATED;
+    public static final String ITEM_PROPERTY_DATA_FINISHED_MODIFYING;
 
 
     // this should move
-    public static final String HIDE_SELECTIONS = EVENT_PREFIX + ".HIDE_SELECTIONS";
-    public static final String SHOW_SELECTIONS = EVENT_PREFIX + ".SHOW_SELECTIONS";
-    public static final String ITEM_SELECTION_CHANGED = EVENT_PREFIX + ".ITEM_SELECTION_CHANGED";
-    public static final String EMPTY_SPACE_CLICKED = EVENT_PREFIX + ".EMPTY_SPACE_CLICKED";
+    public static final String HIDE_SELECTIONS;
+    public static final String SHOW_SELECTIONS;
+    public static final String ITEM_SELECTION_CHANGED;
+    public static final String EMPTY_SPACE_CLICKED;
 
-    public static final String SCENE_RIGHT_CLICK = EVENT_PREFIX + ".SCENE_RIGHT_CLICK";
-    public static final String ITEM_RIGHT_CLICK = EVENT_PREFIX + ".ITEM_RIGHT_CLICK";
+    public static final String SCENE_RIGHT_CLICK;
+    public static final String ITEM_RIGHT_CLICK;
 
-    public static final String LIBRARY_LIST_UPDATED = EVENT_PREFIX + ".LIBRARY_LIST_UPDATED";
+    public static final String LIBRARY_LIST_UPDATED;
+
+    static {
+        TAG = Overlap2D.class.getName();
+        NAME = TAG;
+        PAUSE = NAME + "." + "PAUSE";
+        RESUME = NAME + "." + "RESUME";
+        RENDER = NAME + "." + "RENDER";
+        RESIZE = NAME + "." + "RESIZE";
+        DISPOSE = NAME + "." + "DISPOSE";
+        CREATE = NAME + "." + "CREATE_BTN_CLICKED";
+
+        // tmp events
+        ZOOM_CHANGED = NAME + "." + "ZOOM_CHANGED";
+        GRID_SIZE_CHANGED = NAME + "." + "GRID_SIZE_CHANGED";
+        ITEM_DATA_UPDATED = NAME + "." + "ITEM_DATA_UPDATED";
+        ITEM_PROPERTY_DATA_FINISHED_MODIFYING = NAME + "." + "ITEM_PROPERTY_DATA_FINISHED_MODIFYING";
+
+
+        // this should move
+        HIDE_SELECTIONS = NAME + "." + "HIDE_SELECTIONS";
+        SHOW_SELECTIONS = NAME + "." + "SHOW_SELECTIONS";
+        ITEM_SELECTION_CHANGED = NAME + "." + "ITEM_SELECTION_CHANGED";
+        EMPTY_SPACE_CLICKED = NAME + "." + "EMPTY_SPACE_CLICKED";
+
+        SCENE_RIGHT_CLICK = NAME + "." + "SCENE_RIGHT_CLICK";
+        ITEM_RIGHT_CLICK = NAME + "." + "ITEM_RIGHT_CLICK";
+
+        LIBRARY_LIST_UPDATED = NAME + "." + "LIBRARY_LIST_UPDATED";
+    }
 
     //
     public EditorTextureManager textureManager;

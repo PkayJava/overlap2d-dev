@@ -40,8 +40,13 @@ import com.o2d.pkayjava.editor.utils.runtime.EntityUtils;
  * Created by azakhary on 5/12/2015.
  */
 public class EditSpriteAnimationDialogMediator extends SimpleMediator<EditSpriteAnimationDialog> {
-    private static final String TAG = EditSpriteAnimationDialogMediator.class.getCanonicalName();
-    private static final String NAME = TAG;
+    private static final String TAG;
+    private static final String NAME;
+
+    static {
+        TAG = EditSpriteAnimationDialogMediator.class.getName();
+        NAME = TAG;
+    }
 
     private Entity observable = null;
 
@@ -75,37 +80,29 @@ public class EditSpriteAnimationDialogMediator extends SimpleMediator<EditSprite
         Sandbox sandbox = Sandbox.getInstance();
         UIStage uiStage = sandbox.getUIStage();
 
-        switch (notification.getName()) {
-            case Overlap2DMenuBar.SPRITE_ANIMATIONS_EDITOR_OPEN:
-                viewComponent.show(uiStage);
-                break;
-            case UISpriteAnimationItemProperties.EDIT_ANIMATIONS_CLICKED:
-                viewComponent.show(uiStage);
-                break;
-            case Overlap2D.ITEM_SELECTION_CHANGED:
-                Set<Entity> selection = notification.getBody();
-                if(selection.size() == 1) {
-                    Entity entity = selection.iterator().next();
-                    if(EntityUtils.getType(entity) == EntityFactory.SPRITE_TYPE) {
-                        setObservable(entity);
-                    } else {
-                        observable = null;
-                        viewComponent.setEmpty("Selected item is not a sprite animation");
-                    }
+        if (Overlap2DMenuBar.SPRITE_ANIMATIONS_EDITOR_OPEN.equals(notification.getName())) {
+            viewComponent.show(uiStage);
+        } else if (UISpriteAnimationItemProperties.EDIT_ANIMATIONS_CLICKED.equals(notification.getName())) {
+            viewComponent.show(uiStage);
+        } else if (Overlap2D.ITEM_SELECTION_CHANGED.equals(notification.getName())) {
+            Set<Entity> selection = notification.getBody();
+            if (selection.size() == 1) {
+                Entity entity = selection.iterator().next();
+                if (EntityUtils.getType(entity) == EntityFactory.SPRITE_TYPE) {
+                    setObservable(entity);
+                } else {
+                    observable = null;
+                    viewComponent.setEmpty("Selected item is not a sprite animation");
                 }
-
-            break;
-            case Overlap2D.EMPTY_SPACE_CLICKED:
-                setObservable(null);
-                break;
-            case EditSpriteAnimationDialog.ADD_BUTTON_PRESSED:
-                addAnimation();
-                updateView();
-            break;
-            case EditSpriteAnimationDialog.DELETE_BUTTON_PRESSED:
-                removeAnimation(notification.getBody());
-                updateView();
-            break;
+            }
+        } else if (Overlap2D.EMPTY_SPACE_CLICKED.equals(notification.getName())) {
+            setObservable(null);
+        } else if (EditSpriteAnimationDialog.ADD_BUTTON_PRESSED.equals(notification.getName())) {
+            addAnimation();
+            updateView();
+        } else if (EditSpriteAnimationDialog.DELETE_BUTTON_PRESSED.equals(notification.getName())) {
+            removeAnimation(notification.getBody());
+            updateView();
         }
     }
 
@@ -118,7 +115,7 @@ public class EditSpriteAnimationDialogMediator extends SimpleMediator<EditSprite
     }
 
     private void updateView() {
-        if(observable == null) {
+        if (observable == null) {
             viewComponent.setEmpty("No item selected");
         } else {
             SpriteAnimationComponent spriteAnimationComponent = ComponentRetriever.get(observable, SpriteAnimationComponent.class);

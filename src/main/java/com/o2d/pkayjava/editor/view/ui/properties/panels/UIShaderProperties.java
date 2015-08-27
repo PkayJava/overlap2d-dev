@@ -34,8 +34,15 @@ import java.util.HashMap;
  */
 public class UIShaderProperties extends UIRemovableProperties {
 
-    public static final String prefix = "com.uwsoft.editor.view.ui.properties.panels.UIShaderProperties";
-    public static final String CLOSE_CLICKED = prefix + ".CLOSE_CLICKED";
+    private static final String TAG;
+    public static final String NAME;
+    public static final String CLOSE_CLICKED;
+
+    static {
+        TAG = UIShaderProperties.class.getName();
+        NAME = TAG;
+        CLOSE_CLICKED = NAME + "." + "CLOSE_CLICKED";
+    }
 
     private VisSelectBox<String> shadersSelector;
 

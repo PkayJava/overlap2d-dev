@@ -30,6 +30,7 @@ import javax.imageio.ImageIO;
 
 import com.o2d.pkayjava.editor.proxy.*;
 import com.o2d.pkayjava.editor.proxy.ProjectManager;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
@@ -51,10 +52,16 @@ import com.o2d.pkayjava.editor.utils.NinePatchUtils;
 import com.o2d.pkayjava.editor.utils.Overlap2DUtils;
 
 public class ResolutionManager extends BaseProxy {
-    private static final String TAG = ResolutionManager.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
 
-    public static final String RESOLUTION_LIST_CHANGED = "ResolutionManager" + ".RESOLUTION_LIST_CHANGED";
+    public static final String RESOLUTION_LIST_CHANGED;
+
+    static {
+        TAG = ResolutionManager.class.getName();
+        NAME = TAG;
+        RESOLUTION_LIST_CHANGED = NAME + "." + "RESOLUTION_LIST_CHANGED";
+    }
 
     private static final String EXTENSION_9PATCH = ".9.png";
     public String currentResolutionName;

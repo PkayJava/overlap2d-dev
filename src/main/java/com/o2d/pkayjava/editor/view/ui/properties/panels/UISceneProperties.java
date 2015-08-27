@@ -34,8 +34,16 @@ import com.o2d.pkayjava.editor.view.ui.properties.UIAbstractProperties;
  */
 public class UISceneProperties extends UIAbstractProperties {
 
+    private static final String TAG;
+    public static final String NAME;
+    public static final String AMBIENT_COLOR_BUTTON_CLICKED;
 
-    public static final String AMBIENT_COLOR_BUTTON_CLICKED = "com.uwsoft.editor.view.ui.properties.panels.UISceneProperties" + ".AMBIENT_COLOR_BUTTON_CLICKED";
+    static {
+        TAG = UISceneProperties.class.getName();
+        NAME = TAG;
+        AMBIENT_COLOR_BUTTON_CLICKED = NAME + "." + "AMBIENT_COLOR_BUTTON_CLICKED";
+
+    }
 
     private VisLabel pixelsPerWorldUnitField;
     private VisCheckBox physicsEnabledCheckBox;
@@ -151,7 +159,7 @@ public class UISceneProperties extends UIAbstractProperties {
     }
 
     public void setPixelsPerWorldUnit(int value) {
-        pixelsPerWorldUnitField.setText(value+"");
+        pixelsPerWorldUnitField.setText(value + "");
     }
 
     @Override

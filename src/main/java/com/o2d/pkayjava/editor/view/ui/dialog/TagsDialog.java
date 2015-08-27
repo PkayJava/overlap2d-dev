@@ -20,8 +20,16 @@ import java.util.Set;
  */
 public class TagsDialog extends UIDraggablePanel {
 
-    public static final String prefix = "com.uwsoft.editor.view.ui.dialog.panels.TagsDialog";
-    public static final String LIST_CHANGED = prefix + ".LIST_CHANGED";
+    private static final String TAG;
+    public static final String NAME;
+    public static final String LIST_CHANGED;
+
+    static {
+        TAG = TagsDialog.class.getName();
+        NAME = TAG;
+        LIST_CHANGED = NAME + "." + "LIST_CHANGED";
+    }
+
 
     private Overlap2DFacade facade;
 
@@ -72,7 +80,7 @@ public class TagsDialog extends UIDraggablePanel {
         tagTable = new VisTable();
         VisTable inputTable = new VisTable();
 
-        for(String tag: tags) {
+        for (String tag : tags) {
             tagTable.add(new TagItem(tag, tagItemListener)).pad(5).left().expandX().fillX();
             tagTable.row();
         }
@@ -84,9 +92,9 @@ public class TagsDialog extends UIDraggablePanel {
 
         createTagBtn.addListener(new ClickListener() {
             @Override
-            public void clicked (InputEvent event, float x, float y) {
+            public void clicked(InputEvent event, float x, float y) {
                 String tag = newTagField.getText();
-                if(!tagExists(tag)) {
+                if (!tagExists(tag)) {
                     newTagField.setText("");
                     addTag(tag);
                     facade.sendNotification(LIST_CHANGED);

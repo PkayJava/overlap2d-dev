@@ -20,14 +20,19 @@ import java.util.Set;
 /**
  * Created by azakhary on 8/1/2015.
  */
-public class TagsDialogMediator extends SimpleMediator<com.uwsoft.editor.view.ui.dialog.TagsDialog> {
-    private static final String TAG = com.uwsoft.editor.view.ui.dialog.TagsDialogMediator.class.getCanonicalName();
-    private static final String NAME = TAG;
+public class TagsDialogMediator extends SimpleMediator<TagsDialog> {
+    private static final String TAG;
+    private static final String NAME;
+
+    static {
+        TAG = TagsDialogMediator.class.getName();
+        NAME = TAG;
+    }
 
     private Entity observable = null;
 
     public TagsDialogMediator() {
-        super(NAME, new com.uwsoft.editor.view.ui.dialog.TagsDialog());
+        super(NAME, new TagsDialog());
     }
 
     @Override
@@ -43,7 +48,7 @@ public class TagsDialogMediator extends SimpleMediator<com.uwsoft.editor.view.ui
                 Overlap2D.ITEM_SELECTION_CHANGED,
                 Overlap2D.EMPTY_SPACE_CLICKED,
                 UIBasicItemProperties.TAGS_BUTTON_CLICKED,
-                com.uwsoft.editor.view.ui.dialog.TagsDialog.LIST_CHANGED
+                TagsDialog.LIST_CHANGED
         };
     }
 
@@ -54,24 +59,20 @@ public class TagsDialogMediator extends SimpleMediator<com.uwsoft.editor.view.ui
         Sandbox sandbox = Sandbox.getInstance();
         UIStage uiStage = sandbox.getUIStage();
 
-        switch (notification.getName()) {
-            case UIBasicItemProperties.TAGS_BUTTON_CLICKED:
-                viewComponent.show(uiStage);
-                break;
-            case Overlap2D.ITEM_SELECTION_CHANGED:
-                Set<Entity> selection = notification.getBody();
-                if(selection.size() == 1) {
-                    setObservable(selection.iterator().next());
-                }
-                break;
-            case Overlap2D.EMPTY_SPACE_CLICKED:
-                setObservable(null);
-                break;
-            case TagsDialog.LIST_CHANGED:
-                viewComponent.updateView();
-                MainItemComponent mainItemComponent = observable.getComponent(MainItemComponent.class);
-                mainItemComponent.tags = viewComponent.getTags();
-                break;
+        if (UIBasicItemProperties.TAGS_BUTTON_CLICKED.equals(notification.getName())) {
+            viewComponent.show(uiStage);
+        }
+        if (Overlap2D.ITEM_SELECTION_CHANGED.equals(notification.getName())) {
+            Set<Entity> selection = notification.getBody();
+            if (selection.size() == 1) {
+                setObservable(selection.iterator().next());
+            }
+        } else if (Overlap2D.EMPTY_SPACE_CLICKED.equals(notification.getName())) {
+            setObservable(null);
+        } else if (TagsDialog.LIST_CHANGED.equals(notification.getName())) {
+            viewComponent.updateView();
+            MainItemComponent mainItemComponent = observable.getComponent(MainItemComponent.class);
+            mainItemComponent.tags = viewComponent.getTags();
         }
     }
 
@@ -81,7 +82,7 @@ public class TagsDialogMediator extends SimpleMediator<com.uwsoft.editor.view.ui
     }
 
     private void updateView() {
-        if(observable == null) {
+        if (observable == null) {
             viewComponent.setEmpty();
         } else {
             MainItemComponent mainItemComponent = ComponentRetriever.get(observable, MainItemComponent.class);

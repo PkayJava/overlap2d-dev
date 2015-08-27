@@ -30,12 +30,21 @@ import com.o2d.pkayjava.editor.view.ui.properties.UIRemovableProperties;
  */
 public class UIPolygonComponentProperties extends UIRemovableProperties {
 
-    public static final String prefix = "com.uwsoft.editor.view.ui.properties.panels.UIPolygonComponentProperties";
+    private static final String TAG;
+    public static final String NAME;
+    public static final String COPY_BUTTON_CLICKED;
+    public static final String PASTE_BUTTON_CLICKED;
+    public static final String ADD_DEFAULT_MESH_BUTTON_CLICKED;
+    public static final String CLOSE_CLICKED;
 
-    public static final String COPY_BUTTON_CLICKED = prefix + ".COPY_BUTTON_CLICKED";
-    public static final String PASTE_BUTTON_CLICKED = prefix + ".PASTE_BUTTON_CLICKED";
-    public static final String ADD_DEFAULT_MESH_BUTTON_CLICKED = prefix + ".ADD_DEFAULT_MESH_BUTTON_CLICKED";
-    public static final String CLOSE_CLICKED = prefix + ".CLOSE_CLICKED";
+    static {
+        TAG = UIPolygonComponentProperties.class.getName();
+        NAME = TAG;
+        COPY_BUTTON_CLICKED = NAME + "." + "COPY_BUTTON_CLICKED";
+        PASTE_BUTTON_CLICKED = NAME + "." + "PASTE_BUTTON_CLICKED";
+        ADD_DEFAULT_MESH_BUTTON_CLICKED = NAME + "." + "ADD_DEFAULT_MESH_BUTTON_CLICKED";
+        CLOSE_CLICKED = NAME + "." + "CLOSE_CLICKED";
+    }
 
     private VisTextButton addDefaultMeshButton;
 
@@ -65,7 +74,7 @@ public class UIPolygonComponentProperties extends UIRemovableProperties {
     }
 
     public void setVerticesCount(int count) {
-        verticesCountLbl.setText(count+"");
+        verticesCountLbl.setText(count + "");
     }
 
     public void initEmptyView() {

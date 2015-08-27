@@ -48,10 +48,8 @@ public class PanelMediator<T extends Actor> extends SimpleMediator<T> {
     @Override
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
-        switch (notification.getName()) {
-            case ProjectManager.PROJECT_OPENED:
-                viewComponent.setVisible(true);
-                break;
+        if (ProjectManager.PROJECT_OPENED.equals(notification.getName())) {
+            viewComponent.setVisible(true);
         }
     }
 }

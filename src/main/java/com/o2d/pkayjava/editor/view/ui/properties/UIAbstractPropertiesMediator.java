@@ -60,18 +60,14 @@ public abstract class UIAbstractPropertiesMediator<T, V extends UIAbstractProper
         super.handleNotification(notification);
 
 
-        if(notification.getName().equals(viewComponent.getUpdateEventName())) {
-            if(!lockUpdates) {
+        if (notification.getName().equals(viewComponent.getUpdateEventName())) {
+            if (!lockUpdates) {
                 translateViewToItemData();
             }
         }
 
-        switch (notification.getName()) {
-            case Overlap2D.ITEM_DATA_UPDATED:
-                onItemDataUpdate();
-                break;
-            default:
-                break;
+        if (Overlap2D.ITEM_DATA_UPDATED.equals(notification.getName())) {
+            onItemDataUpdate();
         }
     }
 

@@ -46,8 +46,13 @@ import com.o2d.pkayjava.editor.view.ui.followers.NormalSelectionFollower;
  * Created by azakhary on 5/20/2015.
  */
 public class FollowersUIMediator extends SimpleMediator<FollowersUI> {
-    private static final String TAG = com.uwsoft.editor.view.ui.FollowersUIMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = FollowersUIMediator.class.getName();
+        NAME = TAG;
+    }
 
     private HashMap<Entity, BasicFollower> followers = new HashMap<>();
 
@@ -81,51 +86,39 @@ public class FollowersUIMediator extends SimpleMediator<FollowersUI> {
     @Override
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
-        switch (notification.getName()) {
-            case CompositeCameraChangeCommand.DONE:
-                createFollowersForAllVisible();
-            case SceneDataManager.SCENE_LOADED:
-                createFollowersForAllVisible();
-                break;
-            case ItemFactory.NEW_ITEM_ADDED:
-                createFollower(notification.getBody());
-                break;
-            case Overlap2D.ITEM_PROPERTY_DATA_FINISHED_MODIFYING:
-                BasicFollower follower = followers.get(notification.getBody());
-                if(follower != null) {
-                    follower.update();
-                }
-                break;
-            case Overlap2D.ITEM_DATA_UPDATED:
-                follower = followers.get(notification.getBody());
-                if(follower != null) {
-                    follower.update();
-                }
-                break;
-            case PanTool.SCENE_PANNED:
-                updateAllFollowers();
-                break;
-            case Overlap2D.ITEM_SELECTION_CHANGED:
-                clearAllSubFollowersExceptNew(notification.getBody());
-                setNewSelectionConfiguration(notification.getBody());
-                break;
-            case Overlap2D.HIDE_SELECTIONS:
-                hideAllFollowers(notification.getBody());
-                break;
-            case Overlap2D.SHOW_SELECTIONS:
-                showAllFollowers(notification.getBody());
-                break;
-            case UIToolBoxMediator.TOOL_SELECTED:
-                pushNotificationToFollowers(notification);
-                break;
-            case Overlap2D.ZOOM_CHANGED:
-                updateAllFollowers();
-                break;
-            case ConvertToCompositeCommand.DONE:
-                // because entities changed their parent, it's better to re-make all followers
-                removeAllfollowers();
-                createFollowersForAllVisible();
-                break;
+
+        if (CompositeCameraChangeCommand.DONE.equals(notification.getName())) {
+            createFollowersForAllVisible();
+        }
+
+        if (SceneDataManager.SCENE_LOADED.equals(notification.getName())) {
+            createFollowersForAllVisible();
+        } else if (ItemFactory.NEW_ITEM_ADDED.equals(notification.getName())) {
+            createFollower(notification.getBody());
+        } else if (Overlap2D.ITEM_PROPERTY_DATA_FINISHED_MODIFYING.equals(notification.getName())) {
+            BasicFollower follower = followers.get(notification.getBody());
+            if (follower != null) {
+                follower.update();
+            }
+        } else if (Overlap2D.ITEM_DATA_UPDATED.equals(notification.getName())) {
+            BasicFollower follower = followers.get(notification.getBody());
+            if (follower != null) {
+                follower.update();
+            }
+        } else if (PanTool.SCENE_PANNED.equals(notification.getName())) {
+            updateAllFollowers();
+        } else if (Overlap2D.ITEM_SELECTION_CHANGED.equals(notification.getName())) {
+            clearAllSubFollowersExceptNew(notification.getBody());
+            setNewSelectionConfiguration(notification.getBody());
+        } else if (Overlap2D.HIDE_SELECTIONS.equals(notification.getName())) {
+            hideAllFollowers(notification.getBody());
+        } else if (Overlap2D.SHOW_SELECTIONS.equals(notification.getName())) {
+            showAllFollowers(notification.getBody());
+        } else if (UIToolBoxMediator.TOOL_SELECTED.equals(notification.getName())) {
+            updateAllFollowers();
+        } else if (ConvertToCompositeCommand.DONE.equals(notification.getName())) {
+            removeAllfollowers();
+            createFollowersForAllVisible();
         }
     }
 
@@ -137,9 +130,9 @@ public class FollowersUIMediator extends SimpleMediator<FollowersUI> {
 
     private void clearAllSubFollowersExceptNew(Set<Entity> items) {
         for (BasicFollower follower : followers.values()) {
-            if(!items.contains(follower)) {
-                if(follower instanceof NormalSelectionFollower) {
-                    ((NormalSelectionFollower)follower).clearSubFollowers();
+            if (!items.contains(follower)) {
+                if (follower instanceof NormalSelectionFollower) {
+                    ((NormalSelectionFollower) follower).clearSubFollowers();
                 }
             }
         }
@@ -157,7 +150,7 @@ public class FollowersUIMediator extends SimpleMediator<FollowersUI> {
         Sandbox sandbox = Sandbox.getInstance();
         NodeComponent nodeComponent = ComponentRetriever.get(sandbox.getCurrentViewingEntity(), NodeComponent.class);
 
-        for (Entity entity: nodeComponent.children) {
+        for (Entity entity : nodeComponent.children) {
             createFollower(entity);
         }
     }

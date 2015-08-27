@@ -12,9 +12,15 @@ import java.util.Stack;
  */
 public class UICompositeHierarchy extends UIBaseBox {
 
-    private static final String PREFIX = "com.uwsoft.editor.view.ui.box.UICompositeHierarchy";
+    private static final String TAG;
+    private static final String NAME;
+    public static final String SWITCH_VIEW_COMPOSITE_CLICKED;
 
-    public static final String SWITCH_VIEW_COMPOSITE_CLICKED = PREFIX + ".SWITCH_VIEW_COMPOSITE_CLICKED";
+    static {
+        TAG = UICompositeHierarchy.class.getName();
+        NAME = TAG;
+        SWITCH_VIEW_COMPOSITE_CLICKED = NAME + "." + "SWITCH_VIEW_COMPOSITE_CLICKED";
+    }
 
     private Stack<VisImageTextButton> buttons = new Stack<>();
 
@@ -34,7 +40,7 @@ public class UICompositeHierarchy extends UIBaseBox {
 
     public void addItem(String name, Integer id) {
         String classType = "hierarchy-item";
-        if(name.equals("root")) classType+="-root";
+        if (name.equals("root")) classType += "-root";
 
         VisImageTextButton button = new VisImageTextButton(name, classType);
         button.getLabelCell().padLeft(3);

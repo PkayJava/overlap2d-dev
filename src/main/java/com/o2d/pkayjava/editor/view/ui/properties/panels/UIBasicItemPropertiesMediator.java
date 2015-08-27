@@ -32,6 +32,7 @@ import com.o2d.pkayjava.runtime.components.physics.PhysicsBodyComponent;
 import com.o2d.pkayjava.runtime.factory.EntityFactory;
 import com.o2d.pkayjava.runtime.utils.ComponentRetriever;
 import com.puremvc.patterns.observer.Notification;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -43,8 +44,13 @@ import java.util.Map;
  * Created by azakhary on 4/15/2015.
  */
 public class UIBasicItemPropertiesMediator extends com.o2d.pkayjava.editor.view.ui.properties.UIItemPropertiesMediator<Entity, UIBasicItemProperties> {
-    private static final String TAG = UIBasicItemPropertiesMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = UIBasicItemPropertiesMediator.class.getName();
+        NAME = TAG;
+    }
 
     private TransformComponent transformComponent;
     private MainItemComponent mainItemComponent;
@@ -92,45 +98,41 @@ public class UIBasicItemPropertiesMediator extends com.o2d.pkayjava.editor.view.
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
 
-        switch (notification.getName()) {
-            case UIBasicItemProperties.TINT_COLOR_BUTTON_CLICKED:
-                CustomColorPicker picker = new CustomColorPicker(new ColorPickerAdapter() {
-                    @Override
-                    public void finished(Color newColor) {
-                        viewComponent.setTintColor(newColor);
-                        facade.sendNotification(viewComponent.getUpdateEventName());
-                    }
-
-                    @Override
-                    public void changed(Color newColor) {
-                        viewComponent.setTintColor(newColor);
-                        facade.sendNotification(viewComponent.getUpdateEventName());
-                    }
-                });
-
-                picker.setColor(viewComponent.getTintColor());
-                Sandbox.getInstance().getUIStage().addActor(picker.fadeIn());
-
-                break;
-            case UIBasicItemProperties.LINKING_CHANGED:
-                boolean isLinked = notification.getBody();
-                if (!isLinked) {
-                    facade.sendNotification(Sandbox.ACTION_ADD_TO_LIBRARY, com.o2d.pkayjava.editor.controller.commands.AddToLibraryCommand.payloadUnLink(observableReference));
-                } else {
-                    facade.sendNotification(Sandbox.SHOW_ADD_LIBRARY_DIALOG, observableReference);
+        if (UIBasicItemProperties.TINT_COLOR_BUTTON_CLICKED.equals(notification.getName())) {
+            CustomColorPicker picker = new CustomColorPicker(new ColorPickerAdapter() {
+                @Override
+                public void finished(Color newColor) {
+                    viewComponent.setTintColor(newColor);
+                    facade.sendNotification(viewComponent.getUpdateEventName());
                 }
-                break;
-            case UIBasicItemProperties.ADD_COMPONENT_BUTTON_CLICKED:
-                try {
-                    Class componentClass = componentClassMap.get(viewComponent.getSelectedComponent());
-                    if (componentClass == null) break;
-                    Component component = (Component) ClassReflection.newInstance(componentClass);
-                    facade.sendNotification(Sandbox.ACTION_ADD_COMPONENT, com.o2d.pkayjava.editor.controller.commands.AddComponentToItemCommand.payload(observableReference, component));
-                } catch (ReflectionException ignored) {
+
+                @Override
+                public void changed(Color newColor) {
+                    viewComponent.setTintColor(newColor);
+                    facade.sendNotification(viewComponent.getUpdateEventName());
                 }
-                break;
-            default:
-                break;
+            });
+
+            picker.setColor(viewComponent.getTintColor());
+            Sandbox.getInstance().getUIStage().addActor(picker.fadeIn());
+
+        } else if (UIBasicItemProperties.LINKING_CHANGED.equals(notification.getName())) {
+            boolean isLinked = notification.getBody();
+            if (!isLinked) {
+                facade.sendNotification(Sandbox.ACTION_ADD_TO_LIBRARY, com.o2d.pkayjava.editor.controller.commands.AddToLibraryCommand.payloadUnLink(observableReference));
+            } else {
+                facade.sendNotification(Sandbox.SHOW_ADD_LIBRARY_DIALOG, observableReference);
+            }
+        } else if (UIBasicItemProperties.ADD_COMPONENT_BUTTON_CLICKED.equals(notification.getName())) {
+            try {
+                Class componentClass = componentClassMap.get(viewComponent.getSelectedComponent());
+                if (componentClass == null) {
+                    return;
+                }
+                Component component = (Component) ClassReflection.newInstance(componentClass);
+                facade.sendNotification(Sandbox.ACTION_ADD_COMPONENT, com.o2d.pkayjava.editor.controller.commands.AddComponentToItemCommand.payload(observableReference, component));
+            } catch (ReflectionException ignored) {
+            }
         }
     }
 

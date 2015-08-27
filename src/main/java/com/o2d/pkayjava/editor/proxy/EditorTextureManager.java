@@ -34,10 +34,13 @@ import com.o2d.pkayjava.runtime.utils.MySkin;
 
 
 public class EditorTextureManager extends BaseProxy {
-    private static final String TAG = EditorTextureManager.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
 
-
+    static {
+        TAG = EditorTextureManager.class.getName();
+        NAME = TAG;
+    }
 
     public MySkin editorSkin;
     private TextureAtlas editorAtlas;

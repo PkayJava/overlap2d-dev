@@ -36,9 +36,14 @@ import com.o2d.pkayjava.editor.view.ui.box.UIResourcesBoxMediator;
 /**
  * Created by azakhary on 4/20/2015.
  */
-public class UIDropDownMenuMediator extends SimpleMediator<com.uwsoft.editor.view.ui.UIDropDownMenu> {
-    private static final String TAG = com.uwsoft.editor.view.ui.UIDropDownMenuMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+public class UIDropDownMenuMediator extends SimpleMediator<UIDropDownMenu> {
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = UIDropDownMenuMediator.class.getName();
+        NAME = TAG;
+    }
 
     public static final Integer SCENE_ACTIONS_SET = 0;
     public static final Integer ITEMS_ACTIONS_SET = 1;
@@ -54,7 +59,7 @@ public class UIDropDownMenuMediator extends SimpleMediator<com.uwsoft.editor.vie
     public HashMap<Integer, Array<String>> actionSets = new HashMap<>();
 
     public UIDropDownMenuMediator() {
-        super(NAME, new com.uwsoft.editor.view.ui.UIDropDownMenu());
+        super(NAME, new UIDropDownMenu());
     }
 
     @Override
@@ -88,7 +93,7 @@ public class UIDropDownMenuMediator extends SimpleMediator<com.uwsoft.editor.vie
         return new String[]{
                 Overlap2D.SCENE_RIGHT_CLICK,
                 Overlap2D.ITEM_RIGHT_CLICK,
-                com.uwsoft.editor.view.ui.UIDropDownMenu.ITEM_CLICKED,
+                UIDropDownMenu.ITEM_CLICKED,
                 UIResourcesBoxMediator.IMAGE_RIGHT_CLICK,
                 UIResourcesBoxMediator.ANIMATION_RIGHT_CLICK,
                 UIResourcesBoxMediator.LIBRARY_ITEM_RIGHT_CLICK,
@@ -99,7 +104,7 @@ public class UIDropDownMenuMediator extends SimpleMediator<com.uwsoft.editor.vie
     private void applyItemTypeMutators(Array<String> actionsSet) {
         // generic mutators
         if (sandbox.getSelector().getCurrentSelection().size() == 1) {
-            if(sandbox.getSelector().selectionIsComposite()) {
+            if (sandbox.getSelector().selectionIsComposite()) {
                 actionsSet.add(Sandbox.SHOW_ADD_LIBRARY_DIALOG);
                 actionsSet.add(Sandbox.ACTION_CAMERA_CHANGE_COMPOSITE);
             }
@@ -115,33 +120,23 @@ public class UIDropDownMenuMediator extends SimpleMediator<com.uwsoft.editor.vie
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
 
-        switch (notification.getName()) {
-            case Overlap2D.SCENE_RIGHT_CLICK:
-                Vector2 stageCoords = notification.getBody();
-                showPopup(SCENE_ACTIONS_SET, stageCoords);
-                break;
-            case Overlap2D.ITEM_RIGHT_CLICK:
-                Array<String> actionsSet = new Array<>(actionSets.get(ITEMS_ACTIONS_SET));
-                applyItemTypeMutators(actionsSet);
-                showPopup(actionsSet, sandbox.getSelector().getSelectedItem());
-                break;
-            case UIResourcesBoxMediator.IMAGE_RIGHT_CLICK:
-                showPopup(IMAGE_RESOURCE_ACTION_SET, notification.getBody());
-                break;
-            case UIResourcesBoxMediator.ANIMATION_RIGHT_CLICK:
-                showPopup(RESOURCE_ACTION_SET, notification.getBody());
-                break;
-            case UIResourcesBoxMediator.LIBRARY_ITEM_RIGHT_CLICK:
-                showPopup(RESOURCE_ACTION_SET, notification.getBody());
-                break;
-            case UIResourcesBoxMediator.PARTICLE_EFFECT_RIGHT_CLICK:
-                showPopup(RESOURCE_ACTION_SET, notification.getBody());
-                break;
-            case UIDropDownMenu.ITEM_CLICKED:
-                facade.sendNotification(notification.getBody(), currentObservable);
-                break;
-            default:
-                break;
+        if (Overlap2D.SCENE_RIGHT_CLICK.equals(notification.getName())) {
+            Vector2 stageCoords = notification.getBody();
+            showPopup(SCENE_ACTIONS_SET, stageCoords);
+        } else if (Overlap2D.ITEM_RIGHT_CLICK.equals(notification.getName())) {
+            Array<String> actionsSet = new Array<>(actionSets.get(ITEMS_ACTIONS_SET));
+            applyItemTypeMutators(actionsSet);
+            showPopup(actionsSet, sandbox.getSelector().getSelectedItem());
+        } else if (UIResourcesBoxMediator.IMAGE_RIGHT_CLICK.equals(notification.getName())) {
+            showPopup(IMAGE_RESOURCE_ACTION_SET, notification.getBody());
+        } else if (UIResourcesBoxMediator.ANIMATION_RIGHT_CLICK.equals(notification.getName())) {
+            showPopup(RESOURCE_ACTION_SET, notification.getBody());
+        } else if (UIResourcesBoxMediator.LIBRARY_ITEM_RIGHT_CLICK.equals(notification.getName())) {
+            showPopup(RESOURCE_ACTION_SET, notification.getBody());
+        } else if (UIResourcesBoxMediator.PARTICLE_EFFECT_RIGHT_CLICK.equals(notification.getName())) {
+            showPopup(RESOURCE_ACTION_SET, notification.getBody());
+        } else if (UIDropDownMenu.ITEM_CLICKED.equals(notification.getName())) {
+            facade.sendNotification(notification.getBody(), currentObservable);
         }
     }
 
@@ -149,7 +144,7 @@ public class UIDropDownMenuMediator extends SimpleMediator<com.uwsoft.editor.vie
         showPopup(actionSets.get(actionsSet), observable);
     }
 
-    private void showPopup(Array<String> actionsSet,Object observable) {
+    private void showPopup(Array<String> actionsSet, Object observable) {
         Vector2 coordinates = new Vector2(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
 
         sandbox.getUIStage().addActor(viewComponent);

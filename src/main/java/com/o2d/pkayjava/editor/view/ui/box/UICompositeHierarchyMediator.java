@@ -18,8 +18,13 @@ import com.o2d.pkayjava.editor.view.ui.box.UICompositeHierarchy;
  * Created by CyberJoe on 4/22/2015.
  */
 public class UICompositeHierarchyMediator extends SimpleMediator<UICompositeHierarchy> {
-    private static final String TAG = UICompositeHierarchyMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = UICompositeHierarchyMediator.class.getName();
+        NAME = TAG;
+    }
 
     private Sandbox sandbox;
 
@@ -38,23 +43,16 @@ public class UICompositeHierarchyMediator extends SimpleMediator<UICompositeHier
     @Override
     public void handleNotification(Notification notification) {
         sandbox = Sandbox.getInstance();
-
         super.handleNotification(notification);
-
-        switch (notification.getName()) {
-            case ProjectManager.PROJECT_OPENED:
-                buildCompositeTree(sandbox.getRootEntity());
-                break;
-            case CompositeCameraChangeCommand.DONE:
-                Integer entityId = notification.getBody();
-                changeComposite(entityId);
-                break;
-            case UICompositeHierarchy.SWITCH_VIEW_COMPOSITE_CLICKED:
-                entityId = notification.getBody();
-                Overlap2DFacade.getInstance().sendNotification(Sandbox.ACTION_CAMERA_CHANGE_COMPOSITE, EntityUtils.getByUniqueId(entityId));
-                break;
-            default:
-                break;
+        if (ProjectManager.PROJECT_OPENED.equals(notification.getName())) {
+            buildCompositeTree(sandbox.getRootEntity());
+        } else if (CompositeCameraChangeCommand.DONE.equals(notification.getName())) {
+            Integer entityId = notification.getBody();
+            changeComposite(entityId);
+        } else if (UICompositeHierarchy.SWITCH_VIEW_COMPOSITE_CLICKED.equals(notification.getName())) {
+            Integer entityId = notification.getBody();
+            entityId = notification.getBody();
+            Overlap2DFacade.getInstance().sendNotification(Sandbox.ACTION_CAMERA_CHANGE_COMPOSITE, EntityUtils.getByUniqueId(entityId));
         }
     }
 
@@ -62,7 +60,7 @@ public class UICompositeHierarchyMediator extends SimpleMediator<UICompositeHier
         Array<Integer> composites = new Array<>();
         viewComponent.clearItems();
 
-        while(true) {
+        while (true) {
             Integer entityId = EntityUtils.getEntityId(entity);
             composites.add(entityId);
             ParentNodeComponent parentNodeComponent = ComponentRetriever.get(entity, ParentNodeComponent.class);
@@ -72,8 +70,8 @@ public class UICompositeHierarchyMediator extends SimpleMediator<UICompositeHier
             entity = parentNodeComponent.parentEntity;
         }
 
-        for(int i = composites.size - 1; i >= 0 ; i--) {
-            if(i == composites.size - 1) {
+        for (int i = composites.size - 1; i >= 0; i--) {
+            if (i == composites.size - 1) {
                 viewComponent.addItem("root", composites.get(i));
             } else {
                 viewComponent.addItem("composite", composites.get(i));
@@ -86,12 +84,12 @@ public class UICompositeHierarchyMediator extends SimpleMediator<UICompositeHier
     }
 
     public void updateOriginalItem() {
-    	//TODO fix and uncomment
+        //TODO fix and uncomment
         //updateOriginalItem(scenes.get(scenes.size() - 1), commands.sceneControl.getCurrentScene());
     }
 
     private void updateOriginalItem(CompositeItemVO updatableVo, Entity currItem) {
-    	//TODO fix and uncomment
+        //TODO fix and uncomment
 //        updatableVo.update(new CompositeItemVO(currItem.getDataVO().composite));
 //
 //        String libName = currItem.getDataVO().libraryLink;

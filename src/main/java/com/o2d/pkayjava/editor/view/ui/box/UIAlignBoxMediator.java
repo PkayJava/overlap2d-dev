@@ -33,8 +33,13 @@ import com.o2d.pkayjava.editor.view.ui.box.UIAlignBox;
  * Created by sargis on 4/10/15.
  */
 public class UIAlignBoxMediator extends PanelMediator<UIAlignBox> {
-    private static final String TAG = UIAlignBoxMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = UIAlignBoxMediator.class.getName();
+        NAME = TAG;
+    }
 
     public UIAlignBoxMediator() {
         super(NAME, new UIAlignBox());

@@ -34,8 +34,14 @@ import com.o2d.pkayjava.editor.view.ui.box.UIResolutionBox;
  * Created by sargis on 4/8/15.
  */
 public class UIResolutionBoxMediator extends SimpleMediator<UIResolutionBox> {
-    private static final String TAG = UIResolutionBoxMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = UIResolutionBoxMediator.class.getName();
+        NAME = TAG;
+    }
+
     private ProjectManager projectManager;
 
     public UIResolutionBoxMediator() {
@@ -65,45 +71,38 @@ public class UIResolutionBoxMediator extends SimpleMediator<UIResolutionBox> {
         super.handleNotification(notification);
         Sandbox sandbox = Sandbox.getInstance();
         ResolutionEntryVO resolutionEntryVO;
-        switch (notification.getName()) {
-            case ResolutionManager.RESOLUTION_LIST_CHANGED:
-                viewComponent.update();
-                break;
-            case ProjectManager.PROJECT_OPENED:
-                viewComponent.update();
-                break;
-            case UIResolutionBox.CHANGE_RESOLUTION_BTN_CLICKED:
-                resolutionEntryVO = notification.getBody();
-                float zoom = sandbox.getZoomPercent();
-                Vector3 cameraPos = new Vector3(sandbox.getCamera().position);
-                String name = sandbox.sceneControl.getCurrentSceneVO().sceneName;
-                projectManager.openProjectAndLoadAllData(projectManager.getCurrentProjectVO().projectName, resolutionEntryVO.name);
-                sandbox.loadCurrentProject(name);
-                sandbox.setZoomPercent(zoom);
-                sandbox.getCamera().position.set(cameraPos);
-                break;
-            case UIResolutionBox.DELETE_RESOLUTION_BTN_CLICKED:
-                resolutionEntryVO = notification.getBody();
-                DialogUtils.showConfirmDialog(sandbox.getUIStage(),
-                        "Delete Resolution",
-                        "Are you sure you want to delete resolution: " + resolutionEntryVO.name + "?",
-                        new String[]{"Delete", "Cancel"}, new Integer[]{0, 1},
-                        result -> {
-                            if (result == 0) {
-                                ResolutionManager resolutionManager = facade.retrieveProxy(ResolutionManager.NAME);
-                                resolutionManager.deleteResolution(resolutionEntryVO);
-                                String sceneName = sandbox.sceneControl.getCurrentSceneVO().sceneName;
-                                sandbox.loadCurrentProject(sceneName);
-                            }
-                        });
-                break;
-
-            case UIResolutionBox.REPACK_BTN_CLICKED:
-                ResolutionManager resolutionManager = facade.retrieveProxy(ResolutionManager.NAME);
-                resolutionManager.rePackProjectImagesForAllResolutions();
-                String sceneName = sandbox.sceneControl.getCurrentSceneVO().sceneName;
-                sandbox.loadCurrentProject(sceneName);
-                break;
+        if (ResolutionManager.RESOLUTION_LIST_CHANGED.equals(notification.getName())) {
+            viewComponent.update();
+        } else if (ProjectManager.PROJECT_OPENED.equals(notification.getName())) {
+            viewComponent.update();
+        } else if (UIResolutionBox.CHANGE_RESOLUTION_BTN_CLICKED.equals(notification.getName())) {
+            resolutionEntryVO = notification.getBody();
+            float zoom = sandbox.getZoomPercent();
+            Vector3 cameraPos = new Vector3(sandbox.getCamera().position);
+            String name = sandbox.sceneControl.getCurrentSceneVO().sceneName;
+            projectManager.openProjectAndLoadAllData(projectManager.getCurrentProjectVO().projectName, resolutionEntryVO.name);
+            sandbox.loadCurrentProject(name);
+            sandbox.setZoomPercent(zoom);
+            sandbox.getCamera().position.set(cameraPos);
+        } else if (UIResolutionBox.DELETE_RESOLUTION_BTN_CLICKED.equals(notification.getName())) {
+            resolutionEntryVO = notification.getBody();
+            DialogUtils.showConfirmDialog(sandbox.getUIStage(),
+                    "Delete Resolution",
+                    "Are you sure you want to delete resolution: " + resolutionEntryVO.name + "?",
+                    new String[]{"Delete", "Cancel"}, new Integer[]{0, 1},
+                    result -> {
+                        if (result == 0) {
+                            ResolutionManager resolutionManager = facade.retrieveProxy(ResolutionManager.NAME);
+                            resolutionManager.deleteResolution(resolutionEntryVO);
+                            String sceneName = sandbox.sceneControl.getCurrentSceneVO().sceneName;
+                            sandbox.loadCurrentProject(sceneName);
+                        }
+                    });
+        } else if (UIResolutionBox.REPACK_BTN_CLICKED.equals(notification.getName())) {
+            ResolutionManager resolutionManager = facade.retrieveProxy(ResolutionManager.NAME);
+            resolutionManager.rePackProjectImagesForAllResolutions();
+            String sceneName = sandbox.sceneControl.getCurrentSceneVO().sceneName;
+            sandbox.loadCurrentProject(sceneName);
         }
     }
 }

@@ -32,6 +32,7 @@ import com.o2d.pkayjava.editor.view.stage.Sandbox;
 import com.o2d.pkayjava.editor.view.ui.properties.UIItemPropertiesMediator;
 import com.o2d.pkayjava.editor.view.ui.properties.panels.*;
 import com.o2d.pkayjava.editor.view.ui.properties.panels.UIPolygonComponentProperties;
+
 import org.apache.commons.lang3.ArrayUtils;
 
 /**
@@ -39,8 +40,13 @@ import org.apache.commons.lang3.ArrayUtils;
  */
 public class UIPolygonComponentPropertiesMediator extends UIItemPropertiesMediator<Entity, UIPolygonComponentProperties> {
 
-    private static final String TAG = UIPolygonComponentPropertiesMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = UIPolygonComponentPropertiesMediator.class.getName();
+        NAME = TAG;
+    }
 
     private PolygonComponent polygonComponent;
 
@@ -57,38 +63,31 @@ public class UIPolygonComponentPropertiesMediator extends UIItemPropertiesMediat
                 UIPolygonComponentProperties.PASTE_BUTTON_CLICKED,
                 UIPolygonComponentProperties.CLOSE_CLICKED
         };
-
         return ArrayUtils.addAll(defaultNotifications, notificationInterests);
     }
 
     @Override
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
-
-        switch (notification.getName()) {
-            case UIPolygonComponentProperties.ADD_DEFAULT_MESH_BUTTON_CLICKED:
-                addDefaultMesh();
-                break;
-            case UIPolygonComponentProperties.COPY_BUTTON_CLICKED:
-                copyMesh();
-                break;
-            case UIPolygonComponentProperties.PASTE_BUTTON_CLICKED:
-                pasteMesh();
-                break;
-            case UIPolygonComponentProperties.CLOSE_CLICKED:
-                Overlap2DFacade.getInstance().sendNotification(Sandbox.ACTION_REMOVE_COMPONENT, RemoveComponentFromItemCommand.payload(observableReference, PolygonComponent.class));
-                break;
+        if (UIPolygonComponentProperties.ADD_DEFAULT_MESH_BUTTON_CLICKED.equals(notification.getName())) {
+            addDefaultMesh();
+        } else if (UIPolygonComponentProperties.COPY_BUTTON_CLICKED.equals(notification.getName())) {
+            copyMesh();
+        } else if (UIPolygonComponentProperties.PASTE_BUTTON_CLICKED.equals(notification.getName())) {
+            pasteMesh();
+        } else if (UIPolygonComponentProperties.CLOSE_CLICKED.equals(notification.getName())) {
+            Overlap2DFacade.getInstance().sendNotification(Sandbox.ACTION_REMOVE_COMPONENT, RemoveComponentFromItemCommand.payload(observableReference, PolygonComponent.class));
         }
     }
 
     @Override
     protected void translateObservableDataToView(Entity item) {
         polygonComponent = item.getComponent(PolygonComponent.class);
-        if(polygonComponent.vertices != null) {
+        if (polygonComponent.vertices != null) {
             viewComponent.initView();
             int verticesCount = 0;
-            for(int i = 0; i < polygonComponent.vertices.length; i++) {
-                for(int j = 0; j < polygonComponent.vertices[i].length; j++) {
+            for (int i = 0; i < polygonComponent.vertices.length; i++) {
+                for (int j = 0; j < polygonComponent.vertices[i].length; j++) {
                     verticesCount++;
                 }
             }
@@ -118,7 +117,7 @@ public class UIPolygonComponentPropertiesMediator extends UIItemPropertiesMediat
 
     private void pasteMesh() {
         Vector2[][] vertices = (Vector2[][]) Sandbox.getInstance().retrieveFromLocalClipboard("meshData");
-        if(vertices == null) return;
+        if (vertices == null) return;
         Object[] payload = UpdatePolygonComponentCommand.payloadInitialState(observableReference);
         payload = UpdatePolygonComponentCommand.payload(payload, vertices);
         Overlap2DFacade.getInstance().sendNotification(Sandbox.ACTION_UPDATE_MESH_DATA, payload);

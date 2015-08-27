@@ -44,8 +44,13 @@ import java.util.stream.Stream;
  * Created by sargis on 4/10/15.
  */
 public class UIItemsTreeBoxMediator extends PanelMediator<UIItemsTreeBox> {
-    private static final String TAG = UIItemsTreeBoxMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = UIItemsTreeBoxMediator.class.getName();
+        NAME = TAG;
+    }
 
     public UIItemsTreeBoxMediator() {
         super(NAME, new UIItemsTreeBox());
@@ -69,57 +74,46 @@ public class UIItemsTreeBoxMediator extends PanelMediator<UIItemsTreeBox> {
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
         Sandbox sandbox = Sandbox.getInstance();
-        switch (notification.getName()) {
-            case SceneDataManager.SCENE_LOADED:
-            	Entity rootEntity = sandbox.getRootEntity();
-                viewComponent.init(rootEntity);
-                break;
-            case ItemFactory.NEW_ITEM_ADDED:
-                rootEntity = sandbox.getRootEntity();
-                viewComponent.init(rootEntity);
-                break;
-            case DeleteItemsCommand.DONE:
-                rootEntity = sandbox.getRootEntity();
-                viewComponent.init(rootEntity);
-                break;
-            case UIItemsTreeBox.ITEMS_SELECTED:
-                Selection<Tree.Node> selection = notification.getBody();
-                Array<Tree.Node> nodes = selection.toArray();
-                Set<Entity> items = new HashSet<>();
+        if (SceneDataManager.SCENE_LOADED.equals(notification.getName())) {
+            Entity rootEntity = sandbox.getRootEntity();
+            viewComponent.init(rootEntity);
+        } else if (ItemFactory.NEW_ITEM_ADDED.equals(notification.getName())) {
+            Entity rootEntity = sandbox.getRootEntity();
+            rootEntity = sandbox.getRootEntity();
+            viewComponent.init(rootEntity);
+        } else if (DeleteItemsCommand.DONE.equals(notification.getName())) {
+            Entity rootEntity = sandbox.getRootEntity();
+            rootEntity = sandbox.getRootEntity();
+            viewComponent.init(rootEntity);
+        } else if (UIItemsTreeBox.ITEMS_SELECTED.equals(notification.getName())) {
+            Selection<Tree.Node> selection = notification.getBody();
+            Array<Tree.Node> nodes = selection.toArray();
+            Set<Entity> items = new HashSet<>();
 
-                for (Tree.Node node : nodes) {
-                    Integer entityId = (Integer) node.getObject();
-                    Entity item = EntityUtils.getByUniqueId(entityId);
-                    //layer lock thing
-                    LayerItemVO layerItemVO = EntityUtils.getEntityLayer(item);
-                    if(layerItemVO != null && layerItemVO.isLocked) {
-                        continue;
-                    }
-                    if (item != null) {
-                        items.add(item);
-                    }
+            for (Tree.Node node : nodes) {
+                Integer entityId = (Integer) node.getObject();
+                Entity item = EntityUtils.getByUniqueId(entityId);
+                //layer lock thing
+                LayerItemVO layerItemVO = EntityUtils.getEntityLayer(item);
+                if (layerItemVO != null && layerItemVO.isLocked) {
+                    continue;
                 }
-
-                sendSelectionNotification(items);
-
-                break;
-            case SetSelectionCommand.DONE:
-                viewComponent.setSelection(sandbox.getSelector().getSelectedItems());
-
-                break;
-            case AddSelectionCommand.DONE:
-                viewComponent.setSelection(sandbox.getSelector().getSelectedItems());
-
-                break;
-            case ReleaseSelectionCommand.DONE:
-                viewComponent.setSelection(sandbox.getSelector().getSelectedItems());
-
-                break;
+                if (item != null) {
+                    items.add(item);
+                }
+            }
+            sendSelectionNotification(items);
+        } else if (SetSelectionCommand.DONE.equals(notification.getName())) {
+            viewComponent.setSelection(sandbox.getSelector().getSelectedItems());
+        } else if (AddSelectionCommand.DONE.equals(notification.getName())) {
+            viewComponent.setSelection(sandbox.getSelector().getSelectedItems());
+        } else if (ReleaseSelectionCommand.DONE.equals(notification.getName())) {
+            viewComponent.setSelection(sandbox.getSelector().getSelectedItems());
         }
     }
 
     private void sendSelectionNotification(Set<Entity> items) {
-        Set<Entity> ntfItems = (items.isEmpty())? null : items;
+        Set<Entity> ntfItems = (items.isEmpty()) ? null : items;
         Overlap2DFacade.getInstance().sendNotification(Sandbox.ACTION_SET_SELECTION, ntfItems);
     }
 }

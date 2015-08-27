@@ -12,8 +12,13 @@ import com.o2d.pkayjava.editor.view.ui.properties.panels.UITextToolProperties;
  */
 public class UITextToolPropertiesMediator extends UIAbstractPropertiesMediator<TextTool, UITextToolProperties> {
 
-    private static final String TAG = UITextToolPropertiesMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = UITextToolPropertiesMediator.class.getName();
+        NAME = TAG;
+    }
 
     private FontManager fontManager;
 

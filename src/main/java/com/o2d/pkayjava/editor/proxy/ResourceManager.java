@@ -42,10 +42,15 @@ import com.o2d.pkayjava.runtime.utils.MySkin;
  */
 public class ResourceManager extends BaseProxy implements IResourceRetriever {
 
-    public String packResolutionName = "orig";
+    private static final String TAG;
+    public static final String NAME;
 
-    private static final String TAG = ResourceManager.class.getCanonicalName();
-    public static final String NAME = TAG;
+    static {
+        TAG = ResourceManager.class.getName();
+        NAME = TAG;
+    }
+
+    public String packResolutionName = "orig";
 
     private HashMap<String, ParticleEffect> particleEffects = new HashMap<String, ParticleEffect>(1);
     private TextureAtlas currentProjectAtlas;
@@ -94,11 +99,12 @@ public class ResourceManager extends BaseProxy implements IResourceRetriever {
 
     /**
      * Sets working resolution, please set before doing any loading
+     *
      * @param resolution String resolution name, default is "orig" later use resolution names created in editor
      */
     public void setWorkingResolution(String resolution) {
         ResolutionEntryVO resolutionObject = getProjectVO().getResolution("resolutionName");
-        if(resolutionObject != null) {
+        if (resolutionObject != null) {
             packResolutionName = resolution;
         }
     }
@@ -272,20 +278,21 @@ public class ResourceManager extends BaseProxy implements IResourceRetriever {
     }
 
     private void loadCurrentProjectShaders(String path) {
-    	Iterator<Entry<String, ShaderProgram>> it = shaderPrograms.entrySet().iterator();
-    	while (it.hasNext()) {
-    		Entry<String, ShaderProgram> pair = it.next();
-    		pair.getValue().dispose();
-    		it.remove();
-    	}
+        Iterator<Entry<String, ShaderProgram>> it = shaderPrograms.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<String, ShaderProgram> pair = it.next();
+            pair.getValue().dispose();
+            it.remove();
+        }
         shaderPrograms.clear();
         FileHandle sourceDir = new FileHandle(path);
         for (FileHandle entry : sourceDir.list()) {
             File file = entry.file();
             String filename = file.getName().replace(".vert", "").replace(".frag", "");
-            if (file.isDirectory() || filename.endsWith(".DS_Store") || shaderPrograms.containsKey(filename)) continue;
+            if (file.isDirectory() || filename.endsWith(".DS_Store") || shaderPrograms.containsKey(filename))
+                continue;
             // check if pair exists.
-            if(Gdx.files.internal(path + filename + ".vert").exists() && Gdx.files.internal(path + filename + ".frag").exists()) {
+            if (Gdx.files.internal(path + filename + ".vert").exists() && Gdx.files.internal(path + filename + ".frag").exists()) {
                 ShaderProgram shaderProgram = new ShaderProgram(Gdx.files.internal(path + filename + ".vert"), Gdx.files.internal(path + filename + ".frag"));
                 System.out.println(shaderProgram.getLog());
                 shaderPrograms.put(filename, shaderProgram);
@@ -394,17 +401,17 @@ public class ResourceManager extends BaseProxy implements IResourceRetriever {
 
     @Override
     public ResolutionEntryVO getLoadedResolution() {
-        if(packResolutionName.equals("orig")) {
+        if (packResolutionName.equals("orig")) {
             return getProjectVO().originalResolution;
         }
         return getProjectVO().getResolution(packResolutionName);
     }
 
-	@Override
-	public ShaderProgram getShaderProgram(String shaderName) {
-		// TODO Auto-generated method stub
-		return shaderPrograms.get(shaderName);
-	}
+    @Override
+    public ShaderProgram getShaderProgram(String shaderName) {
+        // TODO Auto-generated method stub
+        return shaderPrograms.get(shaderName);
+    }
 
     public HashMap<String, ShaderProgram> getShaders() {
         return shaderPrograms;

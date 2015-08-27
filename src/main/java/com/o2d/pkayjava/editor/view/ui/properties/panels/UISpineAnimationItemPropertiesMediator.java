@@ -32,8 +32,13 @@ import com.o2d.pkayjava.editor.view.ui.properties.panels.UISpineAnimationItemPro
  * Created by azakhary on 4/16/2015.
  */
 public class UISpineAnimationItemPropertiesMediator extends UIItemPropertiesMediator<Entity, UISpineAnimationItemProperties> {
-    private static final String TAG = UISpineAnimationItemPropertiesMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = UISpineAnimationItemPropertiesMediator.class.getName();
+        NAME = TAG;
+    }
 
     private SpineDataComponent spineDataComponent;
     private SpineObjectComponent spineObjectComponent;
@@ -47,7 +52,7 @@ public class UISpineAnimationItemPropertiesMediator extends UIItemPropertiesMedi
 
         spineObjectComponent = ComponentRetriever.get(entity, SpineObjectComponent.class);
         spineDataComponent = ComponentRetriever.get(entity, SpineDataComponent.class);
-    	
+
         Array<String> animations = new Array<>();
         for (Animation animation : spineObjectComponent.getAnimations()) {
             animations.add(animation.getName());

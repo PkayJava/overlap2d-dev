@@ -31,8 +31,13 @@ import com.o2d.pkayjava.editor.view.stage.UIStage;
  * Created by sargis on 4/20/15.
  */
 public class UIStageMediator extends SimpleMediator<UIStage> {
-    private static final String TAG = UIStageMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = UIStageMediator.class.getName();
+        NAME = TAG;
+    }
 
     public UIStageMediator() {
         super(NAME, new UIStage());

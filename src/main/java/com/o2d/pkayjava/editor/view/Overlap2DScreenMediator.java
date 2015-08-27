@@ -33,8 +33,13 @@ import com.o2d.pkayjava.runtime.systems.render.Overlap2dRenderer;
  * Created by sargis on 3/30/15.
  */
 public class Overlap2DScreenMediator extends SimpleMediator<Overlap2DScreen> {
-    private static final String TAG = com.uwsoft.editor.view.Overlap2DScreenMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = Overlap2DScreenMediator.class.getName();
+        NAME = TAG;
+    }
 
     public Overlap2DScreenMediator() {
         super(NAME, null);
@@ -56,41 +61,36 @@ public class Overlap2DScreenMediator extends SimpleMediator<Overlap2DScreen> {
     @Override
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
-        switch (notification.getName()) {
-            case Overlap2D.CREATE:
-            	setViewComponent(new Overlap2DScreen());
-            	//TODO this must be changed to Command 
-            	facade = Overlap2DFacade.getInstance();
-            	SandboxMediator sandboxMediator = facade.retrieveMediator(SandboxMediator.NAME);
 
-                Engine engine = sandboxMediator.getViewComponent().getEngine();
+        if (Overlap2D.CREATE.equals(notification.getName())) {
+            setViewComponent(new Overlap2DScreen());
+            //TODO this must be changed to Command
+            facade = Overlap2DFacade.getInstance();
+            SandboxMediator sandboxMediator = facade.retrieveMediator(SandboxMediator.NAME);
 
-            	getViewComponent().setEngine(engine);
-                viewComponent.show();
-                break;
-            case SceneDataManager.SCENE_LOADED:
-                facade = Overlap2DFacade.getInstance();
-                sandboxMediator = facade.retrieveMediator(SandboxMediator.NAME);
-                engine = sandboxMediator.getViewComponent().getEngine();
-                SandboxBackUI sandboxBackUI = new SandboxBackUI(engine.getSystem(Overlap2dRenderer.class).batch);
-                getViewComponent().setBackUI(sandboxBackUI);
-                getViewComponent().disableDrawingBgLogo();
-                break;
-            case Overlap2D.PAUSE:
-                viewComponent.pause();
-                break;
-            case Overlap2D.RESUME:
-                viewComponent.resume();
-                break;
-            case Overlap2D.RENDER:
-                viewComponent.render(notification.getBody());
-                break;
-            case Overlap2D.RESIZE:
-                int[] data = notification.getBody();
-                viewComponent.resize(data[0], data[1]);
-                break;
-            case Overlap2D.DISPOSE:
-                break;
+            Engine engine = sandboxMediator.getViewComponent().getEngine();
+
+            getViewComponent().setEngine(engine);
+            viewComponent.show();
+        } else if (SceneDataManager.SCENE_LOADED.equals(notification.getName())) {
+            SandboxMediator sandboxMediator = facade.retrieveMediator(SandboxMediator.NAME);
+            Engine engine = sandboxMediator.getViewComponent().getEngine();
+            facade = Overlap2DFacade.getInstance();
+            sandboxMediator = facade.retrieveMediator(SandboxMediator.NAME);
+            engine = sandboxMediator.getViewComponent().getEngine();
+            SandboxBackUI sandboxBackUI = new SandboxBackUI(engine.getSystem(Overlap2dRenderer.class).batch);
+            getViewComponent().setBackUI(sandboxBackUI);
+            getViewComponent().disableDrawingBgLogo();
+        } else if (Overlap2D.PAUSE.equals(notification.getName())) {
+            viewComponent.pause();
+        } else if (Overlap2D.RESUME.equals(notification.getName())) {
+            viewComponent.resume();
+        } else if (Overlap2D.RENDER.equals(notification.getName())) {
+            viewComponent.render(notification.getBody());
+        } else if (Overlap2D.RESIZE.equals(notification.getName())) {
+            int[] data = notification.getBody();
+            viewComponent.resize(data[0], data[1]);
+        } else if (Overlap2D.DISPOSE.equals(notification.getName())) {
         }
     }
 }

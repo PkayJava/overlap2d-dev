@@ -32,16 +32,21 @@ import com.o2d.pkayjava.editor.view.ui.dialog.PhysicsEditorDialog;
 /**
  * Created by azakhary on 4/28/2015.
  */
-public class PhysicsEditorDialogMediator extends SimpleMediator<com.uwsoft.editor.view.ui.dialog.PhysicsEditorDialog> {
+public class PhysicsEditorDialogMediator extends SimpleMediator<PhysicsEditorDialog> {
 
-    public static final String TAG = com.uwsoft.editor.view.ui.dialog.PhysicsEditorDialogMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    public static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = PhysicsEditorDialogMediator.class.getName();
+        NAME = TAG;
+    }
 
     private Entity currentItem;
 
 
     public PhysicsEditorDialogMediator() {
-        super(NAME, new com.uwsoft.editor.view.ui.dialog.PhysicsEditorDialog());
+        super(NAME, new PhysicsEditorDialog());
     }
 
     @Override
@@ -56,9 +61,9 @@ public class PhysicsEditorDialogMediator extends SimpleMediator<com.uwsoft.edito
                 SceneDataManager.SCENE_LOADED,
                 Sandbox.ACTION_EDIT_PHYSICS,
                 UIDropDownMenu.ACTION_EDIT_RESOURCE_PHYSICS,
-                com.uwsoft.editor.view.ui.dialog.PhysicsEditorDialog.CLEAR_MESH_CLICKED,
-                com.uwsoft.editor.view.ui.dialog.PhysicsEditorDialog.CREATE_FRESH_COPY_CLICKED,
-                com.uwsoft.editor.view.ui.dialog.PhysicsEditorDialog.RETRACE_CLICKED,
+                PhysicsEditorDialog.CLEAR_MESH_CLICKED,
+                PhysicsEditorDialog.CREATE_FRESH_COPY_CLICKED,
+                PhysicsEditorDialog.RETRACE_CLICKED,
                 PhysicsEditorDialog.SAVE_CLICKED
         };
     }
@@ -66,27 +71,19 @@ public class PhysicsEditorDialogMediator extends SimpleMediator<com.uwsoft.edito
     @Override
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
-
-        switch (notification.getName()) {
-            case SceneDataManager.SCENE_LOADED:
-                Sandbox sandbox = Sandbox.getInstance();
-              //TODO fix and uncomment
-                //viewComponent.getItemPhysicsEditor().resVec = new Vector2(commands.getCurrentScene().mulX, commands.getCurrentScene().mulY);
-                break;
-            case Sandbox.ACTION_EDIT_PHYSICS:
-                setItem((Entity) notification.getBody());
-                break;
-            case UIDropDownMenu.ACTION_EDIT_RESOURCE_PHYSICS:
-                setItem((String) notification.getBody());
-                break;
-            default:
-                break;
+        if (SceneDataManager.SCENE_LOADED.equals(notification.getName())) {
+            Sandbox sandbox = Sandbox.getInstance();
+            //TODO fix and uncomment
+            //viewComponent.getItemPhysicsEditor().resVec = new Vector2(commands.getCurrentScene().mulX, commands.getCurrentScene().mulY);
+        } else if (Sandbox.ACTION_EDIT_PHYSICS.equals(notification.getName())) {
+            setItem((Entity) notification.getBody());
+        } else if (UIDropDownMenu.ACTION_EDIT_RESOURCE_PHYSICS.equals(notification.getName())) {
+            setItem((String) notification.getBody());
         }
-
     }
 
     public void setData() {
-    	//TODO fix and uncomment
+        //TODO fix and uncomment
 //        ItemPhysicsEditor itemPhysicsEditor = viewComponent.getItemPhysicsEditor();
 //        PhysicsBodyDataVO currentPhysicsDataVO = itemPhysicsEditor.physicsBodyDataVO;
 //
@@ -134,7 +131,7 @@ public class PhysicsEditorDialogMediator extends SimpleMediator<com.uwsoft.edito
     }
 
     public void setItem(Entity item) {
-    	//TODO fix and uncomment
+        //TODO fix and uncomment
 //        Sandbox commands = Sandbox.getInstance();
 //        UIStage uiStage = commands.getUIStage();
 //
@@ -160,8 +157,8 @@ public class PhysicsEditorDialogMediator extends SimpleMediator<com.uwsoft.edito
     }
 
     private Entity duplicateItem(Entity item) {
-    	return null;
-    	//TODO fix and uncomment
+        return null;
+        //TODO fix and uncomment
 //        MainItemVO data = item.getDataVO();
 //        String className = data.getClass().getSimpleName();
 //

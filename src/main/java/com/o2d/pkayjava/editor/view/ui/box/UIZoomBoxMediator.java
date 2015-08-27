@@ -20,6 +20,7 @@ package com.o2d.pkayjava.editor.view.ui.box;
 
 import com.o2d.pkayjava.editor.view.ui.box.*;
 import com.o2d.pkayjava.editor.view.ui.box.UIZoomBox;
+
 import org.apache.commons.lang3.math.NumberUtils;
 
 import com.puremvc.patterns.mediator.SimpleMediator;
@@ -33,10 +34,13 @@ import com.o2d.pkayjava.editor.proxy.ProjectManager;
  * Created by sargis on 4/9/15.
  */
 public class UIZoomBoxMediator extends SimpleMediator<UIZoomBox> {
-    private static final String TAG = UIZoomBoxMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
 
-    private static final String PREFIX = "UIZoomBoxMediator.";
+    static {
+        TAG = UIZoomBoxMediator.class.getName();
+        NAME = TAG;
+    }
 
     public UIZoomBoxMediator() {
         super(NAME, new UIZoomBox());
@@ -62,22 +66,16 @@ public class UIZoomBoxMediator extends SimpleMediator<UIZoomBox> {
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
         Sandbox sandbox = Sandbox.getInstance();
-        switch (notification.getName()) {
-            case ProjectManager.PROJECT_OPENED:
-                viewComponent.update();
-                viewComponent.setCurrentZoom(sandbox.getZoomPercent() + "");
-                break;
-            case  UIZoomBox.ZOOM_SHIFT_REQUESTED:
-                float zoomDevider = notification.getBody();
-                sandbox.zoomDevideBy(zoomDevider);
-                break;
-            case  UIZoomBox.ZOOM_VALUE_CHANGED:
-                sandbox.setZoomPercent(NumberUtils.toInt(viewComponent.getCurrentZoom()));
-                facade.sendNotification(Overlap2D.ZOOM_CHANGED);
-                break;
-            case  Overlap2D.ZOOM_CHANGED:
-                viewComponent.setCurrentZoom(sandbox.getZoomPercent() + "");
-                break;
-        }
+        if (ProjectManager.PROJECT_OPENED.equals(notification.getName())) {
+            viewComponent.update();
+            viewComponent.setCurrentZoom(sandbox.getZoomPercent() + "");
+        } else if (UIZoomBox.ZOOM_SHIFT_REQUESTED.equals(notification.getName())) {
+            float zoomDevider = notification.getBody();
+            sandbox.zoomDevideBy(zoomDevider);
+        } else if (UIZoomBox.ZOOM_VALUE_CHANGED.equals(notification.getName())) {
+            sandbox.setZoomPercent(NumberUtils.toInt(viewComponent.getCurrentZoom()));
+            facade.sendNotification(Overlap2D.ZOOM_CHANGED);
+        } else if (Overlap2D.ZOOM_CHANGED.equals(notification.getName()))
+            viewComponent.setCurrentZoom(sandbox.getZoomPercent() + "");
     }
 }

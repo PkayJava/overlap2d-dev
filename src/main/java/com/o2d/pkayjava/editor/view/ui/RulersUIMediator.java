@@ -17,8 +17,13 @@ import com.o2d.pkayjava.editor.view.ui.RulersUI;
  * Created by azakhary on 7/18/2015.
  */
 public class RulersUIMediator extends SimpleMediator<RulersUI> {
-    private static final String TAG = com.uwsoft.editor.view.ui.RulersUIMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = RulersUIMediator.class.getName();
+        NAME = TAG;
+    }
 
     /**
      * Constructor.
@@ -45,41 +50,33 @@ public class RulersUIMediator extends SimpleMediator<RulersUI> {
     @Override
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
-
         SceneVO sceneVO = Sandbox.getInstance().getSceneControl().getCurrentSceneVO();
-
-        switch (notification.getName()) {
-            case SceneDataManager.SCENE_LOADED:
-                Array<Guide> guides = new Array<>();
-                for(int i  = 0; i < sceneVO.verticalGuides.size(); i++) {
-                    Guide tmp = new Guide(true);
-                    tmp.pos = sceneVO.verticalGuides.get(i);
-                    guides.add(tmp);
+        if (SceneDataManager.SCENE_LOADED.equals(notification.getName())) {
+            Array<Guide> guides = new Array<>();
+            for (int i = 0; i < sceneVO.verticalGuides.size(); i++) {
+                Guide tmp = new Guide(true);
+                tmp.pos = sceneVO.verticalGuides.get(i);
+                guides.add(tmp);
+            }
+            for (int i = 0; i < sceneVO.horizontalGuides.size(); i++) {
+                Guide tmp = new Guide(false);
+                tmp.pos = sceneVO.horizontalGuides.get(i);
+                guides.add(tmp);
+            }
+            viewComponent.setGuides(guides);
+            viewComponent.setVisible(true);
+        } else if (RulersUI.ACTION_GUIDES_MODIFIED.equals(notification.getName())) {
+            Array<Guide> guides = new Array<>();
+            guides = viewComponent.getGuides();
+            sceneVO.verticalGuides.clear();
+            sceneVO.horizontalGuides.clear();
+            for (int i = 0; i < guides.size; i++) {
+                if (guides.get(i).isVertical) {
+                    sceneVO.verticalGuides.add(guides.get(i).pos);
+                } else {
+                    sceneVO.horizontalGuides.add(guides.get(i).pos);
                 }
-                for(int i  = 0; i < sceneVO.horizontalGuides.size(); i++) {
-                    Guide tmp = new Guide(false);
-                    tmp.pos = sceneVO.horizontalGuides.get(i);
-                    guides.add(tmp);
-                }
-
-                viewComponent.setGuides(guides);
-
-                viewComponent.setVisible(true);
-                break;
-            case RulersUI.ACTION_GUIDES_MODIFIED:
-                guides = viewComponent.getGuides();
-                sceneVO.verticalGuides.clear();
-                sceneVO.horizontalGuides.clear();
-
-                for(int i  = 0; i < guides.size; i++) {
-                    if(guides.get(i).isVertical) {
-                        sceneVO.verticalGuides.add(guides.get(i).pos);
-                    } else {
-                        sceneVO.horizontalGuides.add(guides.get(i).pos);
-                    }
-                }
-
-                break;
+            }
         }
     }
 }

@@ -69,6 +69,7 @@ public class NormalSelectionFollower extends BasicFollower {
     public enum SelectionMode {
         normal, transform
     }
+
     protected SelectionMode mode = SelectionMode.normal;
 
     public NormalSelectionFollower(Entity entity) {
@@ -102,16 +103,16 @@ public class NormalSelectionFollower extends BasicFollower {
 
     private Image getMiniRect() {
         Image rect = new Image(VisUI.getSkin().getDrawable("selection-anchor"));
-        int w = (int) (rect.getWidth()/2);
-        int h = (int) (rect.getHeight()/2);
+        int w = (int) (rect.getWidth() / 2);
+        int h = (int) (rect.getHeight() / 2);
         rect.setOrigin(w, h);
         transformGroup.addActor(rect);
         return rect;
     }
 
     private void positionTransformables() {
-        int w = (int) (miniRects[LT].getWidth()/2);
-        int h = (int) (miniRects[LT].getHeight()/2);
+        int w = (int) (miniRects[LT].getWidth() / 2);
+        int h = (int) (miniRects[LT].getHeight() / 2);
         miniRects[LT].setX(-w);
         miniRects[LT].setY(getHeight() - h);
         miniRects[T].setX((int) (getWidth() / 2) - w);
@@ -129,17 +130,17 @@ public class NormalSelectionFollower extends BasicFollower {
         miniRects[L].setX(-w);
         miniRects[L].setY((int) (getHeight() / 2) - h);
 
-        miniRects[ORIGIN].setX((int) (transformComponent.originX*transformComponent.scaleX) - w);
-        miniRects[ORIGIN].setY((int) (transformComponent.originY*transformComponent.scaleY) - h);
+        miniRects[ORIGIN].setX((int) (transformComponent.originX * transformComponent.scaleX) - w);
+        miniRects[ORIGIN].setY((int) (transformComponent.originY * transformComponent.scaleY) - h);
 
-        miniRects[ROTATION_LT].setX(-w*2);
+        miniRects[ROTATION_LT].setX(-w * 2);
         miniRects[ROTATION_LT].setY(getHeight());
         miniRects[ROTATION_RT].setX(getWidth());
         miniRects[ROTATION_RT].setY(getHeight());
         miniRects[ROTATION_RB].setX(getWidth());
-        miniRects[ROTATION_RB].setY(-h*2);
+        miniRects[ROTATION_RB].setY(-h * 2);
         miniRects[ROTATION_LB].setX(-w * 2);
-        miniRects[ROTATION_LB].setY(-h*2);
+        miniRects[ROTATION_LB].setY(-h * 2);
     }
 
     private void initTransformGroup() {
@@ -172,7 +173,7 @@ public class NormalSelectionFollower extends BasicFollower {
 
     @Override
     public void setFollowerListener(FollowerTransformationListener listener) {
-        for(int i = 0; i < miniRects.length; i++) {
+        for (int i = 0; i < miniRects.length; i++) {
             final int rectId = i;
             miniRects[i].clearListeners();
             miniRects[i].addListener(new AnchorListener(this, listener, rectId) {
@@ -197,7 +198,7 @@ public class NormalSelectionFollower extends BasicFollower {
 
     @Override
     public void clearFollowerListener() {
-        for(int i = 0; i < miniRects.length; i++) {
+        for (int i = 0; i < miniRects.length; i++) {
             miniRects[i].clearListeners();
         }
     }
@@ -212,7 +213,7 @@ public class NormalSelectionFollower extends BasicFollower {
 
         positionTransformables();
 
-        for(int i = 0; i <= 7; i++) {
+        for (int i = 0; i <= 7; i++) {
             miniRects[i].setRotation(-getRotation());
         }
     }
@@ -220,20 +221,18 @@ public class NormalSelectionFollower extends BasicFollower {
     @Override
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
-        switch (notification.getName()) {
-            case UIToolBoxMediator.TOOL_SELECTED:
-                if(notification.getBody().equals(TransformTool.NAME)) {
-                    setMode(SelectionMode.transform);
-                } else {
-                    setMode(SelectionMode.normal);
-                }
-                break;
+        if (UIToolBoxMediator.TOOL_SELECTED.equals(notification.getName())) {
+            if (notification.getBody().equals(TransformTool.NAME)) {
+                setMode(SelectionMode.transform);
+            } else {
+                setMode(SelectionMode.normal);
+            }
         }
     }
 
     public void setMode(SelectionMode mode) {
         this.mode = mode;
-        if(mode == SelectionMode.normal) {
+        if (mode == SelectionMode.normal) {
             transformGroup.setVisible(false);
         } else {
             transformGroup.setVisible(true);

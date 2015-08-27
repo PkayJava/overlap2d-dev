@@ -19,9 +19,15 @@ import com.o2d.pkayjava.editor.view.ui.properties.UIItemCollapsibleProperties;
  */
 public class UILabelItemProperties extends UIItemCollapsibleProperties {
 
-    public static final String prefix = "com.uwsoft.editor.view.ui.properties.panels.UILabelItemProperties";
+    private static final String TAG;
+    public static final String NAME;
+    public static final String LABEL_TEXT_CHAR_TYPED;
 
-    public static final String LABEL_TEXT_CHAR_TYPED = prefix + ".LABEL_TEXT_CHANGED";
+    static {
+        TAG = UILabelItemProperties.class.getName();
+        NAME = TAG;
+        LABEL_TEXT_CHAR_TYPED = NAME + "." + "LABEL_TEXT_CHANGED";
+    }
 
 
     private HashMap<Integer, String> alignNames = new HashMap<>();
@@ -127,7 +133,7 @@ public class UILabelItemProperties extends UIItemCollapsibleProperties {
         for (Map.Entry<Integer, String> entry : alignNames.entrySet()) {
             Integer key = entry.getKey();
             String value = entry.getValue();
-            if(alignSelectBox.getSelected().equals(value)) {
+            if (alignSelectBox.getSelected().equals(value)) {
                 return key;
             }
         }
@@ -158,7 +164,7 @@ public class UILabelItemProperties extends UIItemCollapsibleProperties {
 
     @Override
     public String getPrefix() {
-        return prefix;
+        return NAME;
     }
 
     private void setListeners() {

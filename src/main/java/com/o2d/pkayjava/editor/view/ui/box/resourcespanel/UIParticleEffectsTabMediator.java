@@ -35,8 +35,13 @@ import com.o2d.pkayjava.editor.view.ui.box.resourcespanel.draggable.list.Particl
  */
 public class UIParticleEffectsTabMediator extends UIResourcesTabMediator<UIParticleEffectsTab> {
 
-    private static final String TAG = UIParticleEffectsTabMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = UIParticleEffectsTabMediator.class.getName();
+        NAME = TAG;
+    }
 
     public UIParticleEffectsTabMediator() {
         super(NAME, new UIParticleEffectsTab());
@@ -51,7 +56,7 @@ public class UIParticleEffectsTabMediator extends UIResourcesTabMediator<UIParti
         HashMap<String, ParticleEffect> particles = resourceManager.getProjectParticleList();
         Array<DraggableResource> itemArray = new Array<>();
         for (String name : particles.keySet()) {
-            if(!name.contains(searchText))continue;
+            if (!name.contains(searchText)) continue;
             DraggableResource draggableResource = new DraggableResource(new ParticleEffectResource(name));
             draggableResource.setFactoryFunction(ItemFactory.get()::tryCreateParticleItem);
             itemArray.add(draggableResource);

@@ -21,6 +21,7 @@ package com.o2d.pkayjava.editor.view.ui.properties.panels;
 import com.o2d.pkayjava.editor.view.stage.Sandbox;
 import com.o2d.pkayjava.editor.controller.commands.component.UpdateSpriteAnimationDataCommand;
 import com.o2d.pkayjava.editor.view.ui.properties.panels.UISpriteAnimationItemProperties;
+
 import org.apache.commons.lang3.ArrayUtils;
 
 import com.badlogic.ashley.core.Entity;
@@ -34,8 +35,13 @@ import com.o2d.pkayjava.runtime.utils.ComponentRetriever;
  * Created by azakhary on 4/16/2015.
  */
 public class UISpriteAnimationItemPropertiesMediator extends UIItemPropertiesMediator<Entity, UISpriteAnimationItemProperties> {
-    private static final String TAG = com.uwsoft.editor.view.ui.properties.panels.UISpriteAnimationItemPropertiesMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = UISpriteAnimationItemPropertiesMediator.class.getName();
+        NAME = TAG;
+    }
 
     private SpriteAnimationComponent spriteAnimationComponent;
 
@@ -57,19 +63,14 @@ public class UISpriteAnimationItemPropertiesMediator extends UIItemPropertiesMed
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
 
-        switch (notification.getName()) {
-            case UISpriteAnimationItemProperties.EDIT_ANIMATIONS_CLICKED:
-
-                break;
-            default:
-                break;
+        if (UISpriteAnimationItemProperties.EDIT_ANIMATIONS_CLICKED.equals(notification.getName())) {
         }
     }
 
     @Override
     protected void translateObservableDataToView(Entity entity) {
 
-    	spriteAnimationComponent = ComponentRetriever.get(entity, SpriteAnimationComponent.class);
+        spriteAnimationComponent = ComponentRetriever.get(entity, SpriteAnimationComponent.class);
         Array<String> animations = new Array<>();
         spriteAnimationComponent.frameRangeMap.keySet().forEach(animations::add);
 

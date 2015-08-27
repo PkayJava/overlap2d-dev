@@ -28,6 +28,7 @@ import com.o2d.pkayjava.editor.view.ui.properties.UIItemPropertiesMediator;
 import com.o2d.pkayjava.runtime.components.ShaderComponent;
 import com.o2d.pkayjava.runtime.utils.ComponentRetriever;
 import com.puremvc.patterns.observer.Notification;
+
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.HashMap;
@@ -37,8 +38,13 @@ import java.util.Map;
  * Created by azakhary on 8/12/2015.
  */
 public class UIShaderPropertiesMediator extends UIItemPropertiesMediator<Entity, UIShaderProperties> {
-    private static final String TAG = UIShaderPropertiesMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = UIShaderPropertiesMediator.class.getName();
+        NAME = TAG;
+    }
 
     public UIShaderPropertiesMediator() {
         super(NAME, new UIShaderProperties());
@@ -61,10 +67,8 @@ public class UIShaderPropertiesMediator extends UIItemPropertiesMediator<Entity,
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
 
-        switch (notification.getName()) {
-            case UIPhysicsProperties.CLOSE_CLICKED:
-                Overlap2DFacade.getInstance().sendNotification(Sandbox.ACTION_REMOVE_COMPONENT, RemoveComponentFromItemCommand.payload(observableReference, ShaderComponent.class));
-                break;
+        if (UIPhysicsProperties.CLOSE_CLICKED.equals(notification.getName())) {
+            Overlap2DFacade.getInstance().sendNotification(Sandbox.ACTION_REMOVE_COMPONENT, RemoveComponentFromItemCommand.payload(observableReference, ShaderComponent.class));
         }
     }
 

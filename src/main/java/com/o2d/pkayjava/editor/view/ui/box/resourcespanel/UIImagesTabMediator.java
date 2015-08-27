@@ -33,8 +33,13 @@ import com.o2d.pkayjava.editor.view.ui.box.resourcespanel.draggable.box.ImageRes
  */
 public class UIImagesTabMediator extends UIResourcesTabMediator<UIImagesTab> {
 
-    private static final String TAG = UIImagesTabMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = UIImagesTabMediator.class.getName();
+        NAME = TAG;
+    }
 
 
     public UIImagesTabMediator() {

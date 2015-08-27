@@ -27,8 +27,13 @@ import com.o2d.pkayjava.editor.view.ui.properties.panels.UICompositeItemProperti
  */
 public class UICompositeItemPropertiesMediator extends UIItemPropertiesMediator<Entity, UICompositeItemProperties> {
 
-    private static final String TAG = com.uwsoft.editor.view.ui.properties.panels.UICompositeItemPropertiesMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = UICompositeItemPropertiesMediator.class.getName();
+        NAME = TAG;
+    }
 
     public UICompositeItemPropertiesMediator() {
         super(NAME, new UICompositeItemProperties());

@@ -25,6 +25,7 @@ import com.o2d.pkayjava.editor.view.ui.properties.UIItemPropertiesMediator;
 import com.o2d.pkayjava.runtime.components.light.LightObjectComponent;
 import com.o2d.pkayjava.runtime.data.LightVO;
 import com.o2d.pkayjava.runtime.utils.ComponentRetriever;
+
 import org.apache.commons.lang3.math.NumberUtils;
 
 /**
@@ -32,8 +33,13 @@ import org.apache.commons.lang3.math.NumberUtils;
  */
 public class UILightItemPropertiesMediator extends UIItemPropertiesMediator<Entity, UILightItemProperties> {
 
-    private static final String TAG = UILightItemPropertiesMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = UILightItemPropertiesMediator.class.getName();
+        NAME = TAG;
+    }
 
     private LightObjectComponent lightObjectComponent;
 
@@ -43,7 +49,7 @@ public class UILightItemPropertiesMediator extends UIItemPropertiesMediator<Enti
 
     @Override
     protected void translateObservableDataToView(Entity entity) {
-    	lightObjectComponent = ComponentRetriever.get(entity, LightObjectComponent.class);
+        lightObjectComponent = ComponentRetriever.get(entity, LightObjectComponent.class);
 
         viewComponent.setType(lightObjectComponent.getType());
         viewComponent.setRayCount(lightObjectComponent.rays);
@@ -65,8 +71,8 @@ public class UILightItemPropertiesMediator extends UIItemPropertiesMediator<Enti
         payloadVo.isXRay = viewComponent.isXRay();
         payloadVo.coneDegree = NumberUtils.toFloat(viewComponent.getAngle());
         payloadVo.softnessLength = NumberUtils.toFloat(viewComponent.getSoftnessLength());
-        
-        if(payloadVo.type == LightVO.LightType.POINT) {
+
+        if (payloadVo.type == LightVO.LightType.POINT) {
             payloadVo.distance = NumberUtils.toFloat(viewComponent.getRadius());
         } else {
             payloadVo.distance = NumberUtils.toFloat(viewComponent.getDistance());

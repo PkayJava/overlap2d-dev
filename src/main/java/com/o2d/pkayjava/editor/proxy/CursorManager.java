@@ -27,8 +27,8 @@ import com.o2d.pkayjava.editor.view.ui.widget.CursorData;
  * Created by azakhary on 5/15/2015.
  */
 public class CursorManager extends BaseProxy {
-    private static final String TAG = CursorManager.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
 
     public static CursorData NORMAL = new CursorData("normal", 8, 6);
     public static CursorData CROSS = new CursorData("cross", 14, 14);
@@ -45,6 +45,11 @@ public class CursorManager extends BaseProxy {
     public static CursorData TRANSFORM_RIGHT_LEFT = new CursorData("right-down-up", 17, 16);
     public static CursorData TRANSFORM_HORIZONTAL = new CursorData("left-right", 17, 16);
     public static CursorData TRANSFORM_VERTICAL = new CursorData("up-down", 17, 16);
+
+    static {
+        TAG = CursorManager.class.getName();
+        NAME = TAG;
+    }
 
     private CursorData cursor;
     private CursorData overrideCursor = null;
@@ -71,7 +76,7 @@ public class CursorManager extends BaseProxy {
 
     private void setCursorPixmap() {
         CursorData currentCursor = overrideCursor;
-        if(currentCursor == null) {
+        if (currentCursor == null) {
             currentCursor = cursor;
         }
 

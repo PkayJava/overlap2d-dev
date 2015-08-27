@@ -32,8 +32,13 @@ import com.o2d.pkayjava.editor.view.ui.dialog.CreateNewResolutionDialog;
  * Created by sargis on 4/9/15.
  */
 public class CreateNewResolutionDialogMediator extends SimpleMediator<CreateNewResolutionDialog> {
-    private static final String TAG = com.uwsoft.editor.view.ui.dialog.CreateNewResolutionDialogMediator.class.getCanonicalName();
-    private static final String NAME = TAG;
+    private static final String TAG;
+    private static final String NAME;
+
+    static {
+        TAG = CreateNewResolutionDialogMediator.class.getName();
+        NAME = TAG;
+    }
 
     public CreateNewResolutionDialogMediator() {
         super(NAME, new CreateNewResolutionDialog());

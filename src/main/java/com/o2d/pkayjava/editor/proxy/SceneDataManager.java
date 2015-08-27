@@ -23,6 +23,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.o2d.pkayjava.editor.Overlap2DFacade;
 import com.o2d.pkayjava.runtime.data.SceneVO;
 import com.puremvc.patterns.proxy.BaseProxy;
+
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -33,11 +34,17 @@ import java.util.ArrayList;
  * Created by sargis on 3/23/15.
  */
 public class SceneDataManager extends BaseProxy {
-    private static final String EVENT_PREFIX = "SceneDataManager";
-    public static final String SCENE_LOADED = EVENT_PREFIX + ".SCENE_LOADED";
 
-    private static final String TAG = SceneDataManager.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+    public static final String SCENE_LOADED;
+
+    static {
+        TAG = SceneDataManager.class.getName();
+        NAME = TAG;
+        SCENE_LOADED = NAME + "." + "SCENE_LOADED";
+    }
+
 
     public SceneDataManager() {
         super(NAME);

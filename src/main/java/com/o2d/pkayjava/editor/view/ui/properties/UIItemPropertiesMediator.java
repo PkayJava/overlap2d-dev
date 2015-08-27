@@ -28,6 +28,14 @@ import com.puremvc.patterns.observer.Notification;
  */
 public abstract class UIItemPropertiesMediator<T extends Entity, V extends UIAbstractProperties> extends UIAbstractPropertiesMediator<T, V> {
 
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = UIItemPropertiesMediator.class.getName();
+        NAME = TAG;
+    }
+
     public UIItemPropertiesMediator(String mediatorName, V viewComponent) {
         super(mediatorName, viewComponent);
     }
@@ -42,13 +50,9 @@ public abstract class UIItemPropertiesMediator<T extends Entity, V extends UIAbs
             }
         }
 
-        switch (notification.getName()) {
-            case Overlap2D.ITEM_DATA_UPDATED:
-                if (observableReference == null) return;
-                onItemDataUpdate();
-                break;
-            default:
-                break;
+        if (Overlap2D.ITEM_DATA_UPDATED.equals(notification.getName())) {
+            if (observableReference == null) return;
+            onItemDataUpdate();
         }
     }
 

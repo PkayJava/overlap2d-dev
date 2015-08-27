@@ -55,8 +55,13 @@ import com.o2d.pkayjava.editor.view.ui.box.UILayerBox;
  */
 public class UILayerBoxMediator extends PanelMediator<UILayerBox> {
 
-    private static final String TAG = UILayerBoxMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = UILayerBoxMediator.class.getName();
+        NAME = TAG;
+    }
 
     private ArrayList<LayerItemVO> layers;
 
@@ -93,134 +98,118 @@ public class UILayerBoxMediator extends PanelMediator<UILayerBox> {
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
         UILayerBox.UILayerItem layerItem;
-        switch (notification.getName()) {
-            case SceneDataManager.SCENE_LOADED:
-                initLayerData();
-                int layerid = getFirstFreeLayer();
-                viewComponent.setCurrentSelectedLayer(layerid);
-                viewComponent.currentSelectedLayerIndex = layerid;
-                break;
-            case CompositeCameraChangeCommand.DONE:
-                initLayerData();
-                layerid = getFirstFreeLayer();
-                viewComponent.setCurrentSelectedLayer(layerid);
-                viewComponent.currentSelectedLayerIndex = layerid;
-                break;
-            case NewLayerCommand.DONE:
-                initLayerData();
-                setSelectedByName(notification.getBody());
-                break;
-            case DeleteLayerCommand.DONE:
-                initLayerData();
-                int deletedIndex = (int)notification.getBody()-1;
-                if(deletedIndex == -1) deletedIndex = 0;
-                viewComponent.setCurrentSelectedLayer(deletedIndex);
-                viewComponent.currentSelectedLayerIndex = deletedIndex;
-                break;
-            case DeleteLayerCommand.UNDONE:
-                initLayerData();
-                setSelectedByName(notification.getBody());
-                break;
-            case UILayerBox.LAYER_ROW_CLICKED:
-                layerItem = notification.getBody();
-                selectEntitiesByLayerName(layerItem);
-                break;
-            case UILayerBox.CREATE_NEW_LAYER:
-                DialogUtils.showInputDialog(Sandbox.getInstance().getUIStage(), "Please set unique name for your Layer", "Please set unique name for your Layer", new InputDialogListener() {
-                    @Override
-                    public void finished(String input) {
-                        if (checkIfNameIsUnique(input)) {
-                            Object[] payload = NewLayerCommand.payload(viewComponent.getCurrentSelectedLayerIndex()+1, input);
-                            facade.sendNotification(Sandbox.ACTION_NEW_LAYER, payload);
-                        } else {
-                            // show error dialog
-                        }
-                    }
-                    @Override
-                    public void canceled() {
-
-                    }
-                });
-                break;
-            case UILayerBox.LAYER_DROPPED:
-                facade.sendNotification(Sandbox.ACTION_SWAP_LAYERS, notification.getBody());
-                break;
-            case LayerSwapCommand.DONE:
-                int index = viewComponent.getCurrentSelectedLayerIndex();
-                initLayerData();
-                viewComponent.setCurrentSelectedLayer(index);
-                break;
-            case UILayerBox.DELETE_LAYER:
-                if (layers == null) return;
-                int deletingLayerIndex = viewComponent.getCurrentSelectedLayerIndex();
-                if(deletingLayerIndex != -1) {
-                    String layerName = layers.get(deletingLayerIndex).layerName;
-                    facade.sendNotification(Sandbox.ACTION_DELETE_LAYER, layerName);
-                }
-                break;
-            case UILayerBox.LOCK_LAYER:
-                layerItem = notification.getBody();
-                lockLayerByName(layerItem);
-                break;
-            case UILayerBox.HIDE_LAYER:
-                layerItem = notification.getBody();
-                hideEntitiesByLayerName(layerItem);
-                break;
-            case Overlap2D.ITEM_SELECTION_CHANGED:
-                Set<Entity> selection = notification.getBody();
-                if(selection.size() == 1) {
-                    ZIndexComponent zIndexComponent = ComponentRetriever.get(selection.iterator().next(), ZIndexComponent.class);
-                    index = findLayerByName(zIndexComponent.layerName);
-                    if(index == -1) {
-                        // handle this somehow
+        if (SceneDataManager.SCENE_LOADED.equals(notification.getName())) {
+            initLayerData();
+            int layerid = getFirstFreeLayer();
+            viewComponent.setCurrentSelectedLayer(layerid);
+            viewComponent.currentSelectedLayerIndex = layerid;
+        } else if (CompositeCameraChangeCommand.DONE.equals(notification.getName())) {
+            initLayerData();
+            int layerid = getFirstFreeLayer();
+            viewComponent.setCurrentSelectedLayer(layerid);
+            viewComponent.currentSelectedLayerIndex = layerid;
+        } else if (NewLayerCommand.DONE.equals(notification.getName())) {
+            initLayerData();
+            setSelectedByName(notification.getBody());
+        } else if (DeleteLayerCommand.DONE.equals(notification.getName())) {
+            initLayerData();
+            int deletedIndex = (int) notification.getBody() - 1;
+            if (deletedIndex == -1) deletedIndex = 0;
+            viewComponent.setCurrentSelectedLayer(deletedIndex);
+            viewComponent.currentSelectedLayerIndex = deletedIndex;
+        } else if (DeleteLayerCommand.UNDONE.equals(notification.getName())) {
+            initLayerData();
+            setSelectedByName(notification.getBody());
+        } else if (UILayerBox.LAYER_ROW_CLICKED.equals(notification.getName())) {
+            layerItem = notification.getBody();
+            selectEntitiesByLayerName(layerItem);
+        } else if (UILayerBox.CREATE_NEW_LAYER.equals(notification.getName())) {
+            DialogUtils.showInputDialog(Sandbox.getInstance().getUIStage(), "Please set unique name for your Layer", "Please set unique name for your Layer", new InputDialogListener() {
+                @Override
+                public void finished(String input) {
+                    if (checkIfNameIsUnique(input)) {
+                        Object[] payload = NewLayerCommand.payload(viewComponent.getCurrentSelectedLayerIndex() + 1, input);
+                        facade.sendNotification(Sandbox.ACTION_NEW_LAYER, payload);
                     } else {
-                        viewComponent.setCurrentSelectedLayer(index);
-                        viewComponent.currentSelectedLayerIndex = index;
+                        // show error dialog
                     }
-                } else if (selection.size() > 1) {
-                    // multi selection handling not yet clear
                 }
-                break;
-            case ItemFactory.NEW_ITEM_ADDED:
-                index = viewComponent.getCurrentSelectedLayerIndex();
-                Entity item = notification.getBody();
-                ZIndexComponent zIndexComponent = ComponentRetriever.get(item, ZIndexComponent.class);
-                if(zIndexComponent.layerName == null) zIndexComponent.layerName = layers.get(index).layerName;
-                break;
-            case UILayerBox.CHANGE_LAYER_NAME:
-                // TODO: this needs to be command
-                String layerName = notification.getBody();
-                int layerIndex = viewComponent.getCurrentSelectedLayerIndex();
-                if(layerIndex == -1) break;
-                LayerItemVO layer_view = layers.get(layerIndex);
-                layerItem = viewComponent.getCurrentSelectedLayer();
-                VisTextField textField = layerItem.getNameField();
 
-                if(layer_view.layerName.equals(layerName))  // Name didn't change
-                {
-                    textField.clearSelection();
-                    textField.setDisabled(true);
-                    viewComponent.enableDraggingInEditedSlot();
+                @Override
+                public void canceled() {
+
                 }
-                else if(checkIfNameIsUnique(layerName)) // Name changed
-                {
-                    textField.clearSelection();
-                    textField.setDisabled(true);
-                    viewComponent.enableDraggingInEditedSlot();
-                    String prevName = layer_view.layerName;
-                    layer_view.layerName = layerName;
-                    // update the map
-                    Entity viewEntity = Sandbox.getInstance().getCurrentViewingEntity();
-                    LayerMapComponent layerMapComponent = ComponentRetriever.get(viewEntity, LayerMapComponent.class);
-                    layerMapComponent.rename(prevName, layerName);
+            });
+        } else if (UILayerBox.LAYER_DROPPED.equals(notification.getName())) {
+            facade.sendNotification(Sandbox.ACTION_SWAP_LAYERS, notification.getBody());
+        } else if (LayerSwapCommand.DONE.equals(notification.getName())) {
+            int index = viewComponent.getCurrentSelectedLayerIndex();
+            initLayerData();
+            viewComponent.setCurrentSelectedLayer(index);
+        } else if (UILayerBox.DELETE_LAYER.equals(notification.getName())) {
+            if (layers == null) return;
+            int deletingLayerIndex = viewComponent.getCurrentSelectedLayerIndex();
+            if (deletingLayerIndex != -1) {
+                String layerName = layers.get(deletingLayerIndex).layerName;
+                facade.sendNotification(Sandbox.ACTION_DELETE_LAYER, layerName);
+            }
+        } else if (UILayerBox.LOCK_LAYER.equals(notification.getName())) {
+            layerItem = notification.getBody();
+            lockLayerByName(layerItem);
+        } else if (UILayerBox.HIDE_LAYER.equals(notification.getName())) {
+            layerItem = notification.getBody();
+            hideEntitiesByLayerName(layerItem);
+        } else if (Overlap2D.ITEM_SELECTION_CHANGED.equals(notification.getName())) {
+            Set<Entity> selection = notification.getBody();
+            if (selection.size() == 1) {
+                int index = viewComponent.getCurrentSelectedLayerIndex();
+                ZIndexComponent zIndexComponent = ComponentRetriever.get(selection.iterator().next(), ZIndexComponent.class);
+                index = findLayerByName(zIndexComponent.layerName);
+                if (index == -1) {
+                    // handle this somehow
+                } else {
+                    viewComponent.setCurrentSelectedLayer(index);
+                    viewComponent.currentSelectedLayerIndex = index;
                 }
-                else
-                {
-                    //Show error dialog
-                }
-                break;
-            default:
-                break;
+            } else if (selection.size() > 1) {
+                // multi selection handling not yet clear
+            }
+        } else if (ItemFactory.NEW_ITEM_ADDED.equals(notification.getName())) {
+            int index = viewComponent.getCurrentSelectedLayerIndex();
+            Entity item = notification.getBody();
+            ZIndexComponent zIndexComponent = ComponentRetriever.get(item, ZIndexComponent.class);
+            if (zIndexComponent.layerName == null)
+                zIndexComponent.layerName = layers.get(index).layerName;
+        } else if (UILayerBox.CHANGE_LAYER_NAME.equals(notification.getName())) {
+            // TODO: this needs to be command
+            String layerName = notification.getBody();
+            int layerIndex = viewComponent.getCurrentSelectedLayerIndex();
+            if (layerIndex == -1) {
+                return;
+            }
+            LayerItemVO layer_view = layers.get(layerIndex);
+            layerItem = viewComponent.getCurrentSelectedLayer();
+            VisTextField textField = layerItem.getNameField();
+
+            if (layer_view.layerName.equals(layerName))  // Name didn't change
+            {
+                textField.clearSelection();
+                textField.setDisabled(true);
+                viewComponent.enableDraggingInEditedSlot();
+            } else if (checkIfNameIsUnique(layerName)) // Name changed
+            {
+                textField.clearSelection();
+                textField.setDisabled(true);
+                viewComponent.enableDraggingInEditedSlot();
+                String prevName = layer_view.layerName;
+                layer_view.layerName = layerName;
+                // update the map
+                Entity viewEntity = Sandbox.getInstance().getCurrentViewingEntity();
+                LayerMapComponent layerMapComponent = ComponentRetriever.get(viewEntity, LayerMapComponent.class);
+                layerMapComponent.rename(prevName, layerName);
+            } else {
+                //Show error dialog
+            }
         }
     }
 
@@ -257,7 +246,7 @@ public class UILayerBoxMediator extends PanelMediator<UILayerBox> {
     private void lockLayerByName(UILayerBox.UILayerItem layerItem) {
         String layerName = layerItem.getLayerName();
         boolean toLock = !layerItem.isLocked();
-        if(toLock){
+        if (toLock) {
             Sandbox.getInstance().getSelector().clearSelections();
         }
         Entity viewEntity = Sandbox.getInstance().getCurrentViewingEntity();
@@ -267,7 +256,7 @@ public class UILayerBoxMediator extends PanelMediator<UILayerBox> {
     }
 
     private void selectEntitiesByLayerName(UILayerBox.UILayerItem layerItem) {
-        if(layerItem.isLocked()){
+        if (layerItem.isLocked()) {
             Sandbox.getInstance().getSelector().clearSelections();
             viewComponent.clearSelection();
             return;
@@ -277,10 +266,10 @@ public class UILayerBoxMediator extends PanelMediator<UILayerBox> {
 
         NodeComponent nodeComponent = ComponentRetriever.get(viewEntity, NodeComponent.class);
         Set<Entity> items = new HashSet<>();
-        for(int i=0; i<nodeComponent.children.size; i++){
+        for (int i = 0; i < nodeComponent.children.size; i++) {
             Entity entity = nodeComponent.children.get(i);
             ZIndexComponent childZComponent = ComponentRetriever.get(entity, ZIndexComponent.class);
-            if(childZComponent.layerName.equals(layerName)){
+            if (childZComponent.layerName.equals(layerName)) {
                 items.add(entity);
             }
         }
@@ -294,10 +283,10 @@ public class UILayerBoxMediator extends PanelMediator<UILayerBox> {
         Entity viewEntity = Sandbox.getInstance().getCurrentViewingEntity();
 
         NodeComponent nodeComponent = ComponentRetriever.get(viewEntity, NodeComponent.class);
-        for(int i=0; i<nodeComponent.children.size; i++){
+        for (int i = 0; i < nodeComponent.children.size; i++) {
             Entity entity = nodeComponent.children.get(i);
             ZIndexComponent childZComponent = ComponentRetriever.get(entity, ZIndexComponent.class);
-            if(childZComponent.layerName.equals(layerName)){
+            if (childZComponent.layerName.equals(layerName)) {
                 EntityUtils.getEntityLayer(entity).isVisible = toHide;
             }
         }
@@ -324,8 +313,8 @@ public class UILayerBoxMediator extends PanelMediator<UILayerBox> {
     }
 
     private int getFirstFreeLayer() {
-        for(int i = 0; i < layers.size(); i++) {
-            if(!layers.get(i).isLocked) {
+        for (int i = 0; i < layers.size(); i++) {
+            if (!layers.get(i).isLocked) {
                 return i;
             }
         }
@@ -341,7 +330,7 @@ public class UILayerBoxMediator extends PanelMediator<UILayerBox> {
 
         viewComponent.clearItems();
 
-        for (int i = (layers.size()-1); i >=0; i--) {
+        for (int i = (layers.size() - 1); i >= 0; i--) {
             viewComponent.addItem(layers.get(i));
         }
     }
@@ -351,7 +340,7 @@ public class UILayerBoxMediator extends PanelMediator<UILayerBox> {
     }
 
     public String getCurrentSelectedLayerName() {
-        if(viewComponent.getCurrentSelectedLayerIndex() == -1) return null;
+        if (viewComponent.getCurrentSelectedLayerIndex() == -1) return null;
         return layers.get(viewComponent.getCurrentSelectedLayerIndex()).layerName;
     }
 }

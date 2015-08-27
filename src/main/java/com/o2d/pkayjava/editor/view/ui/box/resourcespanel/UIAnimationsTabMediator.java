@@ -39,8 +39,14 @@ import java.util.function.BiFunction;
  */
 public class UIAnimationsTabMediator extends UIResourcesTabMediator<UIAnimationsTab> {
 
-    private static final String TAG = UIAnimationsTabMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = UIAnimationsTabMediator.class.getName();
+        NAME = TAG;
+    }
+
     private Array<DraggableResource> animationBoxes;
 
     public UIAnimationsTabMediator() {

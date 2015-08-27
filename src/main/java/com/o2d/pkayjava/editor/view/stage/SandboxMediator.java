@@ -52,11 +52,15 @@ import com.o2d.pkayjava.runtime.utils.ComponentRetriever;
  * Created by sargis on 4/20/15.
  */
 public class SandboxMediator extends SimpleMediator<Sandbox> {
-    private static final String TAG = SandboxMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+    public static final String SANDBOX_TOOL_CHANGED;
 
-    private static final String PREFIX =  "SandboxStageMediator";
-    public static final String SANDBOX_TOOL_CHANGED = PREFIX + ".SANDBOX_TOOL_CHANGED";
+    static {
+        TAG = SandboxMediator.class.getName();
+        NAME = TAG;
+        SANDBOX_TOOL_CHANGED = NAME + "." + "SANDBOX_TOOL_CHANGED";
+    }
 
     private final Vector2 reducedMoveDirection = new Vector2(0, 0);
 
@@ -116,29 +120,22 @@ public class SandboxMediator extends SimpleMediator<Sandbox> {
     @Override
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
-        switch (notification.getName()) {
-            case SceneDataManager.SCENE_LOADED:
-                handleSceneLoaded(notification);
-                break;
-            case UIToolBoxMediator.TOOL_SELECTED:
-                setCurrentTool(notification.getBody());
-                break;
-            case ItemFactory.NEW_ITEM_ADDED:
-                addListenerToItem(notification.getBody());
-                break;
-            case CompositeCameraChangeCommand.DONE:
-                initItemListeners();
-                break;
-            default:
-                break;
+        if (SceneDataManager.SCENE_LOADED.equals(notification.getName())) {
+            handleSceneLoaded(notification);
+        } else if (UIToolBoxMediator.TOOL_SELECTED.equals(notification.getName())) {
+            setCurrentTool(notification.getBody());
+        } else if (ItemFactory.NEW_ITEM_ADDED.equals(notification.getName())) {
+            addListenerToItem(notification.getBody());
+        } else if (CompositeCameraChangeCommand.DONE.equals(notification.getName())) {
+            initItemListeners();
         }
-        if(currentSelectedTool != null) {
+        if (currentSelectedTool != null) {
             currentSelectedTool.handleNotification(notification);
         }
     }
 
     private void handleSceneLoaded(Notification notification) {
-		//TODO fix and uncomment
+        //TODO fix and uncomment
         //viewComponent.addListener(stageListener);
 
         initItemListeners();
@@ -156,7 +153,7 @@ public class SandboxMediator extends SimpleMediator<Sandbox> {
         NodeComponent nodeComponent = ComponentRetriever.get(rootEntity, NodeComponent.class);
         SnapshotArray<Entity> childrenEntities = nodeComponent.children;
 
-        for (Entity child: childrenEntities) {
+        for (Entity child : childrenEntities) {
             addListenerToItem(child);
         }
     }
@@ -169,7 +166,7 @@ public class SandboxMediator extends SimpleMediator<Sandbox> {
      */
     private void addListenerToItem(Entity entity) {
         InputListenerComponent inputListenerComponent = entity.getComponent(InputListenerComponent.class);
-        if(inputListenerComponent == null){
+        if (inputListenerComponent == null) {
             inputListenerComponent = new InputListenerComponent();
             entity.add(inputListenerComponent);
         }
@@ -193,7 +190,7 @@ public class SandboxMediator extends SimpleMediator<Sandbox> {
     public class SandboxItemEventListener extends EntityClickListener {
 
         public SandboxItemEventListener(final Entity entity) {
-        	
+
         }
 
         @Override
@@ -211,7 +208,7 @@ public class SandboxMediator extends SimpleMediator<Sandbox> {
             return currentSelectedTool.itemMouseDown(entity, coords.x, coords.y);
         }
 
-        
+
         @Override
         public void touchUp(Entity entity, float x, float y, int pointer, int button) {
             super.touchUp(entity, x, y, pointer, button);
@@ -256,7 +253,7 @@ public class SandboxMediator extends SimpleMediator<Sandbox> {
             // TODO: key pressed 0 for unckown, should be removed?
             // TODO: need to make sure OSX Command button works too.
 
-            if(currentSelectedTool != null) {
+            if (currentSelectedTool != null) {
                 currentSelectedTool.keyDown(entity, keycode);
             }
 
@@ -289,7 +286,7 @@ public class SandboxMediator extends SimpleMediator<Sandbox> {
                 }
                 if (keycode == Input.Keys.NUM_0 || keycode == Input.Keys.NUMPAD_0) {
                     sandbox.setZoomPercent(100);
-                    sandbox.getCamera().position.set(0 ,0, 0);
+                    sandbox.getCamera().position.set(0, 0, 0);
                     facade.sendNotification(Overlap2D.ZOOM_CHANGED);
                 }
                 if (keycode == Input.Keys.X) {
@@ -301,8 +298,8 @@ public class SandboxMediator extends SimpleMediator<Sandbox> {
                 if (keycode == Input.Keys.V) {
                     facade.sendNotification(Sandbox.ACTION_PASTE);
                 }
-                if(keycode == Input.Keys.Z) {
-                    if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                if (keycode == Input.Keys.Z) {
+                    if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
                         CommandManager commandManager = facade.retrieveProxy(CommandManager.NAME);
                         commandManager.redoCommand();
                     } else {
@@ -384,7 +381,7 @@ public class SandboxMediator extends SimpleMediator<Sandbox> {
         public void touchUp(Entity entity, float x, float y, int pointer, int button) {
             super.touchUp(entity, x, y, pointer, button);
 
-            if(currentSelectedTool != null) {
+            if (currentSelectedTool != null) {
                 currentSelectedTool.stageMouseUp(x, y);
             }
 
@@ -431,8 +428,8 @@ public class SandboxMediator extends SimpleMediator<Sandbox> {
             // Control pressed as well
             if (isControlPressed()) {
                 float zoomPercent = sandbox.getZoomPercent();
-                zoomPercent-=amount*4f;
-                if(zoomPercent < 5 ) zoomPercent = 5;
+                zoomPercent -= amount * 4f;
+                if (zoomPercent < 5) zoomPercent = 5;
                 sandbox.setZoomPercent(zoomPercent);
 
                 facade.sendNotification(Overlap2D.ZOOM_CHANGED);
@@ -490,7 +487,7 @@ public class SandboxMediator extends SimpleMediator<Sandbox> {
     }
 
     public String getCurrentSelectedToolName() {
-        if(currentSelectedTool == null) {
+        if (currentSelectedTool == null) {
             return "";
         }
         return currentSelectedTool.getName();

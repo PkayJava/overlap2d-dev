@@ -24,6 +24,7 @@ import com.o2d.pkayjava.editor.Overlap2DFacade;
 import com.o2d.pkayjava.editor.proxy.ProjectManager;
 import com.o2d.pkayjava.editor.view.ui.box.resourcespanel.*;
 import com.o2d.pkayjava.editor.view.ui.box.resourcespanel.UILibraryItemsTab;
+
 import org.apache.commons.lang3.ArrayUtils;
 
 import com.badlogic.gdx.utils.Array;
@@ -39,8 +40,13 @@ import com.o2d.pkayjava.runtime.data.CompositeItemVO;
  */
 public class UILibraryItemsTabMediator extends UIResourcesTabMediator<UILibraryItemsTab> {
 
-    private static final String TAG = UILibraryItemsTabMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = UILibraryItemsTabMediator.class.getName();
+        NAME = TAG;
+    }
 
 
     public UILibraryItemsTabMediator() {
@@ -56,12 +62,8 @@ public class UILibraryItemsTabMediator extends UIResourcesTabMediator<UILibraryI
     @Override
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
-        switch (notification.getName()) {
-            case Overlap2D.LIBRARY_LIST_UPDATED:
-                initList(viewComponent.searchString);
-
-            default:
-                break;
+        if (Overlap2D.LIBRARY_LIST_UPDATED.equals(notification.getName())) {
+            initList(viewComponent.searchString);
         }
     }
 
@@ -72,7 +74,7 @@ public class UILibraryItemsTabMediator extends UIResourcesTabMediator<UILibraryI
 
         Array<DraggableResource> itemArray = new Array<>();
         for (String key : items.keySet()) {
-            if(!key.contains(searchText))continue;
+            if (!key.contains(searchText)) continue;
             DraggableResource draggableResource = new DraggableResource(new LibraryItemResource(key));
             draggableResource.setFactoryFunction(ItemFactory.get()::createItemFromLibrary);
             draggableResource.initDragDrop();

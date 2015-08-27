@@ -49,8 +49,14 @@ import java.util.List;
  * Created by sargis on 4/3/15.
  */
 public class ImportDialogMediator extends SimpleMediator<ImportDialog> {
-    private static final String TAG = ImportDialogMediator.class.getCanonicalName();
-    private static final String NAME = TAG;
+    private static final String TAG;
+    private static final String NAME;
+
+    static {
+        TAG = ImportDialogMediator.class.getName();
+        NAME = TAG;
+    }
+
     private AssetsImportProgressHandler progressHandler;
 
     private int importType;
@@ -82,13 +88,13 @@ public class ImportDialogMediator extends SimpleMediator<ImportDialog> {
     }
 
     public Vector2 getLocationFromDtde(DropTargetDragEvent dtde) {
-        Vector2 pos = new Vector2((float)(dtde).getLocation().getX(),(float)(dtde).getLocation().getY());
+        Vector2 pos = new Vector2((float) (dtde).getLocation().getX(), (float) (dtde).getLocation().getY());
 
         return pos;
     }
 
     public Vector2 getLocationFromDropEvent(DropTargetDropEvent dtde) {
-        Vector2 pos = new Vector2((float)(dtde).getLocation().getX(),(float)(dtde).getLocation().getY());
+        Vector2 pos = new Vector2((float) (dtde).getLocation().getX(), (float) (dtde).getLocation().getY());
 
         return pos;
     }
@@ -98,45 +104,39 @@ public class ImportDialogMediator extends SimpleMediator<ImportDialog> {
         super.handleNotification(notification);
         Sandbox sandbox = Sandbox.getInstance();
         UIStage uiStage = sandbox.getUIStage();
-        switch (notification.getName()) {
-            case Overlap2DMenuBar.IMPORT_TO_LIBRARY:
-                viewComponent.show(uiStage);
-                break;
-            case ImportDialog.BROWSE_BTN_CLICKED:
-                showFileChoose();
-                break;
-            case FileDropListener.ACTION_DRAG_ENTER:
-                Vector2 dropPos = getLocationFromDtde(notification.getBody());
-                if(viewComponent.checkDropRegionHit(dropPos)) {
-                    viewComponent.dragOver();
-                }
-                break;
-            case FileDropListener.ACTION_DRAG_OVER:
-                dropPos = getLocationFromDtde(notification.getBody());
-                if(viewComponent.checkDropRegionHit(dropPos)) {
-                    viewComponent.dragOver();
-                }
-                break;
-            case FileDropListener.ACTION_DRAG_EXIT:
-                dropPos = getLocationFromDtde(notification.getBody());
-                if(viewComponent.checkDropRegionHit(dropPos)) {
-                    viewComponent.dragExit();
-                }
-                break;
-            case FileDropListener.ACTION_DROP:
-                dropPos = getLocationFromDropEvent(notification.getBody());
-                if(viewComponent.checkDropRegionHit(dropPos)) {
-                    DropTargetDropEvent dtde = notification.getBody();
-                    String[] paths = catchFiles(dtde);
-                    postPathObtainAction(paths);
-                }
-                break;
-            case ImportDialog.CANCEL_BTN_CLICKED:
-                viewComponent.setDroppingView();
-                break;
-            case ImportDialog.IMPORT_BTN_CLICKED:
-                startImport();
-                break;
+        if (Overlap2DMenuBar.IMPORT_TO_LIBRARY.equals(notification.getName())) {
+            viewComponent.show(uiStage);
+        } else if (ImportDialog.BROWSE_BTN_CLICKED.equals(notification.getName())) {
+            showFileChoose();
+        } else if (FileDropListener.ACTION_DRAG_ENTER.equals(notification.getName())) {
+            Vector2 dropPos = getLocationFromDtde(notification.getBody());
+            if (viewComponent.checkDropRegionHit(dropPos)) {
+                viewComponent.dragOver();
+            }
+        } else if (FileDropListener.ACTION_DRAG_OVER.equals(notification.getName())) {
+            Vector2 dropPos = getLocationFromDtde(notification.getBody());
+            dropPos = getLocationFromDtde(notification.getBody());
+            if (viewComponent.checkDropRegionHit(dropPos)) {
+                viewComponent.dragOver();
+            }
+        } else if (FileDropListener.ACTION_DRAG_EXIT.equals(notification.getName())) {
+            Vector2 dropPos = getLocationFromDtde(notification.getBody());
+            dropPos = getLocationFromDtde(notification.getBody());
+            if (viewComponent.checkDropRegionHit(dropPos)) {
+                viewComponent.dragExit();
+            }
+        } else if (FileDropListener.ACTION_DROP.equals(notification.getName())) {
+            Vector2 dropPos = getLocationFromDtde(notification.getBody());
+            dropPos = getLocationFromDropEvent(notification.getBody());
+            if (viewComponent.checkDropRegionHit(dropPos)) {
+                DropTargetDropEvent dtde = notification.getBody();
+                String[] paths = catchFiles(dtde);
+                postPathObtainAction(paths);
+            }
+        } else if (ImportDialog.CANCEL_BTN_CLICKED.equals(notification.getName())) {
+            viewComponent.setDroppingView();
+        } else if (ImportDialog.IMPORT_BTN_CLICKED.equals(notification.getName())) {
+            startImport();
         }
     }
 
@@ -160,7 +160,7 @@ public class ImportDialogMediator extends SimpleMediator<ImportDialog> {
     }
 
     private void showFileChoose() {
-         Sandbox sandbox = Sandbox.getInstance();
+        Sandbox sandbox = Sandbox.getInstance();
         FileChooser fileChooser = new FileChooser(FileChooser.Mode.OPEN);
 
         fileChooser.setMultiselectionEnabled(true);
@@ -168,10 +168,10 @@ public class ImportDialogMediator extends SimpleMediator<ImportDialog> {
             @Override
             public void selected(Array<FileHandle> files) {
                 String paths[] = new String[files.size];
-                for(int i = 0; i < files.size; i++) {
+                for (int i = 0; i < files.size; i++) {
                     paths[i] = files.get(i).path();
                 }
-                if(paths.length > 0) {
+                if (paths.length > 0) {
                     postPathObtainAction(paths);
                 }
             }
@@ -216,9 +216,9 @@ public class ImportDialogMediator extends SimpleMediator<ImportDialog> {
         projectManager.saveCurrentProject(vo);
     }
 
-    private  Array<FileHandle> getFilesFromPaths(String[] paths) {
+    private Array<FileHandle> getFilesFromPaths(String[] paths) {
         Array<FileHandle> files = new Array<>();
-        for(int i = 0; i < paths.length;i++) {
+        for (int i = 0; i < paths.length; i++) {
             files.add(new FileHandle(new File(paths[i])));
         }
 
@@ -228,17 +228,16 @@ public class ImportDialogMediator extends SimpleMediator<ImportDialog> {
     public String[] catchFiles(DropTargetDropEvent dtde) {
         dtde.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
 
-        Transferable t= dtde.getTransferable();
+        Transferable t = dtde.getTransferable();
         if (t.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
             try {
-                List<File> list = (List<File>)dtde.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
+                List<File> list = (List<File>) dtde.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
                 String[] paths = new String[list.size()];
-                for(int i = 0; i < list.size(); i++) {
+                for (int i = 0; i < list.size(); i++) {
                     paths[i] = list.get(i).getAbsolutePath();
                 }
                 return paths;
-            }
-            catch (Exception ufe) {
+            } catch (Exception ufe) {
             }
         }
 

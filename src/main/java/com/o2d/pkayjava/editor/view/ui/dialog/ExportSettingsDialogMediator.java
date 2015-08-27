@@ -33,8 +33,13 @@ import com.o2d.pkayjava.editor.view.ui.dialog.ExportSettingsDialog;
  * Created by sargis on 4/6/15.
  */
 public class ExportSettingsDialogMediator extends SimpleMediator<ExportSettingsDialog> {
-    private static final String TAG = ExportSettingsDialogMediator.class.getCanonicalName();
-    private static final String NAME = TAG;
+    private static final String TAG;
+    private static final String NAME;
+
+    static {
+        TAG = ExportSettingsDialogMediator.class.getName();
+        NAME = TAG;
+    }
 
     public ExportSettingsDialogMediator() {
         super(NAME, new ExportSettingsDialog());
@@ -60,19 +65,15 @@ public class ExportSettingsDialogMediator extends SimpleMediator<ExportSettingsD
         super.handleNotification(notification);
         Sandbox sandbox = Sandbox.getInstance();
         UIStage uiStage = sandbox.getUIStage();
-        switch (notification.getName()) {
-            case Overlap2DMenuBar.EXPORT_SETTINGS:
-                viewComponent.show(uiStage);
-                break;
-            case ExportSettingsDialog.SAVE_SETTINGS_AND_EXPORT_BTN_CLICKED:
-                saveExportSettings(notification.getBody());
-                exportProject(notification.getBody());
-                viewComponent.hide();
-                break;
-            case ExportSettingsDialog.SAVE_SETTINGS_BTN_CLICKED:
-                saveExportSettings(notification.getBody());
-                viewComponent.hide();
-                break;
+        if (Overlap2DMenuBar.EXPORT_SETTINGS.equals(notification.getName())) {
+            viewComponent.show(uiStage);
+        } else if (ExportSettingsDialog.SAVE_SETTINGS_AND_EXPORT_BTN_CLICKED.equals(notification.getName())) {
+            saveExportSettings(notification.getBody());
+            exportProject(notification.getBody());
+            viewComponent.hide();
+        } else if (ExportSettingsDialog.SAVE_SETTINGS_BTN_CLICKED.equals(notification.getName())) {
+            saveExportSettings(notification.getBody());
+            viewComponent.hide();
         }
     }
 

@@ -26,7 +26,17 @@ import com.puremvc.patterns.observer.BaseNotification;
  * Created by sargis on 3/30/15.
  */
 public class Overlap2DFacade extends SimpleFacade {
-    public static final String STARTUP = "startup";
+
+    private static final String TAG;
+    public static final String NAME;
+    public static final String STARTUP;
+
+    static {
+        TAG = Overlap2DFacade.class.getName();
+        NAME = TAG;
+        STARTUP = NAME + "." + ".STARTUP";
+    }
+
     private static Overlap2DFacade instance = null;
     private Overlap2D overlap2D;
 

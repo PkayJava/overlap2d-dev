@@ -38,6 +38,7 @@ import com.o2d.pkayjava.editor.view.ui.widget.ProgressHandler;
 import com.o2d.pkayjava.runtime.data.*;
 import com.o2d.pkayjava.runtime.utils.MySkin;
 import com.puremvc.patterns.proxy.BaseProxy;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.w3c.dom.NodeList;
@@ -47,6 +48,7 @@ import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -59,12 +61,18 @@ import java.util.concurrent.Executors;
 
 
 public class ProjectManager extends BaseProxy {
-    private static final String TAG = ProjectManager.class.getCanonicalName();
-    public static final String NAME = TAG;
-    private static final String EVENT_PREFIX = "ProjectManager";
+    private static final String TAG;
+    public static final String NAME;
 
-    public static final String PROJECT_OPENED = EVENT_PREFIX + ".PROJECT_OPENED";
-    public static final String PROJECT_DATA_UPDATED = EVENT_PREFIX + ".PROJECT_DATA_UPDATED";
+    public static final String PROJECT_OPENED;
+    public static final String PROJECT_DATA_UPDATED;
+
+    static {
+        TAG = ProjectManager.class.getName();
+        NAME = TAG;
+        PROJECT_OPENED = NAME + "." + "PROJECT_OPENED";
+        PROJECT_DATA_UPDATED = NAME + "." + "PROJECT_DATA_UPDATED";
+    }
 
     public ProjectVO currentProjectVO;
     public ProjectInfoVO currentProjectInfoVO;
@@ -498,11 +506,11 @@ public class ProjectManager extends BaseProxy {
         Array<File> imgs = getAtlasPages(fileHandle);
 
         Array<FileHandle> imgHandles = new Array<>();
-        for(int i = 0; i < imgs.size; i++) {
+        for (int i = 0; i < imgs.size; i++) {
             imgHandles.add(new FileHandle(imgs.get(i)));
         }
 
-        return  imgHandles;
+        return imgHandles;
     }
 
     private boolean addParticleEffectImages(FileHandle fileHandle, Array<FileHandle> imgs) {
@@ -513,15 +521,15 @@ public class ProjectManager extends BaseProxy {
                 if (line == null) break;
                 if (line.trim().equals("- Image Path -")) {
                     line = reader.readLine();
-                    if(line.contains("\\") || line.contains("/")) {
+                    if (line.contains("\\") || line.contains("/")) {
                         // then it's a path let's see if exists.
                         File tmp = new File(line);
-                        if(tmp.exists()) {
+                        if (tmp.exists()) {
                             imgs.add(new FileHandle(tmp));
                         } else {
                             line = FilenameUtils.getBaseName(line) + ".png";
                             File file = new File(FilenameUtils.getFullPath(fileHandle.path()) + line);
-                            if(file.exists()) {
+                            if (file.exists()) {
                                 imgs.add(new FileHandle(file));
                             } else {
                                 return false;
@@ -529,7 +537,7 @@ public class ProjectManager extends BaseProxy {
                         }
                     } else {
                         File file = new File(FilenameUtils.getFullPath(fileHandle.path()) + line);
-                        if(file.exists()) {
+                        if (file.exists()) {
                             imgs.add(new FileHandle(file));
                         } else {
                             return false;
@@ -559,7 +567,7 @@ public class ProjectManager extends BaseProxy {
                     try {
                         //copy images
                         boolean allImagesFound = addParticleEffectImages(fileHandle, imgs);
-                        if(allImagesFound) {
+                        if (allImagesFound) {
                             // copy the fileHandle
                             String newName = fileHandle.name();
                             File target = new File(targetPath + "/" + newName);
@@ -572,7 +580,7 @@ public class ProjectManager extends BaseProxy {
                     }
                 }
             }
-            if(imgs.size > 0) {
+            if (imgs.size > 0) {
                 copyImageFilesForAllResolutionsIntoProject(imgs, false);
             }
             ResolutionManager resolutionManager = facade.retrieveProxy(ResolutionManager.NAME);
@@ -611,7 +619,6 @@ public class ProjectManager extends BaseProxy {
         });
         executor.shutdown();
     }
-
 
 
     public void importImagesIntoProject(final Array<FileHandle> files, ProgressHandler progressHandler) {
@@ -1032,8 +1039,8 @@ public class ProjectManager extends BaseProxy {
     }
 
     public SceneConfigVO getCurrentSceneConfigVO() {
-        for(int i = 0; i < currentProjectVO.sceneConfigs.size(); i++) {
-            if(currentProjectVO.sceneConfigs.get(i).sceneName.equals(Sandbox.getInstance().getSceneControl().getCurrentSceneVO().sceneName)) {
+        for (int i = 0; i < currentProjectVO.sceneConfigs.size(); i++) {
+            if (currentProjectVO.sceneConfigs.get(i).sceneName.equals(Sandbox.getInstance().getSceneControl().getCurrentSceneVO().sceneName)) {
                 return currentProjectVO.sceneConfigs.get(i);
             }
         }
@@ -1056,7 +1063,7 @@ public class ProjectManager extends BaseProxy {
             for (FileHandle handle : files) {
                 // check if shaders folder exists
                 String shadersPath = currentWorkingPath + "/" + currentProjectVO.projectName + "/assets/shaders";
-                File destination = new File(currentWorkingPath + "/" + currentProjectVO.projectName + "/assets/shaders/"+handle.name());
+                File destination = new File(currentWorkingPath + "/" + currentProjectVO.projectName + "/assets/shaders/" + handle.name());
                 try {
                     FileUtils.forceMkdir(new File(shadersPath));
                     FileUtils.copyFile(handle.file(), destination);

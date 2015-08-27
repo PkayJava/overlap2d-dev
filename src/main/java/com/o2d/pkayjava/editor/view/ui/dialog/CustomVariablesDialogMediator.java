@@ -28,7 +28,6 @@ import com.o2d.pkayjava.editor.view.stage.Sandbox;
 import com.o2d.pkayjava.editor.Overlap2DFacade;
 import com.o2d.pkayjava.editor.view.menu.Overlap2DMenuBar;
 import com.o2d.pkayjava.editor.view.stage.UIStage;
-import com.o2d.pkayjava.editor.view.ui.dialog.CustomVariablesDialog;
 import com.o2d.pkayjava.editor.view.ui.properties.panels.UIBasicItemProperties;
 import com.o2d.pkayjava.runtime.components.MainItemComponent;
 import com.o2d.pkayjava.runtime.utils.CustomVariables;
@@ -37,14 +36,19 @@ import com.o2d.pkayjava.runtime.utils.ComponentRetriever;
 /**
  * Created by azakhary on 5/12/2015.
  */
-public class CustomVariablesDialogMediator extends SimpleMediator<com.o2d.pkayjava.editor.view.ui.dialog.CustomVariablesDialog> {
-    private static final String TAG = CustomVariablesDialogMediator.class.getCanonicalName();
-    private static final String NAME = TAG;
+public class CustomVariablesDialogMediator extends SimpleMediator<CustomVariablesDialog> {
+    private static final String TAG;
+    private static final String NAME;
+
+    static {
+        TAG = CustomVariablesDialogMediator.class.getName();
+        NAME = TAG;
+    }
 
     private Entity observable = null;
 
     public CustomVariablesDialogMediator() {
-        super(NAME, new com.o2d.pkayjava.editor.view.ui.dialog.CustomVariablesDialog());
+        super(NAME, new CustomVariablesDialog());
     }
 
     @Override
@@ -57,12 +61,12 @@ public class CustomVariablesDialogMediator extends SimpleMediator<com.o2d.pkayja
     @Override
     public String[] listNotificationInterests() {
         return new String[]{
-                com.o2d.pkayjava.editor.Overlap2D.ITEM_SELECTION_CHANGED,
-                com.o2d.pkayjava.editor.Overlap2D.EMPTY_SPACE_CLICKED,
-                com.o2d.pkayjava.editor.view.ui.properties.panels.UIBasicItemProperties.CUSTOM_VARS_BUTTON_CLICKED,
-                com.o2d.pkayjava.editor.view.ui.dialog.CustomVariablesDialog.ADD_BUTTON_PRESSED,
-                com.o2d.pkayjava.editor.view.ui.dialog.CustomVariablesDialog.DELETE_BUTTON_PRESSED,
-                com.o2d.pkayjava.editor.view.menu.Overlap2DMenuBar.CUSTOM_VARIABLES_EDITOR_OPEN
+                Overlap2D.ITEM_SELECTION_CHANGED,
+                Overlap2D.EMPTY_SPACE_CLICKED,
+                UIBasicItemProperties.CUSTOM_VARS_BUTTON_CLICKED,
+                CustomVariablesDialog.ADD_BUTTON_PRESSED,
+                CustomVariablesDialog.DELETE_BUTTON_PRESSED,
+                Overlap2DMenuBar.CUSTOM_VARIABLES_EDITOR_OPEN
         };
     }
 
@@ -70,33 +74,26 @@ public class CustomVariablesDialogMediator extends SimpleMediator<com.o2d.pkayja
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
 
-        com.o2d.pkayjava.editor.view.stage.Sandbox sandbox = com.o2d.pkayjava.editor.view.stage.Sandbox.getInstance();
-        com.o2d.pkayjava.editor.view.stage.UIStage uiStage = sandbox.getUIStage();
+        Sandbox sandbox = Sandbox.getInstance();
+        UIStage uiStage = sandbox.getUIStage();
 
-        switch (notification.getName()) {
-            case com.o2d.pkayjava.editor.view.menu.Overlap2DMenuBar.CUSTOM_VARIABLES_EDITOR_OPEN:
-                viewComponent.show(uiStage);
-                break;
-            case com.o2d.pkayjava.editor.view.ui.properties.panels.UIBasicItemProperties.CUSTOM_VARS_BUTTON_CLICKED:
-                viewComponent.show(uiStage);
-                break;
-            case com.o2d.pkayjava.editor.Overlap2D.ITEM_SELECTION_CHANGED:
-                Set<Entity> selection = notification.getBody();
-                if(selection.size() == 1) {
-                    setObservable(selection.iterator().next());
-                }
-                break;
-            case com.o2d.pkayjava.editor.Overlap2D.EMPTY_SPACE_CLICKED:
-                setObservable(null);
-                break;
-            case com.o2d.pkayjava.editor.view.ui.dialog.CustomVariablesDialog.ADD_BUTTON_PRESSED:
-                setVariable();
-                updateView();
-                break;
-            case com.o2d.pkayjava.editor.view.ui.dialog.CustomVariablesDialog.DELETE_BUTTON_PRESSED:
-                removeVariable(notification.getBody());
-                updateView();
-                break;
+        if (Overlap2DMenuBar.CUSTOM_VARIABLES_EDITOR_OPEN.equals(notification.getName())) {
+            viewComponent.show(uiStage);
+        } else if (UIBasicItemProperties.CUSTOM_VARS_BUTTON_CLICKED.equals(notification.getName())) {
+            viewComponent.show(uiStage);
+        } else if (Overlap2D.ITEM_SELECTION_CHANGED.equals(notification.getName())) {
+            Set<Entity> selection = notification.getBody();
+            if (selection.size() == 1) {
+                setObservable(selection.iterator().next());
+            }
+        } else if (Overlap2D.EMPTY_SPACE_CLICKED.equals(notification.getName())) {
+            setObservable(null);
+        } else if (CustomVariablesDialog.ADD_BUTTON_PRESSED.equals(notification.getName())) {
+            setVariable();
+            updateView();
+        } else if (CustomVariablesDialog.DELETE_BUTTON_PRESSED.equals(notification.getName())) {
+            removeVariable(notification.getBody());
+            updateView();
         }
     }
 
@@ -126,7 +123,7 @@ public class CustomVariablesDialogMediator extends SimpleMediator<com.o2d.pkayja
     }
 
     private void updateView() {
-        if(observable == null) {
+        if (observable == null) {
             viewComponent.setEmpty();
         } else {
             CustomVariables vars = new CustomVariables();

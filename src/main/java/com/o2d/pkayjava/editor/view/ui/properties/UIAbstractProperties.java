@@ -26,6 +26,12 @@ import com.o2d.pkayjava.editor.Overlap2DFacade;
  */
 public abstract class UIAbstractProperties extends VisTable {
 
+    private static final String TAG;
+
+    static {
+        TAG = UIAbstractProperties.class.getName();
+    }
+
     protected final Overlap2DFacade facade;
 
     public UIAbstractProperties() {
@@ -33,10 +39,10 @@ public abstract class UIAbstractProperties extends VisTable {
     }
 
     public String getPrefix() {
-        return "com.uwsoft.editor.view.ui.properties";
+        return TAG;
     }
 
     public String getUpdateEventName() {
-        return getPrefix()+"." + "PROPERTIES_UPDATED";
+        return getPrefix() + "." + "PROPERTIES_UPDATED";
     }
 }

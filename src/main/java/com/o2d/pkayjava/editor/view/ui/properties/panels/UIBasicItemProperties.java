@@ -43,12 +43,23 @@ import com.o2d.pkayjava.editor.utils.StandardWidgetsFactory;
  */
 public class UIBasicItemProperties extends UIItemProperties {
 
-    public static final String prefix = "com.uwsoft.editor.view.ui.properties.panels.UIBasicItemProperties";
-    public static final String TINT_COLOR_BUTTON_CLICKED = prefix + ".TINT_COLOR_BUTTON_CLICKED";
-    public static final String CUSTOM_VARS_BUTTON_CLICKED = prefix + ".CUSTOM_VARS_BUTTON_CLICKED";
-    public static final String TAGS_BUTTON_CLICKED = prefix + ".TAGS_BUTTON_CLICKED";
-    public static final String ADD_COMPONENT_BUTTON_CLICKED = prefix + "ADD_COMPONENT_BUTTON_CLICKED";
-    public static final String LINKING_CHANGED = prefix + ".LINKING_CHANGED";
+    private static final String TAG;
+    public static final String NAME;
+    public static final String TINT_COLOR_BUTTON_CLICKED;
+    public static final String CUSTOM_VARS_BUTTON_CLICKED;
+    public static final String TAGS_BUTTON_CLICKED;
+    public static final String ADD_COMPONENT_BUTTON_CLICKED;
+    public static final String LINKING_CHANGED;
+
+    static {
+        TAG = UIBasicItemProperties.class.getName();
+        NAME = TAG;
+        TINT_COLOR_BUTTON_CLICKED = NAME + "." + "TINT_COLOR_BUTTON_CLICKED";
+        CUSTOM_VARS_BUTTON_CLICKED = NAME + "." + "CUSTOM_VARS_BUTTON_CLICKED";
+        TAGS_BUTTON_CLICKED = NAME + "." + "TAGS_BUTTON_CLICKED";
+        ADD_COMPONENT_BUTTON_CLICKED = NAME + "." + "ADD_COMPONENT_BUTTON_CLICKED";
+        LINKING_CHANGED = NAME + "." + "LINKING_CHANGED";
+    }
 
     public enum ItemType {
         multiple,
@@ -205,7 +216,7 @@ public class UIBasicItemProperties extends UIItemProperties {
     }
 
     public void setItemType(ItemType type, int itemUniqueId) {
-        itemType.setText(itemTypeNameMap.get(type) + " ("+itemUniqueId+")");
+        itemType.setText(itemTypeNameMap.get(type) + " (" + itemUniqueId + ")");
         itemTypeIcon.setDrawable(VisUI.getSkin().getDrawable(itemTypeIconMap.get(type)));
         itemTypeIcon.setWidth(22);
     }
@@ -302,7 +313,7 @@ public class UIBasicItemProperties extends UIItemProperties {
 
     @Override
     public String getPrefix() {
-        return prefix;
+        return NAME;
     }
 
     private void setListeners() {

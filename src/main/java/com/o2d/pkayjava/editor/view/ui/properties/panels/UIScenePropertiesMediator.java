@@ -26,6 +26,7 @@ import com.o2d.pkayjava.editor.view.ui.widget.components.color.CustomColorPicker
 import com.o2d.pkayjava.runtime.data.PhysicsPropertiesVO;
 import com.o2d.pkayjava.runtime.data.SceneVO;
 import com.puremvc.patterns.observer.Notification;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -33,8 +34,13 @@ import org.apache.commons.lang3.math.NumberUtils;
  * Created by azakhary on 4/16/2015.
  */
 public class UIScenePropertiesMediator extends UIAbstractPropertiesMediator<SceneVO, UISceneProperties> {
-    private static final String TAG = UIScenePropertiesMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = UIScenePropertiesMediator.class.getName();
+        NAME = TAG;
+    }
 
     public UIScenePropertiesMediator() {
         super(NAME, new UISceneProperties());
@@ -53,29 +59,23 @@ public class UIScenePropertiesMediator extends UIAbstractPropertiesMediator<Scen
     @Override
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
+        if (UISceneProperties.AMBIENT_COLOR_BUTTON_CLICKED.equals(notification.getName())) {
+            CustomColorPicker picker = new CustomColorPicker(new ColorPickerAdapter() {
+                @Override
+                public void finished(Color newColor) {
+                    viewComponent.setAmbientColor(newColor);
+                    facade.sendNotification(viewComponent.getUpdateEventName());
+                }
 
-        switch (notification.getName()) {
-            case UISceneProperties.AMBIENT_COLOR_BUTTON_CLICKED:
-                CustomColorPicker picker = new CustomColorPicker(new ColorPickerAdapter() {
-                    @Override
-                    public void finished(Color newColor) {
-                        viewComponent.setAmbientColor(newColor);
-                        facade.sendNotification(viewComponent.getUpdateEventName());
-                    }
+                @Override
+                public void changed(Color newColor) {
+                    viewComponent.setAmbientColor(newColor);
+                    facade.sendNotification(viewComponent.getUpdateEventName());
+                }
+            });
 
-                    @Override
-                    public void changed(Color newColor) {
-                        viewComponent.setAmbientColor(newColor);
-                        facade.sendNotification(viewComponent.getUpdateEventName());
-                    }
-                });
-
-                picker.setColor(viewComponent.getAmbientColor());
-                Sandbox.getInstance().getUIStage().addActor(picker.fadeIn());
-
-                break;
-            default:
-                break;
+            picker.setColor(viewComponent.getAmbientColor());
+            Sandbox.getInstance().getUIStage().addActor(picker.fadeIn());
         }
     }
 

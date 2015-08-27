@@ -10,6 +10,7 @@ import com.o2d.pkayjava.runtime.components.physics.PhysicsBodyComponent;
 import com.o2d.pkayjava.editor.view.stage.Sandbox;
 import com.o2d.pkayjava.editor.view.ui.properties.UIItemPropertiesMediator;
 import com.o2d.pkayjava.editor.view.ui.properties.panels.UIPhysicsProperties;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -18,8 +19,13 @@ import org.apache.commons.lang3.math.NumberUtils;
  */
 public class UIPhysicsPropertiesMediator extends UIItemPropertiesMediator<Entity, UIPhysicsProperties> {
 
-    private static final String TAG = com.uwsoft.editor.view.ui.properties.panels.UIPhysicsPropertiesMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = UIPhysicsPropertiesMediator.class.getName();
+        NAME = TAG;
+    }
 
     private PhysicsBodyComponent physicsComponent;
 
@@ -40,11 +46,8 @@ public class UIPhysicsPropertiesMediator extends UIItemPropertiesMediator<Entity
     @Override
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
-
-        switch (notification.getName()) {
-            case UIPhysicsProperties.CLOSE_CLICKED:
-                Overlap2DFacade.getInstance().sendNotification(Sandbox.ACTION_REMOVE_COMPONENT, RemoveComponentFromItemCommand.payload(observableReference, PhysicsBodyComponent.class));
-                break;
+        if (UIPhysicsProperties.CLOSE_CLICKED.equals(notification.getName())) {
+            Overlap2DFacade.getInstance().sendNotification(Sandbox.ACTION_REMOVE_COMPONENT, RemoveComponentFromItemCommand.payload(observableReference, PhysicsBodyComponent.class));
         }
     }
 

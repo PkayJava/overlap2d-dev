@@ -19,6 +19,7 @@
 package com.o2d.pkayjava.editor.view.ui.dialog;
 
 import com.commons.O2DDialog;
+
 import org.apache.commons.lang3.math.NumberUtils;
 
 import com.badlogic.ashley.core.Entity;
@@ -40,11 +41,22 @@ import com.o2d.pkayjava.editor.event.ClickNotifier;
  */
 public class PhysicsEditorDialog extends O2DDialog {
 
-    public static final String PREFIX = "com.uwsoft.editor.view.ui.dialog.PhysicsEditorDialog";
-    public static final String SAVE_CLICKED = PREFIX + ".SAVE_CLICKED";
-    public static final String RETRACE_CLICKED = PREFIX + ".RETRACE_CLICKED";
-    public static final String CLEAR_MESH_CLICKED = PREFIX + ".CLEAR_MESH_CLICKED";
-    public static final String CREATE_FRESH_COPY_CLICKED = PREFIX + ".CREATE_FRESH_COPY_CLICKED";
+    private static final String TAG;
+    public static final String NAME;
+
+    public static final String SAVE_CLICKED;
+    public static final String RETRACE_CLICKED;
+    public static final String CLEAR_MESH_CLICKED;
+    public static final String CREATE_FRESH_COPY_CLICKED;
+
+    static {
+        TAG = PhysicsEditorDialog.class.getName();
+        NAME = TAG;
+        SAVE_CLICKED = NAME + "." + "SAVE_CLICKED";
+        RETRACE_CLICKED = NAME + "." + "RETRACE_CLICKED";
+        CLEAR_MESH_CLICKED = NAME + "." + "CLEAR_MESH_CLICKED";
+        CREATE_FRESH_COPY_CLICKED = NAME + "." + "CREATE_FRESH_COPY_CLICKED";
+    }
 
     private VisTable mainTable;
     private VisTable controlsTable;
@@ -397,10 +409,10 @@ public class PhysicsEditorDialog extends O2DDialog {
 
     //public ItemPhysicsEditor getItemPhysicsEditor() {
     //    return itemPhysicsEditor;
-   // }
+    // }
 
     public boolean isAllowSleep() {
-        return  allowSleepBox.isChecked();
+        return allowSleepBox.isChecked();
     }
 
     public void setAllowSleep(boolean isAllowSleep) {
@@ -408,7 +420,7 @@ public class PhysicsEditorDialog extends O2DDialog {
     }
 
     public boolean isAwake() {
-        return  awakeBox.isChecked();
+        return awakeBox.isChecked();
     }
 
     public void setAwake(boolean isAwake) {
@@ -416,7 +428,7 @@ public class PhysicsEditorDialog extends O2DDialog {
     }
 
     public boolean isBullet() {
-        return  bulletBox.isChecked();
+        return bulletBox.isChecked();
     }
 
     public void setBullet(boolean isBullet) {

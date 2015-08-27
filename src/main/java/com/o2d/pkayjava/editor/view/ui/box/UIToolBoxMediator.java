@@ -29,11 +29,16 @@ import com.o2d.pkayjava.editor.view.ui.box.UIToolBox;
  * Created by sargis on 4/9/15.
  */
 public class UIToolBoxMediator extends SimpleMediator<UIToolBox> {
-    private static final String TAG = UIToolBoxMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
 
-    private static final String PREFIX =  "UIToolBoxMediator.";
-    public static final String TOOL_SELECTED = PREFIX + ".TOOL_CHANGED";
+    public static final String TOOL_SELECTED;
+
+    static {
+        TAG = UIToolBoxMediator.class.getName();
+        NAME = TAG;
+        TOOL_SELECTED = NAME + "." + "TOOL_CHANGED";
+    }
 
 
     private String currentTool;

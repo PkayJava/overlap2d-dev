@@ -18,31 +18,35 @@
 
 package com.o2d.pkayjava.editor.view.ui.dialog;
 
+import com.o2d.pkayjava.editor.proxy.ProjectManager;
 import com.puremvc.patterns.mediator.SimpleMediator;
 import com.puremvc.patterns.observer.Notification;
 import com.o2d.pkayjava.editor.view.stage.Sandbox;
 import com.o2d.pkayjava.editor.Overlap2DFacade;
-import com.o2d.pkayjava.editor.proxy.ProjectManager;
 import com.o2d.pkayjava.editor.view.menu.Overlap2DMenuBar;
 import com.o2d.pkayjava.editor.view.stage.UIStage;
-import com.o2d.pkayjava.editor.view.ui.dialog.NewProjectDialog;
 
 /**
  * Created by sargis on 4/1/15.
  */
-public class NewProjectDialogMediator extends SimpleMediator<com.o2d.pkayjava.editor.view.ui.dialog.NewProjectDialog> {
-    private static final String TAG = NewProjectDialogMediator.class.getCanonicalName();
-    private static final String NAME = TAG;
+public class NewProjectDialogMediator extends SimpleMediator<NewProjectDialog> {
+    private static final String TAG;
+    private static final String NAME;
+
+    static {
+        TAG = NewProjectDialogMediator.class.getName();
+        NAME = TAG;
+    }
 
     public NewProjectDialogMediator() {
-        super(NAME, new com.o2d.pkayjava.editor.view.ui.dialog.NewProjectDialog());
+        super(NAME, new NewProjectDialog());
     }
 
     @Override
     public String[] listNotificationInterests() {
         return new String[]{
                 com.o2d.pkayjava.editor.view.menu.Overlap2DMenuBar.NEW_PROJECT,
-                com.o2d.pkayjava.editor.view.ui.dialog.NewProjectDialog.CREATE_BTN_CLICKED
+                NewProjectDialog.CREATE_BTN_CLICKED
         };
     }
 
@@ -51,7 +55,7 @@ public class NewProjectDialogMediator extends SimpleMediator<com.o2d.pkayjava.ed
         super.onRegister();
         facade = com.o2d.pkayjava.editor.Overlap2DFacade.getInstance();
 
-        com.o2d.pkayjava.editor.proxy.ProjectManager projectManager = facade.retrieveProxy(com.o2d.pkayjava.editor.proxy.ProjectManager.NAME);
+        ProjectManager projectManager = facade.retrieveProxy(ProjectManager.NAME);
         viewComponent.setDefaultWorkspacePath(projectManager.getWorkspacePath());
     }
 
@@ -60,21 +64,17 @@ public class NewProjectDialogMediator extends SimpleMediator<com.o2d.pkayjava.ed
         super.handleNotification(notification);
         com.o2d.pkayjava.editor.view.stage.Sandbox sandbox = com.o2d.pkayjava.editor.view.stage.Sandbox.getInstance();
         com.o2d.pkayjava.editor.view.stage.UIStage uiStage = sandbox.getUIStage();
-        switch (notification.getName()) {
-            case com.o2d.pkayjava.editor.view.menu.Overlap2DMenuBar.NEW_PROJECT:
-                viewComponent.show(uiStage);
-                break;
-            case com.o2d.pkayjava.editor.view.ui.dialog.NewProjectDialog.CREATE_BTN_CLICKED:
-                com.o2d.pkayjava.editor.proxy.ProjectManager projectManager = facade.retrieveProxy(com.o2d.pkayjava.editor.proxy.ProjectManager.NAME);
-                int originWidth = Integer.parseInt(viewComponent.getOriginWidth());
-                int originHeight = Integer.parseInt(viewComponent.getOriginHeight());
-                int pixelPerWorldUnit = Integer.parseInt(viewComponent.getPixelPerWorldUnit());
-                projectManager.createNewProject(notification.getBody(), originWidth, originHeight, pixelPerWorldUnit);
-                //TODO: this should be not here
-                sandbox.loadCurrentProject();
-                viewComponent.hide();
-                break;
+        if (Overlap2DMenuBar.NEW_PROJECT.equals(notification.getName())) {
+            viewComponent.show(uiStage);
+        } else if (NewProjectDialog.CREATE_BTN_CLICKED.equals(notification.getName())) {
+            ProjectManager projectManager = facade.retrieveProxy(ProjectManager.NAME);
+            int originWidth = Integer.parseInt(viewComponent.getOriginWidth());
+            int originHeight = Integer.parseInt(viewComponent.getOriginHeight());
+            int pixelPerWorldUnit = Integer.parseInt(viewComponent.getPixelPerWorldUnit());
+            projectManager.createNewProject(notification.getBody(), originWidth, originHeight, pixelPerWorldUnit);
+            //TODO: this should be not here
+            sandbox.loadCurrentProject();
+            viewComponent.hide();
         }
-
     }
 }

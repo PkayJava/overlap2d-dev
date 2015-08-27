@@ -29,8 +29,13 @@ import com.o2d.pkayjava.editor.Overlap2DFacade;
  */
 public class FontManager extends BaseProxy {
 
-    private static final String TAG = FontManager.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = FontManager.class.getCanonicalName();
+        NAME = TAG;
+    }
 
     private static final String cache_name = "overlap2d-fonts-cache";
 
@@ -61,16 +66,16 @@ public class FontManager extends BaseProxy {
             String path = System.getenv("WINDIR");
             result[0] = path + "\\" + "Fonts";
             return result;
-        } else if(SystemUtils.IS_OS_MAC_OSX || SystemUtils.IS_OS_MAC) {
+        } else if (SystemUtils.IS_OS_MAC_OSX || SystemUtils.IS_OS_MAC) {
             result = new String[1];
-            result[0] = System.getProperty("user.home")+File.separator + "Library/Fonts";
+            result[0] = System.getProperty("user.home") + File.separator + "Library/Fonts";
             //result[1] = "/Library/Fonts";
             //result[2] = "/System/Library/Fonts";
             return result;
         } else if (SystemUtils.IS_OS_LINUX) {
-            String path = System.getProperty("user.home")+File.separator + ".fonts";
+            String path = System.getProperty("user.home") + File.separator + ".fonts";
             File tmp = new File(path);
-            if(tmp.exists() && tmp.isDirectory()) {
+            if (tmp.exists() && tmp.isDirectory()) {
                 result = new String[1];
                 result[0] = path;
             } else {
@@ -84,12 +89,12 @@ public class FontManager extends BaseProxy {
 
     public List<File> getSystemFontFiles() {
         // only retrieving ttf files
-        String[] extensions = new String[] { "ttf", "TTF" };
+        String[] extensions = new String[]{"ttf", "TTF"};
         String[] paths = getSystemFontsPaths();
 
         ArrayList<File> files = new ArrayList<>();
 
-        for(int i = 0; i < paths.length; i++) {
+        for (int i = 0; i < paths.length; i++) {
             File fontDirectory = new File(paths[i]);
             if (!fontDirectory.exists() || !fontDirectory.isDirectory()) {
                 continue;
@@ -106,7 +111,7 @@ public class FontManager extends BaseProxy {
         for (File file : fontFiles) {
             Font f = null;
             try {
-                if(!systemFontMap.containsValue(file.getAbsolutePath())) {
+                if (!systemFontMap.containsValue(file.getAbsolutePath())) {
                     f = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(file.getAbsolutePath()));
                     String name = f.getFamily();
                     systemFontMap.put(name, file.getAbsolutePath());
@@ -123,14 +128,14 @@ public class FontManager extends BaseProxy {
     }
 
     public void loadCachedSystemFontMap() {
-        systemFontMap = (HashMap<String, String>)prefs.get();
+        systemFontMap = (HashMap<String, String>) prefs.get();
     }
 
     public void invalidateFontMap() {
         Array<String> names = new Array<>(getSystemFontNames());
-        for(Iterator<Map.Entry<String, String>> it = systemFontMap.entrySet().iterator(); it.hasNext(); ) {
+        for (Iterator<Map.Entry<String, String>> it = systemFontMap.entrySet().iterator(); it.hasNext(); ) {
             Map.Entry<String, String> entry = it.next();
-            if(!names.contains(entry.getKey(), false)) {
+            if (!names.contains(entry.getKey(), false)) {
                 it.remove();
             }
         }

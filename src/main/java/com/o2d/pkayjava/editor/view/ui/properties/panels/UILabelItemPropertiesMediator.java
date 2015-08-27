@@ -10,6 +10,7 @@ import com.o2d.pkayjava.editor.view.ui.properties.UIItemPropertiesMediator;
 import com.o2d.pkayjava.runtime.components.label.LabelComponent;
 import com.o2d.pkayjava.runtime.utils.ComponentRetriever;
 import com.o2d.pkayjava.editor.view.ui.properties.panels.UILabelItemProperties;
+
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Arrays;
@@ -19,8 +20,13 @@ import java.util.Arrays;
  */
 public class UILabelItemPropertiesMediator extends UIItemPropertiesMediator<Entity, UILabelItemProperties> {
 
-    private static final String TAG = com.uwsoft.editor.view.ui.properties.panels.UILabelItemPropertiesMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = UILabelItemPropertiesMediator.class.getName();
+        NAME = TAG;
+    }
 
     private String prevText = null;
 
@@ -39,7 +45,7 @@ public class UILabelItemPropertiesMediator extends UIItemPropertiesMediator<Enti
     @Override
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
-        if(notification.getName().equals(UILabelItemProperties.LABEL_TEXT_CHAR_TYPED)) {
+        if (notification.getName().equals(UILabelItemProperties.LABEL_TEXT_CHAR_TYPED)) {
             onTextChange();
         }
     }
@@ -67,7 +73,7 @@ public class UILabelItemPropertiesMediator extends UIItemPropertiesMediator<Enti
         viewComponent.setAlignValue(labelComponent.labelAlign);
         viewComponent.setText(labelComponent.text.toString());
 
-        if(prevText == null) this.prevText = viewComponent.getText();
+        if (prevText == null) this.prevText = viewComponent.getText();
     }
 
     @Override

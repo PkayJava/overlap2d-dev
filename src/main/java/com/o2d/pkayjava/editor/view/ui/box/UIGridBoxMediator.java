@@ -29,8 +29,13 @@ import com.o2d.pkayjava.editor.view.ui.box.UIGridBox;
  * Created by azakhary on 4/15/2015.
  */
 public class UIGridBoxMediator extends SimpleMediator<UIGridBox> {
-    private static final String TAG = UIGridBoxMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = UIGridBoxMediator.class.getName();
+        NAME = TAG;
+    }
 
     public UIGridBoxMediator() {
         super(NAME, new UIGridBox());
@@ -49,21 +54,14 @@ public class UIGridBoxMediator extends SimpleMediator<UIGridBox> {
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
         Sandbox sandbox = Sandbox.getInstance();
-
-        switch (notification.getName()) {
-            case ProjectManager.PROJECT_OPENED:
-                viewComponent.update();
-                viewComponent.setGridSize(sandbox.getGridSize());
-                break;
-            case Overlap2D.GRID_SIZE_CHANGED:
-                viewComponent.setGridSize(sandbox.getGridSize());
-                break;
-            case UIGridBox.GRID_SIZE_TEXT_FIELD_UPDATED:
-                String body = notification.getBody();
-                sandbox.setGridSize(Integer.parseInt(body));
-                break;
-            default:
-                break;
+        if (ProjectManager.PROJECT_OPENED.equals(notification.getName())) {
+            viewComponent.update();
+            viewComponent.setGridSize(sandbox.getGridSize());
+        } else if (Overlap2D.GRID_SIZE_CHANGED.equals(notification.getName())) {
+            viewComponent.setGridSize(sandbox.getGridSize());
+        } else if (UIGridBox.GRID_SIZE_TEXT_FIELD_UPDATED.equals(notification.getName())) {
+            String body = notification.getBody();
+            sandbox.setGridSize(Integer.parseInt(body));
         }
     }
 }

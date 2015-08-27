@@ -31,12 +31,17 @@ import com.o2d.pkayjava.editor.event.MenuItemListener;
  */
 public class UIDropDownMenu extends PopupMenu {
 
-    private static final String CLASS_NAME = "com.uwsoft.editor.view.ui.UIDropDownMenu";
+    private static final String TAG;
+    public static final String NAME;
+    public static final String ACTION_EDIT_RESOURCE_PHYSICS;
+    public static final String ITEM_CLICKED;
 
-
-    public static final String ACTION_EDIT_RESOURCE_PHYSICS = CLASS_NAME + "ACTION_EDIT_RESOURCE_PHYSICS";
-
-    public static final String ITEM_CLICKED = CLASS_NAME + ".ACTION_CLICKED";
+    static {
+        TAG = UIDropDownMenu.class.getName();
+        NAME = TAG;
+        ACTION_EDIT_RESOURCE_PHYSICS = NAME + "." + "ACTION_EDIT_RESOURCE_PHYSICS";
+        ITEM_CLICKED = NAME + "." + "ACTION_CLICKED";
+    }
 
     private Array<String> currentActionList = new Array<>();
 
@@ -76,7 +81,7 @@ public class UIDropDownMenu extends PopupMenu {
     private void initView() {
         clear();
 
-        for(int i = 0; i < currentActionList.size; i++) {
+        for (int i = 0; i < currentActionList.size; i++) {
             String itemName = actionNames.get(currentActionList.get(i));
             MenuItem menuItem = new MenuItem(itemName, new MenuItemListener(ITEM_CLICKED, currentActionList.get(i)));
             addItem(menuItem);

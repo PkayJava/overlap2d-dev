@@ -8,9 +8,15 @@ import com.o2d.pkayjava.editor.view.ui.properties.panels.UILabelItemProperties;
  */
 public class UITextToolProperties extends UILabelItemProperties {
 
-    public static final String prefix = "com.uwsoft.editor.view.ui.properties.panels.UITextToolProperties";
+    private static final String TAG;
+    public static final String NAME;
+    public static final String FONT_FAMILY_SELECTED;
 
-    public static final String FONT_FAMILY_SELECTED = prefix + ".FONT_FAMILY_SELECTED";
+    static {
+        TAG = UITextToolProperties.class.getName();
+        NAME = TAG;
+        FONT_FAMILY_SELECTED = NAME + "." + "FONT_FAMILY_SELECTED";
+    }
 
     public UITextToolProperties() {
         super();

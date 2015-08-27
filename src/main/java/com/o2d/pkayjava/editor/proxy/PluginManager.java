@@ -40,8 +40,13 @@ import java.util.Set;
  * Created by azakhary on 7/24/2015.
  */
 public class PluginManager extends BaseProxy implements PluginAPI {
-    private static final String TAG = PluginManager.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = PluginManager.class.getCanonicalName();
+        NAME = TAG;
+    }
 
     private ArrayList<O2DPlugin> plugins = new ArrayList<>();
 
@@ -57,7 +62,7 @@ public class PluginManager extends BaseProxy implements PluginAPI {
     }
 
     public void initPlugin(O2DPlugin plugin) {
-        if(plugins.contains(plugin)) return;
+        if (plugins.contains(plugin)) return;
 
         registerPlugin(plugin);
 
@@ -70,7 +75,7 @@ public class PluginManager extends BaseProxy implements PluginAPI {
     }
 
     public void dropDownActionSets(Set<Entity> selectedEntities, Array<String> actionsSet) {
-        for(O2DPlugin plugin: plugins) {
+        for (O2DPlugin plugin : plugins) {
             plugin.onDropDownOpen(selectedEntities, actionsSet);
         }
     }

@@ -28,8 +28,13 @@ import com.o2d.pkayjava.editor.controller.commands.RevertableCommand;
  * Created by azakhary on 5/14/2015.
  */
 public class CommandManager extends BaseProxy {
-    private static final String TAG = CommandManager.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = CommandManager.class.getName();
+        NAME = TAG;
+    }
 
     private int cursor = 0;
 
@@ -47,7 +52,7 @@ public class CommandManager extends BaseProxy {
 
     public void addCommand(RevertableCommand revertableCommand) {
         //remove all commands after the cursor
-        for(int i = commands.size()-1; i > cursor; i--) {
+        for (int i = commands.size() - 1; i > cursor; i--) {
             commands.remove(i);
         }
         commands.add(revertableCommand);
@@ -55,9 +60,9 @@ public class CommandManager extends BaseProxy {
     }
 
     public void undoCommand() {
-        if(cursor < 0) return;
+        if (cursor < 0) return;
         RevertableCommand command = commands.get(cursor);
-        if(command.isStateDone()) {
+        if (command.isStateDone()) {
             command.callUndoAction();
             command.setStateDone(false);
         }
@@ -65,9 +70,9 @@ public class CommandManager extends BaseProxy {
     }
 
     public void redoCommand() {
-        if(cursor + 1 >= commands.size()) return;
-        RevertableCommand command = commands.get(cursor+1);
-        if(!command.isStateDone()) {
+        if (cursor + 1 >= commands.size()) return;
+        RevertableCommand command = commands.get(cursor + 1);
+        if (!command.isStateDone()) {
             cursor++;
             command.callDoAction();
             command.setStateDone(true);

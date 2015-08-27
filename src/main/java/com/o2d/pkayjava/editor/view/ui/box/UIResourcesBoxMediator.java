@@ -37,15 +37,22 @@ import java.util.stream.Stream;
  */
 public class UIResourcesBoxMediator extends PanelMediator<UIResourcesBox> {
 
-    private static final String TAG = UIResourcesBoxMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
 
-    private static final String PREFIX = "com.uwsoft.editor.view.ui.box";
+    public static final String IMAGE_RIGHT_CLICK;
+    public static final String ANIMATION_RIGHT_CLICK;
+    public static final String LIBRARY_ITEM_RIGHT_CLICK;
+    public static final String PARTICLE_EFFECT_RIGHT_CLICK;
 
-    public static final String IMAGE_RIGHT_CLICK = "IMAGE_RIGHT_CLICK";
-    public static final String ANIMATION_RIGHT_CLICK = "ANIMATION_RIGHT_CLICK";
-    public static final String LIBRARY_ITEM_RIGHT_CLICK = "LIBRARY_ITEM_RIGHT_CLICK";
-    public static final String PARTICLE_EFFECT_RIGHT_CLICK = "PARTICLE_EFFECT_RIGHT_CLICK";
+    static {
+        TAG = UIResourcesBoxMediator.class.getName();
+        NAME = TAG;
+        IMAGE_RIGHT_CLICK = NAME + "." + "IMAGE_RIGHT_CLICK";
+        ANIMATION_RIGHT_CLICK = NAME + "." + "ANIMATION_RIGHT_CLICK";
+        LIBRARY_ITEM_RIGHT_CLICK = NAME + "." + "LIBRARY_ITEM_RIGHT_CLICK";
+        PARTICLE_EFFECT_RIGHT_CLICK = NAME + "." + "PARTICLE_EFFECT_RIGHT_CLICK";
+    }
 
     @Override
     public void onRegister() {
@@ -65,20 +72,14 @@ public class UIResourcesBoxMediator extends PanelMediator<UIResourcesBox> {
         return Stream.of(parentNotifications, new String[]{
                 ProjectManager.PROJECT_OPENED,
                 ProjectManager.PROJECT_DATA_UPDATED
-            }).flatMap(Stream::of).toArray(String[]::new);
+        }).flatMap(Stream::of).toArray(String[]::new);
     }
 
     @Override
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
-        switch (notification.getName()) {
-            case ProjectManager.PROJECT_OPENED:
-
-                break;
-            case ProjectManager.PROJECT_DATA_UPDATED:
-
-            default:
-                break;
+        if (ProjectManager.PROJECT_OPENED.equals(notification.getName())) {
+        } else if (ProjectManager.PROJECT_DATA_UPDATED.equals(notification.getName())) {
         }
     }
 

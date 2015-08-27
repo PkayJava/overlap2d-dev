@@ -55,15 +55,12 @@ public abstract class UIResourcesTabMediator<T extends UIResourcesTab> extends S
 
     @Override
     public void handleNotification(Notification notification) {
-        switch (notification.getName()) {
-            case ProjectManager.PROJECT_OPENED:
-            case ProjectManager.PROJECT_DATA_UPDATED:
-                initList(viewComponent.searchString);
-                break;
-            case UIResourcesTab.SEARCH:
-                initList(viewComponent.searchString);
-            default:
-                break;
+        if (ProjectManager.PROJECT_OPENED.equals(notification.getName())) {
+            initList(viewComponent.searchString);
+        } else if (ProjectManager.PROJECT_DATA_UPDATED.equals(notification.getName())) {
+            initList(viewComponent.searchString);
+        } else if (UIResourcesTab.SEARCH.equals(notification.getName())) {
+            initList(viewComponent.searchString);
         }
     }
 
