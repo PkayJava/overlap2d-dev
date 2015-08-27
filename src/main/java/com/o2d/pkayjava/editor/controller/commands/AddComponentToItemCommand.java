@@ -11,8 +11,15 @@ import com.o2d.pkayjava.editor.controller.commands.EntityModifyRevertableCommand
  */
 public class AddComponentToItemCommand extends EntityModifyRevertableCommand {
 
-    private static final String CLASS_NAME = "com.uwsoft.editor.controller.commands.AddComponentToItemCommand";
-    public static final String DONE = CLASS_NAME + "DONE";
+    private static final String TAG;
+    public static final String NAME;
+    public static final String DONE;
+
+    static {
+        TAG = AddComponentToItemCommand.class.getName();
+        NAME = TAG;
+        DONE = NAME + "." + "DONE";
+    }
 
     private Entity entity;
     private Component component;

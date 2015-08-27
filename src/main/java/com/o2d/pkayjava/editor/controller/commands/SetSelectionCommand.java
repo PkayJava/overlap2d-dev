@@ -35,8 +35,15 @@ import com.o2d.pkayjava.editor.utils.runtime.EntityUtils;
  */
 public class SetSelectionCommand extends com.o2d.pkayjava.editor.controller.commands.RevertableCommand {
 
-    private static final String CLASS_NAME = "com.uwsoft.editor.controller.commands.SetSelectionCommand";
-    public static final String DONE = CLASS_NAME + "DONE";
+    private static final String TAG;
+    public static final String NAME;
+    public static final String DONE;
+
+    static {
+        TAG = SetSelectionCommand.class.getName();
+        NAME = TAG;
+        DONE = NAME + "." + "DONE";
+    }
 
     private Array<Integer> previousSelectionIds;
 

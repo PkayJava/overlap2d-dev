@@ -40,8 +40,15 @@ import com.o2d.pkayjava.editor.view.ui.box.UILayerBoxMediator;
  */
 public class ConvertToCompositeCommand extends EntityModifyRevertableCommand {
 
-    private static final String CLASS_NAME = "com.uwsoft.editor.controller.commands.ConvertToCompositeCommand";
-    public static final String DONE = CLASS_NAME + "DONE";
+    private static final String TAG;
+    public static final String NAME;
+    public static final String DONE;
+
+    static {
+        TAG = ConvertToCompositeCommand.class.getName();
+        NAME = TAG;
+        DONE = NAME + "." + "DONE";
+    }
 
     protected Integer entityId;
     protected Integer parentEntityId;

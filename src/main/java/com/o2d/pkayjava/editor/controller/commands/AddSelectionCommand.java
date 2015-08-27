@@ -31,14 +31,21 @@ import com.o2d.pkayjava.editor.utils.runtime.EntityUtils;
  */
 public class AddSelectionCommand extends RevertableCommand {
 
-    private static final String CLASS_NAME = "com.uwsoft.editor.controller.commands.AddSelectionCommand";
-    public static final String DONE = CLASS_NAME + "DONE";
+    private static final String TAG;
+    public static final String NAME;
+    public static final String DONE;
+
+    static {
+        TAG = AddSelectionCommand.class.getName();
+        NAME = TAG;
+        DONE = NAME + "." + "DONE";
+    }
 
     private Array<Integer> entityIds;
 
     @Override
     public void doAction() {
-        if(entityIds == null) {
+        if (entityIds == null) {
             Set<Entity> items = getNotification().getBody();
             entityIds = EntityUtils.getEntityId(items);
         }

@@ -43,8 +43,15 @@ import com.o2d.pkayjava.editor.view.ui.FollowersUIMediator;
  */
 public class DeleteItemsCommand extends EntityModifyRevertableCommand {
 
-    private static final String CLASS_NAME = "com.uwsoft.editor.controller.commands.DeleteItemsCommand";
-    public static final String DONE = CLASS_NAME + "DONE";
+    private static final String TAG;
+    public static final String NAME;
+    public static final String DONE;
+
+    static {
+        TAG = DeleteItemsCommand.class.getName();
+        NAME = TAG;
+        DONE = NAME + "." + "DONE";
+    }
 
     private String backup;
     private Array<Integer> entityIdsToDelete;

@@ -11,8 +11,15 @@ import com.o2d.pkayjava.editor.view.stage.Sandbox;
  * Created by CyberJoe on 7/25/2015.
  */
 public class NewLayerCommand extends EntityModifyRevertableCommand {
-    private static final String CLASS_NAME = "com.uwsoft.editor.controller.commands.NewLayerCommand";
-    public static final String DONE = CLASS_NAME + "DONE";
+    private static final String TAG;
+    public static final String NAME;
+    public static final String DONE;
+
+    static {
+        TAG = NewLayerCommand.class.getName();
+        NAME = TAG;
+        DONE = NAME + "." + "DONE";
+    }
 
     private String layerName;
 

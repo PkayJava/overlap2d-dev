@@ -33,8 +33,15 @@ import com.o2d.pkayjava.editor.utils.runtime.EntityUtils;
  */
 public class ReleaseSelectionCommand extends RevertableCommand {
 
-    private static final String CLASS_NAME = "com.uwsoft.editor.controller.commands.ReleaseSelectionCommand";
-    public static final String DONE = CLASS_NAME + "DONE";
+    private static final String TAG;
+    public static final String NAME;
+    public static final String DONE;
+
+    static {
+        TAG = ReleaseSelectionCommand.class.getName();
+        NAME = TAG;
+        DONE = NAME + "." + "DONE";
+    }
 
     private Array<Integer> entityIds;
 

@@ -29,8 +29,15 @@ import com.o2d.pkayjava.editor.view.stage.Sandbox;
  * Created by azakhary on 8/18/2015.
  */
 public class LayerSwapCommand extends EntityModifyRevertableCommand {
-    private static final String CLASS_NAME = "com.uwsoft.editor.controller.commands.LayerSwapCommand";
-    public static final String DONE = CLASS_NAME + "DONE";
+    private static final String TAG;
+    public static final String NAME;
+    public static final String DONE;
+
+    static {
+        TAG = LayerSwapCommand.class.getName();
+        NAME = TAG;
+        DONE = NAME + "." + "DONE";
+    }
 
     private Integer entityId;
 

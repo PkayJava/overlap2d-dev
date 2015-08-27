@@ -18,9 +18,18 @@ import java.util.Set;
  * Created by CyberJoe on 7/25/2015.
  */
 public class DeleteLayerCommand extends TransactiveCommand {
-    private static final String CLASS_NAME = "com.uwsoft.editor.controller.commands.DeleteLayerCommand";
-    public static final String DONE = CLASS_NAME + "DONE";
-    public static final String UNDONE = CLASS_NAME + "UNDONE";
+    private static final String TAG;
+    public static final String NAME;
+    public static final String DONE;
+    public static final String UNDONE;
+
+    static {
+        TAG = DeleteItemsCommand.class.getName();
+        NAME = TAG;
+        DONE = NAME + "." + "DONE";
+        UNDONE = NAME + "." + "UNDONE";
+    }
+
 
     private String layerName;
     private DeleteLayerAtomCommand deleteLayerAtomCommand;
@@ -49,10 +58,10 @@ public class DeleteLayerCommand extends TransactiveCommand {
         Set<Entity> result = new HashSet<>();
         Entity viewingEntity = Sandbox.getInstance().getCurrentViewingEntity();
         NodeComponent nodeComponent = ComponentRetriever.get(viewingEntity, NodeComponent.class);
-        for(int i = 0; i < nodeComponent.children.size; i++) {
+        for (int i = 0; i < nodeComponent.children.size; i++) {
             Entity child = nodeComponent.children.get(i);
             ZIndexComponent zIndexComponent = ComponentRetriever.get(child, ZIndexComponent.class);
-            if(zIndexComponent.layerName.equals(layerName)) {
+            if (zIndexComponent.layerName.equals(layerName)) {
                 result.add(child);
             }
         }

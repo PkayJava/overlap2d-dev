@@ -31,8 +31,15 @@ import com.o2d.pkayjava.editor.utils.runtime.EntityUtils;
  */
 public class CompositeCameraChangeCommand extends RevertableCommand {
 
-    private static final String CLASS_NAME = "com.uwsoft.editor.controller.commands.CompositeCameraChangeCommand";
-    public static final String DONE = CLASS_NAME + "DONE";
+    private static final String TAG;
+    public static final String NAME;
+    public static final String DONE;
+
+    static {
+        TAG = CompositeCameraChangeCommand.class.getName();
+        NAME = TAG;
+        DONE = NAME + "." + "DONE";
+    }
 
     private Integer previousViewEntityId;
     private Integer enteringInto;
@@ -47,8 +54,8 @@ public class CompositeCameraChangeCommand extends RevertableCommand {
         // check if entity is selected
         wasPrevSelected = sandbox.getSelector().isSelected(entity);
 
-        if(enteringInto == null) enteringInto = EntityUtils.getEntityId(entity);
-        if(previousViewEntityId == null) previousViewEntityId = EntityUtils.getEntityId(oldEntity);
+        if (enteringInto == null) enteringInto = EntityUtils.getEntityId(entity);
+        if (previousViewEntityId == null) previousViewEntityId = EntityUtils.getEntityId(oldEntity);
 
         ViewPortComponent viewPortComponent = ComponentRetriever.get(oldEntity, ViewPortComponent.class);
         oldEntity.remove(ViewPortComponent.class);
@@ -82,7 +89,7 @@ public class CompositeCameraChangeCommand extends RevertableCommand {
         previousTransformComponent.disableTransform();
         transformComponent.enableTransform();
 
-        if(wasPrevSelected) {
+        if (wasPrevSelected) {
             sandbox.getSelector().setSelection(EntityUtils.getByUniqueId(enteringInto), true);
         }
     }
