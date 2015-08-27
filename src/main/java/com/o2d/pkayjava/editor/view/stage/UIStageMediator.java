@@ -58,27 +58,25 @@ public class UIStageMediator extends SimpleMediator<UIStage> {
 
     @Override
     public void handleNotification(Notification notification) {
-        switch (notification.getName()) {
-            case Sandbox.SHOW_ADD_LIBRARY_DIALOG:
-                Sandbox sandbox = Sandbox.getInstance();
+        if (Sandbox.SHOW_ADD_LIBRARY_DIALOG.equals(notification.getName())) {
+            Sandbox sandbox = Sandbox.getInstance();
 
-                Entity item = notification.getBody();
+            Entity item = notification.getBody();
 
-                DialogUtils.showInputDialog(sandbox.getUIStage(), "New Library Item ", "Unique Name", new InputDialogListener() {
-                    @Override
-                    public void finished(String input) {
-                        Object[] payload = new Object[2];
-                        payload[0] = item;
-                        payload[1] = input;
-                        facade.sendNotification(Sandbox.ACTION_ADD_TO_LIBRARY, payload);
-                    }
+            DialogUtils.showInputDialog(sandbox.getUIStage(), "New Library Item ", "Unique Name", new InputDialogListener() {
+                @Override
+                public void finished(String input) {
+                    Object[] payload = new Object[2];
+                    payload[0] = item;
+                    payload[1] = input;
+                    facade.sendNotification(Sandbox.ACTION_ADD_TO_LIBRARY, payload);
+                }
 
-                    @Override
-                    public void canceled() {
+                @Override
+                public void canceled() {
 
-                    }
-                });
-                break;
+                }
+            });
         }
     }
 

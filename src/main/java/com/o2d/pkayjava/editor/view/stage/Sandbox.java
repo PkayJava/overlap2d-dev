@@ -64,40 +64,73 @@ public class Sandbox {
 
     private static Sandbox instance = null;
 
-    private static final String CLASS_NAME = "com.o2d.pkayjava.editor.gdx.commands.Sandbox";
+    private static final String TAG;
+    public static final String NAME;
 
-    public static final String ACTION_GROUP_ITEMS = CLASS_NAME + "ACTION_GROUP_ITEMS";
-    public static final String ACTION_CAMERA_CHANGE_COMPOSITE = CLASS_NAME + "ACTION_CAMERA_CHANGE_COMPOSITE";
-    public static final String ACTION_CONVERT_TO_BUTTON = CLASS_NAME + "ACTION_CONVERT_TO_BUTTON";
-    public static final String ACTION_CUT = CLASS_NAME + "ACTION_CUT";
-    public static final String ACTION_COPY = CLASS_NAME + "ACTION_COPY";
-    public static final String ACTION_PASTE = CLASS_NAME + "ACTION_PASTE";
-    public static final String ACTION_DELETE = CLASS_NAME + "ACTION_DELETE";
-    public static final String ACTION_CREATE_ITEM = CLASS_NAME + "ACTION_CREATE_ITEM";
+    public static final String ACTION_GROUP_ITEMS;
+    public static final String ACTION_CAMERA_CHANGE_COMPOSITE;
+    public static final String ACTION_CONVERT_TO_BUTTON;
+    public static final String ACTION_CUT;
+    public static final String ACTION_COPY;
+    public static final String ACTION_PASTE;
+    public static final String ACTION_DELETE;
+    public static final String ACTION_CREATE_ITEM;
 
-    public static final String ACTION_DELETE_LAYER = CLASS_NAME + "ACTION_DELETE_LAYER";
-    public static final String ACTION_NEW_LAYER = CLASS_NAME + "ACTION_NEW_LAYER";
-    public static final String ACTION_SWAP_LAYERS = CLASS_NAME + "ACTION_SWAP_LAYERS";
+    public static final String ACTION_DELETE_LAYER;
+    public static final String ACTION_NEW_LAYER;
+    public static final String ACTION_SWAP_LAYERS;
 
-    public static final String ACTION_ADD_COMPONENT = CLASS_NAME + "ACTION_ADD_COMPONENT";
-    public static final String ACTION_REMOVE_COMPONENT = CLASS_NAME + "ACTION_REMOVE_COMPONENT";
+    public static final String ACTION_ADD_COMPONENT;
+    public static final String ACTION_REMOVE_COMPONENT;
 
-    public static final String SHOW_ADD_LIBRARY_DIALOG = CLASS_NAME + "SHOW_ADD_LIBRARY_DIALOG";
-    public static final String ACTION_ADD_TO_LIBRARY = CLASS_NAME + "ACTION_ADD_TO_LIBRARY";
-    public static final String ACTION_EDIT_PHYSICS = CLASS_NAME + "ACTION_EDIT_PHYSICS";
-    public static final String ACTION_SET_GRID_SIZE_FROM_ITEM = CLASS_NAME + "ACTION_SET_GRID_SIZE_FROM_ITEM";
-    public static final String ACTION_ITEMS_MOVE_TO = CLASS_NAME + "ACTION_ITEMS_MOVE_TO";
-    public static final String ACTION_ITEM_TRANSFORM_TO = CLASS_NAME + "ACTION_ITEM_TRANSFORM_TO";
+    public static final String SHOW_ADD_LIBRARY_DIALOG;
+    public static final String ACTION_ADD_TO_LIBRARY;
+    public static final String ACTION_EDIT_PHYSICS;
+    public static final String ACTION_SET_GRID_SIZE_FROM_ITEM;
+    public static final String ACTION_ITEMS_MOVE_TO;
+    public static final String ACTION_ITEM_TRANSFORM_TO;
 
-    public static final String ACTION_SET_SELECTION = CLASS_NAME + "ACTION_SET_SELECTION";
-    public static final String ACTION_ADD_SELECTION = CLASS_NAME + "ACTION_ADD_SELECTION";
-    public static final String ACTION_RELEASE_SELECTION = CLASS_NAME + "ACTION_RELEASE_SELECTION";
+    public static final String ACTION_SET_SELECTION;
+    public static final String ACTION_ADD_SELECTION;
+    public static final String ACTION_RELEASE_SELECTION;
 
-    public static final String ACTION_UPDATE_ITEM_DATA = CLASS_NAME + "ACTION_UPDATE_ITEM_DATA";
-    public static final String ACTION_UPDATE_LABEL_DATA = CLASS_NAME + "ACTION_UPDATE_LABEL_DATA";
-    public static final String ACTION_UPDATE_LIGHT_DATA = CLASS_NAME + "ACTION_UPDATE_LIGHT_DATA";
-    public static final String ACTION_UPDATE_SPRITE_ANIMATION_DATA = CLASS_NAME + "ACTION_UPDATE_SPRITE_ANIMATION_DATA";
-    public static final String ACTION_UPDATE_MESH_DATA = CLASS_NAME + "ACTION_UPDATE_MESH_DATA";
+    public static final String ACTION_UPDATE_ITEM_DATA;
+    public static final String ACTION_UPDATE_LABEL_DATA;
+    public static final String ACTION_UPDATE_LIGHT_DATA;
+    public static final String ACTION_UPDATE_SPRITE_ANIMATION_DATA;
+    public static final String ACTION_UPDATE_MESH_DATA;
+
+    static {
+        TAG = Sandbox.class.getName();
+        NAME = TAG;
+        ACTION_UPDATE_MESH_DATA = NAME + "." + "ACTION_UPDATE_MESH_DATA";
+        ACTION_UPDATE_SPRITE_ANIMATION_DATA = NAME + "." + "ACTION_UPDATE_SPRITE_ANIMATION_DATA";
+        ACTION_UPDATE_LIGHT_DATA = NAME + "." + "ACTION_UPDATE_LIGHT_DATA";
+        ACTION_UPDATE_LABEL_DATA = NAME + "." + "ACTION_UPDATE_LABEL_DATA";
+        ACTION_UPDATE_ITEM_DATA = NAME + "." + "ACTION_UPDATE_ITEM_DATA";
+        ACTION_RELEASE_SELECTION = NAME + "." + "ACTION_RELEASE_SELECTION";
+        ACTION_ADD_SELECTION = NAME + "." + "ACTION_ADD_SELECTION";
+        ACTION_SET_SELECTION = NAME + "." + "ACTION_SET_SELECTION";
+        ACTION_ITEM_TRANSFORM_TO = NAME + "." + "ACTION_ITEM_TRANSFORM_TO";
+        ACTION_ITEMS_MOVE_TO = NAME + "." + "ACTION_ITEMS_MOVE_TO";
+        ACTION_SET_GRID_SIZE_FROM_ITEM = NAME + "." + "ACTION_SET_GRID_SIZE_FROM_ITEM";
+        ACTION_EDIT_PHYSICS = NAME + "." + "ACTION_EDIT_PHYSICS";
+        ACTION_GROUP_ITEMS = NAME + "." + "ACTION_GROUP_ITEMS";
+        ACTION_CAMERA_CHANGE_COMPOSITE = NAME + "." + "ACTION_CAMERA_CHANGE_COMPOSITE";
+        ACTION_CONVERT_TO_BUTTON = NAME + "." + "ACTION_CONVERT_TO_BUTTON";
+        ACTION_CUT = NAME + "." + "ACTION_CUT";
+        ACTION_COPY = NAME + "." + "ACTION_COPY";
+        ACTION_PASTE = NAME + "." + "ACTION_PASTE";
+        ACTION_DELETE = NAME + "." + "ACTION_DELETE";
+        ACTION_CREATE_ITEM = NAME + "." + "ACTION_CREATE_ITEM";
+        ACTION_DELETE_LAYER = NAME + "." + "ACTION_DELETE_LAYER";
+        ACTION_NEW_LAYER = NAME + "." + "ACTION_NEW_LAYER";
+        ACTION_SWAP_LAYERS = NAME + "." + "ACTION_SWAP_LAYERS";
+        ACTION_REMOVE_COMPONENT = NAME + "." + "ACTION_REMOVE_COMPONENT";
+        ACTION_ADD_COMPONENT = NAME + "." + "ACTION_ADD_COMPONENT";
+        SHOW_ADD_LIBRARY_DIALOG = NAME + "." + "SHOW_ADD_LIBRARY_DIALOG";
+        ACTION_ADD_TO_LIBRARY = NAME + "." + "ACTION_ADD_TO_LIBRARY";
+    }
 
 
     public SceneControlMediator sceneControl;

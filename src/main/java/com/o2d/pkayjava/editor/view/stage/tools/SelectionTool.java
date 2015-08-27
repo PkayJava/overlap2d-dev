@@ -47,7 +47,13 @@ import com.o2d.pkayjava.editor.view.stage.tools.SimpleTool;
  */ //TODO all the new Vector2 instances should be replaced by tmp instances
 public class SelectionTool extends SimpleTool {
 
-    public static final String NAME = "SELECTION_TOOL";
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = SelectionTool.class.getName();
+        NAME = TAG;
+    }
 
     protected Sandbox sandbox;
 

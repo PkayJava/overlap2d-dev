@@ -31,15 +31,20 @@ import com.o2d.pkayjava.editor.view.stage.tools.ItemDropTool;
  */
 public class ConeLightTool extends ItemDropTool {
 
-    public static final String NAME = "CONE_LIGHT_TOOL";
+    private static final String TAG;
+    public static final String NAME;
 
+    static {
+        TAG = ConeLightTool.class.getName();
+        NAME = TAG;
+    }
 
     @Override
     public Entity putItem(float x, float y) {
         //LayerItemVO layer = Sandbox.getInstance().getItemFactory().getSelectedLayer();
         LightVO vo = new LightVO();
         vo.type = LightVO.LightType.CONE;
-        vo.distance = 300/sandbox.getPixelPerWU();
+        vo.distance = 300 / sandbox.getPixelPerWU();
         vo.coneDegree = 45;
 
         return ItemFactory.get().createLightItem(vo, new Vector2(x, y));

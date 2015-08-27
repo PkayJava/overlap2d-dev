@@ -16,10 +16,16 @@ import com.o2d.pkayjava.editor.view.stage.tools.SimpleTool;
  * Created by CyberJoe on 5/1/2015.
  */
 public class PanTool extends SimpleTool {
-    private static final String EVENT_PREFIX = "com.uwsoft.editor.view.stage.tools.PanTool";
-    public static final String SCENE_PANNED = EVENT_PREFIX + ".SCENE_PANNED";
 
-    public static final String NAME = "PAN_TOOL";
+    private static final String TAG;
+    public static final String NAME;
+    public static final String SCENE_PANNED;
+
+    static {
+        TAG = PointLightTool.class.getName();
+        NAME = TAG;
+        SCENE_PANNED = NAME + "." + "SCENE_PANNED";
+    }
 
     private Vector2 lastCoordinates;
 

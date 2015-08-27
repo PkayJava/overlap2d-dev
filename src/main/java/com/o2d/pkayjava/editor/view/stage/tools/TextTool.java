@@ -34,7 +34,13 @@ import com.o2d.pkayjava.editor.view.stage.tools.ItemDropTool;
  */
 public class TextTool extends ItemDropTool {
 
-    public static final String NAME = "TEXT_TOOL";
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = TextTool.class.getName();
+        NAME = TAG;
+    }
 
     private String fontFamily;
     private boolean isBold;

@@ -50,7 +50,13 @@ import java.util.Set;
  */
 public class PolygonTool extends SelectionTool implements PolygonTransformationListener {
 
-    public static final String NAME = "MESH_TOOL";
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = PolygonTool.class.getName();
+        NAME = TAG;
+    }
 
     private FollowersUIMediator followersUIMediator;
 

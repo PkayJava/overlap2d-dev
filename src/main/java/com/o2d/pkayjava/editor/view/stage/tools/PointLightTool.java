@@ -31,7 +31,13 @@ import com.o2d.pkayjava.editor.view.stage.tools.ItemDropTool;
  */
 public class PointLightTool extends ItemDropTool {
 
-    public static final String NAME = "POINT_LIGHT_TOOL";
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = PointLightTool.class.getName();
+        NAME = TAG;
+    }
 
 
     @Override
