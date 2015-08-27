@@ -29,7 +29,7 @@ import com.o2d.pkayjava.editor.Overlap2DFacade;
  */
 public class FontManager extends BaseProxy {
 
-    private static final String TAG = com.uwsoft.editor.proxy.FontManager.class.getCanonicalName();
+    private static final String TAG = FontManager.class.getCanonicalName();
     public static final String NAME = TAG;
 
     private static final String cache_name = "overlap2d-fonts-cache";

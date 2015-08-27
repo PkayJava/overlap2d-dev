@@ -40,7 +40,7 @@ import java.util.Set;
  * Created by azakhary on 7/24/2015.
  */
 public class PluginManager extends BaseProxy implements PluginAPI {
-    private static final String TAG = com.uwsoft.editor.proxy.PluginManager.class.getCanonicalName();
+    private static final String TAG = PluginManager.class.getCanonicalName();
     public static final String NAME = TAG;
 
     private ArrayList<O2DPlugin> plugins = new ArrayList<>();

@@ -44,7 +44,7 @@ public class ResourceManager extends BaseProxy implements IResourceRetriever {
 
     public String packResolutionName = "orig";
 
-    private static final String TAG = com.uwsoft.editor.proxy.ResourceManager.class.getCanonicalName();
+    private static final String TAG = ResourceManager.class.getCanonicalName();
     public static final String NAME = TAG;
 
     private HashMap<String, ParticleEffect> particleEffects = new HashMap<String, ParticleEffect>(1);
@@ -56,7 +56,7 @@ public class ResourceManager extends BaseProxy implements IResourceRetriever {
     private HashMap<FontSizePair, BitmapFont> bitmapFonts = new HashMap<>();
     private HashMap<String, ShaderProgram> shaderPrograms = new HashMap<String, ShaderProgram>(1);
 
-    private com.uwsoft.editor.proxy.ResolutionManager resolutionManager;
+    private ResolutionManager resolutionManager;
 
     public ResourceManager() {
         super(NAME);

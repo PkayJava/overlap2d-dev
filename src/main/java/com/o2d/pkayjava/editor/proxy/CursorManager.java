@@ -27,7 +27,7 @@ import com.o2d.pkayjava.editor.view.ui.widget.CursorData;
  * Created by azakhary on 5/15/2015.
  */
 public class CursorManager extends BaseProxy {
-    private static final String TAG = com.uwsoft.editor.proxy.CursorManager.class.getCanonicalName();
+    private static final String TAG = CursorManager.class.getCanonicalName();
     public static final String NAME = TAG;
 
     public static CursorData NORMAL = new CursorData("normal", 8, 6);

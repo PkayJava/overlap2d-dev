@@ -28,7 +28,7 @@ import com.o2d.pkayjava.editor.controller.commands.RevertableCommand;
  * Created by azakhary on 5/14/2015.
  */
 public class CommandManager extends BaseProxy {
-    private static final String TAG = com.uwsoft.editor.proxy.CommandManager.class.getCanonicalName();
+    private static final String TAG = CommandManager.class.getCanonicalName();
     public static final String NAME = TAG;
 
     private int cursor = 0;

@@ -34,7 +34,7 @@ import com.o2d.pkayjava.runtime.utils.MySkin;
 
 
 public class EditorTextureManager extends BaseProxy {
-    private static final String TAG = com.uwsoft.editor.proxy.EditorTextureManager.class.getCanonicalName();
+    private static final String TAG = EditorTextureManager.class.getCanonicalName();
     public static final String NAME = TAG;
 
 
@@ -81,7 +81,7 @@ public class EditorTextureManager extends BaseProxy {
     }
 
     public Texture getRegionOriginalImage(String regionName) {
-        com.uwsoft.editor.proxy.ProjectManager projectManager = facade.retrieveProxy(ProjectManager.NAME);
+        ProjectManager projectManager = facade.retrieveProxy(ProjectManager.NAME);
         String sourcePath = projectManager.getCurrentWorkingPath() + "/" + projectManager.getCurrentProjectVO().projectName + "/assets/orig/images/" + regionName + ".png";
         return new Texture(Gdx.files.absolute(sourcePath));
     }
