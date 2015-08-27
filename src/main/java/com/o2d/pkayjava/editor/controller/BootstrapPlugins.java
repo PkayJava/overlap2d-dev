@@ -60,7 +60,7 @@ public class BootstrapPlugins extends SimpleCommand {
                 e.printStackTrace();
             }
         }
-        loadedPlugins = manager.loadModules("com.overlap2d.plugins");
+        loadedPlugins = manager.loadModules("com.o2d.pkayjava.editor.plugins");
         for (Module module : loadedPlugins) {
             try {
                 pluginManager.initPlugin((O2DPlugin) module.getClass().newInstance());

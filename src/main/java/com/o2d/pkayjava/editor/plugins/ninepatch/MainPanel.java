@@ -37,9 +37,16 @@ import com.puremvc.patterns.facade.SimpleFacade;
  * Created by azakhary on 8/18/2015.
  */
 public class MainPanel extends UIDraggablePanel {
-    public static final String CLASS_NAME = "com.uwsoft.editor.plugins.ninepatch.MainPanel";
 
-    public static final String SAVE_CLICKED = CLASS_NAME + ".SAVE_CLICKED";
+    private static final String TAG;
+    public static final String NAME;
+    public static final String SAVE_CLICKED;
+
+    static {
+        TAG = MainPanel.class.getName();
+        NAME = TAG;
+        SAVE_CLICKED = NAME + "." + "SAVE_CLICKED";
+    }
 
     private SimpleFacade facade;
 
@@ -103,7 +110,7 @@ public class MainPanel extends UIDraggablePanel {
         previewTable.row();
 
         saveBtn.addListener(new ClickListener() {
-            public void clicked (InputEvent event, float x, float y) {
+            public void clicked(InputEvent event, float x, float y) {
                 facade.sendNotification(SAVE_CLICKED);
             }
         });

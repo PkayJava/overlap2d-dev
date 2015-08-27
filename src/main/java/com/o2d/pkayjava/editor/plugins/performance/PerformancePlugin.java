@@ -19,6 +19,7 @@
 package com.o2d.pkayjava.editor.plugins.performance;
 
 import com.commons.plugins.O2DPluginAdapter;
+import com.o2d.pkayjava.editor.view.menu.Overlap2DMenuBar;
 import net.mountainblade.modular.annotations.Implementation;
 
 /**
@@ -27,10 +28,18 @@ import net.mountainblade.modular.annotations.Implementation;
  */
 @Implementation(authors = "azakhary", version = "0.0.1")
 public class PerformancePlugin extends O2DPluginAdapter {
-    public static final String CLASS_NAME = "com.uwsoft.editor.plugins.performance";
 
-    public static final String PANEL_OPEN = CLASS_NAME + ".PANEL_OPEN";
-    public static final String WINDOWS_MENU = "com.uwsoft.editor.view.Overlap2DMenuBar.WINDOW_MENU";
+    private static final String TAG;
+    public static final String NAME;
+
+    public static final String PANEL_OPEN;
+    public static final String WINDOWS_MENU = Overlap2DMenuBar.WINDOW_MENU;
+
+    static {
+        TAG = PerformancePlugin.class.getName();
+        NAME = TAG;
+        PANEL_OPEN = NAME + "." + "PANEL_OPEN";
+    }
 
     private PerformancePanelMediator performancePanelMediator;
 

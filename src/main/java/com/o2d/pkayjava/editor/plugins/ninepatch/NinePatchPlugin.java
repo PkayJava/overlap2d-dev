@@ -21,6 +21,7 @@ package com.o2d.pkayjava.editor.plugins.ninepatch;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.utils.Array;
 import com.commons.plugins.O2DPluginAdapter;
+import com.o2d.pkayjava.editor.proxy.SceneDataManager;
 import com.o2d.pkayjava.runtime.components.MainItemComponent;
 import com.o2d.pkayjava.runtime.factory.EntityFactory;
 import com.o2d.pkayjava.runtime.utils.ComponentRetriever;
@@ -34,11 +35,20 @@ import java.util.Set;
  */
 @Implementation(authors = "azakhary", version = "0.0.1")
 public class NinePatchPlugin extends O2DPluginAdapter {
-    public static final String CLASS_NAME = "com.uwsoft.editor.plugins.ninepatch.NinePatchPlugin";
 
-    public static final String EDIT_NINE_PATCH = CLASS_NAME + ".EDIT_NINE_PATCH";
-    public static final String CONVERT_TO_NINE_PATCH = CLASS_NAME + ".CONVERT_TO_NINE_PATCH";
-    public static final String SCENE_LOADED = "com.uwsoft.editor.proxy.SceneDataManager.SCENE_LOADED";
+    private static final String TAG;
+    public static final String NAME;
+
+    public static final String EDIT_NINE_PATCH;
+    public static final String CONVERT_TO_NINE_PATCH;
+    public static final String SCENE_LOADED = SceneDataManager.SCENE_LOADED;
+
+    static {
+        TAG = NinePatchPlugin.class.getName();
+        NAME = TAG;
+        EDIT_NINE_PATCH = NAME + "." + "EDIT_NINE_PATCH";
+        CONVERT_TO_NINE_PATCH = NAME + "." + "CONVERT_TO_NINE_PATCH";
+    }
 
     private MainPanelMediator performancePanelMediator;
 

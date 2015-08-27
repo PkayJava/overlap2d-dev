@@ -41,8 +41,13 @@ import java.io.IOException;
  * Created by azakhary on 8/18/2015.
  */
 public class MainPanelMediator extends SimpleMediator<MainPanel> {
-    private static final String TAG = MainPanelMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
+
+    static {
+        TAG = MainPanelMediator.class.getName();
+        NAME = TAG;
+    }
 
     private NinePatchPlugin plugin;
 
@@ -65,20 +70,16 @@ public class MainPanelMediator extends SimpleMediator<MainPanel> {
     @Override
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
-        switch (notification.getName()) {
-            case NinePatchPlugin.EDIT_NINE_PATCH:
-                loadNinePatch();
-                break;
-            case NinePatchPlugin.CONVERT_TO_NINE_PATCH:
-                convertImageToNinePatch();
-                loadNinePatch();
-                break;
-            case MainPanel.SAVE_CLICKED:
-                Entity entity = plugin.currEditingEntity;
-                NinePatchComponent ninePatchComponent = ComponentRetriever.get(entity, NinePatchComponent.class);
-                applyNewSplits(ninePatchComponent.textureRegionName, viewComponent.getSplits());
-                viewComponent.hide();
-                break;
+        if (NinePatchPlugin.EDIT_NINE_PATCH.equals(notification.getName())) {
+            loadNinePatch();
+        } else if (NinePatchPlugin.CONVERT_TO_NINE_PATCH.equals(notification.getName())) {
+            convertImageToNinePatch();
+            loadNinePatch();
+        } else if (MainPanel.SAVE_CLICKED.equals(notification.getName())) {
+            Entity entity = plugin.currEditingEntity;
+            NinePatchComponent ninePatchComponent = ComponentRetriever.get(entity, NinePatchComponent.class);
+            applyNewSplits(ninePatchComponent.textureRegionName, viewComponent.getSplits());
+            viewComponent.hide();
         }
     }
 

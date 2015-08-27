@@ -19,6 +19,9 @@
 package com.o2d.pkayjava.editor.plugins.performance;
 
 import com.badlogic.ashley.core.Engine;
+import com.o2d.pkayjava.editor.controller.commands.DeleteItemsCommand;
+import com.o2d.pkayjava.editor.factory.ItemFactory;
+import com.o2d.pkayjava.editor.proxy.SceneDataManager;
 import com.puremvc.patterns.mediator.SimpleMediator;
 import com.puremvc.patterns.observer.Notification;
 
@@ -26,12 +29,17 @@ import com.puremvc.patterns.observer.Notification;
  * Created by azakhary on 7/24/2015.
  */
 public class PerformancePanelMediator extends SimpleMediator<PerformancePanel> {
-    private static final String TAG = PerformancePanelMediator.class.getCanonicalName();
-    public static final String NAME = TAG;
+    private static final String TAG;
+    public static final String NAME;
 
-    public static final String SCENE_LOADED = "com.uwsoft.editor.proxy.SceneDataManager.SCENE_LOADED";
-    public static final String NEW_ITEM_ADDED = "com.uwsoft.editor.factory.ItemFactory.NEW_ITEM_ADDED";
-    public static final String ACTION_DELETE = "com.uwsoft.editor.controller.commands.DeleteItemsCommandDONE";
+    public static final String SCENE_LOADED = SceneDataManager.SCENE_LOADED;
+    public static final String NEW_ITEM_ADDED = ItemFactory.NEW_ITEM_ADDED;
+    public static final String ACTION_DELETE = DeleteItemsCommand.DONE;
+
+    static {
+        TAG = PerformancePanelMediator.class.getName();
+        NAME = TAG;
+    }
 
     private PerformancePlugin performancePlugin;
 
@@ -55,15 +63,12 @@ public class PerformancePanelMediator extends SimpleMediator<PerformancePanel> {
     @Override
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
-        switch (notification.getName()) {
-            case SCENE_LOADED:
-                viewComponent.initView();
-                Engine engine = performancePlugin.getEngine();
-                viewComponent.setEngine(engine);
-                break;
-            case PerformancePlugin.PANEL_OPEN:
-                viewComponent.show(performancePlugin.getStage());
-                break;
+        if (SCENE_LOADED.equals(notification.getName())) {
+            viewComponent.initView();
+            Engine engine = performancePlugin.getEngine();
+            viewComponent.setEngine(engine);
+        } else if (PerformancePlugin.PANEL_OPEN.equals(notification.getName())) {
+            viewComponent.show(performancePlugin.getStage());
         }
     }
 }
