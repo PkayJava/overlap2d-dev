@@ -30,11 +30,22 @@ import java.awt.dnd.DropTargetListener;
  */
 public class FileDropListener implements DropTargetListener {
 
-    private static final String CLASS_NAME = "com.uwsoft.editor.view.frame.FileDropListener";
-    public static final String ACTION_DRAG_ENTER = CLASS_NAME + "ACTION_DRAG_ENTER";
-    public static final String ACTION_DRAG_OVER = CLASS_NAME + "ACTION_DRAG_OVER";
-    public static final String ACTION_DRAG_EXIT = CLASS_NAME + "ACTION_DRAG_EXIT";
-    public static final String ACTION_DROP = CLASS_NAME + "ACTION_DROP";
+    private static final String TAG;
+    public static final String NAME;
+
+    public static final String ACTION_DRAG_ENTER;
+    public static final String ACTION_DRAG_OVER;
+    public static final String ACTION_DRAG_EXIT;
+    public static final String ACTION_DROP;
+
+    static {
+        TAG = FileDropListener.class.getName();
+        NAME = TAG;
+        ACTION_DRAG_ENTER = NAME + "." + "ACTION_DRAG_ENTER";
+        ACTION_DRAG_OVER = NAME + "." + "ACTION_DRAG_OVER";
+        ACTION_DRAG_EXIT = NAME + "." + "ACTION_DRAG_EXIT";
+        ACTION_DROP = NAME + "." + "ACTION_DROP";
+    }
 
     public void sendNotification(String notification) {
         sendNotification(notification, null);
@@ -42,7 +53,7 @@ public class FileDropListener implements DropTargetListener {
 
     public void sendNotification(String notification, Object data) {
         Overlap2DFacade facade = Overlap2DFacade.getInstance();
-        if(facade != null) {
+        if (facade != null) {
             facade.sendNotification(notification, data);
         }
     }

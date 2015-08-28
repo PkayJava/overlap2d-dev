@@ -87,11 +87,8 @@ public class FollowersUIMediator extends SimpleMediator<FollowersUI> {
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
 
-        if (CompositeCameraChangeCommand.DONE.equals(notification.getName())) {
-            createFollowersForAllVisible();
-        }
 
-        if (SceneDataManager.SCENE_LOADED.equals(notification.getName())) {
+        if (CompositeCameraChangeCommand.DONE.equals(notification.getName()) || SceneDataManager.SCENE_LOADED.equals(notification.getName())) {
             createFollowersForAllVisible();
         } else if (ItemFactory.NEW_ITEM_ADDED.equals(notification.getName())) {
             createFollower(notification.getBody());
@@ -115,6 +112,8 @@ public class FollowersUIMediator extends SimpleMediator<FollowersUI> {
         } else if (Overlap2D.SHOW_SELECTIONS.equals(notification.getName())) {
             showAllFollowers(notification.getBody());
         } else if (UIToolBoxMediator.TOOL_SELECTED.equals(notification.getName())) {
+            pushNotificationToFollowers(notification);
+        } else if (Overlap2D.ZOOM_CHANGED.equals(notification.getName())) {
             updateAllFollowers();
         } else if (ConvertToCompositeCommand.DONE.equals(notification.getName())) {
             removeAllfollowers();

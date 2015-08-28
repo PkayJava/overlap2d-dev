@@ -23,13 +23,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.o2d.pkayjava.runtime.components.MainItemComponent;
+import com.o2d.pkayjava.runtime.components.NinePatchComponent;
+import com.o2d.pkayjava.runtime.components.TextureRegionComponent;
+import com.o2d.pkayjava.runtime.factory.EntityFactory;
+import com.o2d.pkayjava.runtime.utils.ComponentRetriever;
 import com.puremvc.patterns.mediator.SimpleMediator;
 import com.puremvc.patterns.observer.Notification;
-import com.uwsoft.editor.renderer.components.MainItemComponent;
-import com.uwsoft.editor.renderer.components.NinePatchComponent;
-import com.uwsoft.editor.renderer.components.TextureRegionComponent;
-import com.uwsoft.editor.renderer.factory.EntityFactory;
-import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;

@@ -18,8 +18,6 @@
 
 package com.o2d.pkayjava.editor.utils.poly.earclipping.ewjordan;
 
-import com.o2d.pkayjava.editor.utils.poly.earclipping.ewjordan.Triangle;
-
 /**
  * @author EwJordan (http://www.ewjordan.com/earClip/)
  */
@@ -42,7 +40,7 @@ public class Polygon {
         this(t.x, t.y);
     }
 
-    public void set(com.uwsoft.editor.utils.poly.earclipping.ewjordan.Polygon p) {
+    public void set(Polygon p) {
         nVertices = p.nVertices;
         x = new float[nVertices];
         y = new float[nVertices];

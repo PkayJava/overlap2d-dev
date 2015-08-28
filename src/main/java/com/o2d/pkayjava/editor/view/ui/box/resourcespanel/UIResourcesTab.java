@@ -34,11 +34,22 @@ import com.o2d.pkayjava.editor.Overlap2DFacade;
  * Created by sargis on 5/4/15.
  */
 public abstract class UIResourcesTab extends Tab {
+
+    private static final String TAG;
+    public static final String NAME;
+    public static final String SEARCH;
+
+    static {
+        TAG = UIResourcesTab.class.getName();
+        NAME = TAG;
+        SEARCH = NAME + "." + "SEARCH";
+    }
+
     private VisTable contentTable;
     private VisScrollPane scrollPane;
     private VisTextField visTextField;
-    public String searchString  =   "";
-    public static final String SEARCH = "com.uwsoft.editor.view.ui.box.resourcespanel.UIResourcesTab" + ".SEARCH";
+    public String searchString = "";
+
     public UIResourcesTab() {
         super(false, false);
         contentTable = new VisTable();
@@ -55,6 +66,7 @@ public abstract class UIResourcesTab extends Tab {
         visLabel.setStyle(VisUI.getSkin().get("small", Label.LabelStyle.class));
         return visLabel;
     }
+
     protected VisTextField createTextField() {
         visTextField = new VisTextField();
         final String notification = SEARCH;
@@ -62,7 +74,7 @@ public abstract class UIResourcesTab extends Tab {
 
             @Override
             public void keyTyped(VisTextField textField, char c) {
-                searchString    =   textField.getText();
+                searchString = textField.getText();
                 Overlap2DFacade facade = Overlap2DFacade.getInstance();
                 facade.sendNotification(notification);
             }

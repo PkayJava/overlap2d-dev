@@ -45,7 +45,7 @@ public class CutItemsCommand extends EntityModifyRevertableCommand {
 
     @Override
     public void doAction() {
-        backup = com.uwsoft.editor.controller.commands.CopyItemsCommand.getJsonStringFromEntities(sandbox.getSelector().getSelectedItems());
+        backup = CopyItemsCommand.getJsonStringFromEntities(sandbox.getSelector().getSelectedItems());
         String data = CopyItemsCommand.getJsonStringFromEntities(sandbox.getSelector().getSelectedItems());
 
         Object[] payload = new Object[2];
