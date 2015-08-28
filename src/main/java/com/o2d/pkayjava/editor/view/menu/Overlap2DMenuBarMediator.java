@@ -225,8 +225,9 @@ public class Overlap2DMenuBarMediator extends SimpleMediator<Overlap2DMenuBar> {
         PreferencesManager prefs = PreferencesManager.getInstance();
         prefs.buildRecentHistory();
         prefs.pushHistory(path);
-        Sandbox sandbox = Sandbox.getInstance();
-        projectManager.openProjectFromPath(path);
+        if (projectManager != null) {
+            projectManager.openProjectFromPath(path);
+        }
     }
 
     public void clearRecents() {

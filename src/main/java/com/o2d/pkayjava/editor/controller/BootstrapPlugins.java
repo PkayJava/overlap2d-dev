@@ -45,29 +45,42 @@ public class BootstrapPlugins extends SimpleCommand {
         facade.registerProxy(pluginManager);
 
         ProjectManager projectManager = facade.retrieveProxy(ProjectManager.NAME);
-        File pluginDir = new File(projectManager.getRootPath() + File.separator + "plugins");
-        //File pluginDir = new File("D:\\Intellij\\plugins");
+        File pluginDir = null;
+        if (projectManager != null) {
+            pluginDir = new File(projectManager.getRootPath() + File.separator + "plugins");
+        }
 
         ModuleManager manager = new DefaultModuleManager();
-        Collection<Module> loadedPlugins = manager.loadModules(pluginDir);
 
-        for(Module module: loadedPlugins) {
-            try {
-                pluginManager.initPlugin((O2DPlugin) module.getClass().newInstance());
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
+        Collection<Module> loadedPlugins = null;
+        if (pluginDir != null) {
+            loadedPlugins = manager.loadModules(pluginDir);
+        }
+
+        if (loadedPlugins != null) {
+            for (Module module : loadedPlugins) {
+                try {
+                    pluginManager.initPlugin((O2DPlugin) module.getClass().newInstance());
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
             }
         }
-        loadedPlugins = manager.loadModules("com.o2d.pkayjava.editor.plugins");
-        for (Module module : loadedPlugins) {
-            try {
-                pluginManager.initPlugin((O2DPlugin) module.getClass().newInstance());
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
+
+        if (manager != null) {
+            loadedPlugins = manager.loadModules("com.o2d.pkayjava.editor.plugins");
+        }
+        if (loadedPlugins != null) {
+            for (Module module : loadedPlugins) {
+                try {
+                    pluginManager.initPlugin((O2DPlugin) module.getClass().newInstance());
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

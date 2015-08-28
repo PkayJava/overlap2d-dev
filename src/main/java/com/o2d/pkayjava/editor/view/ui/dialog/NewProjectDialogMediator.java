@@ -45,7 +45,7 @@ public class NewProjectDialogMediator extends SimpleMediator<NewProjectDialog> {
     @Override
     public String[] listNotificationInterests() {
         return new String[]{
-                com.o2d.pkayjava.editor.view.menu.Overlap2DMenuBar.NEW_PROJECT,
+                Overlap2DMenuBar.NEW_PROJECT,
                 NewProjectDialog.CREATE_BTN_CLICKED
         };
     }
@@ -53,17 +53,19 @@ public class NewProjectDialogMediator extends SimpleMediator<NewProjectDialog> {
     @Override
     public void onRegister() {
         super.onRegister();
-        facade = com.o2d.pkayjava.editor.Overlap2DFacade.getInstance();
+        facade = Overlap2DFacade.getInstance();
 
         ProjectManager projectManager = facade.retrieveProxy(ProjectManager.NAME);
-        viewComponent.setDefaultWorkspacePath(projectManager.getWorkspacePath());
+        if (projectManager != null) {
+            viewComponent.setDefaultWorkspacePath(projectManager.getWorkspacePath());
+        }
     }
 
     @Override
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
-        com.o2d.pkayjava.editor.view.stage.Sandbox sandbox = com.o2d.pkayjava.editor.view.stage.Sandbox.getInstance();
-        com.o2d.pkayjava.editor.view.stage.UIStage uiStage = sandbox.getUIStage();
+        Sandbox sandbox = Sandbox.getInstance();
+        UIStage uiStage = sandbox.getUIStage();
         if (Overlap2DMenuBar.NEW_PROJECT.equals(notification.getName())) {
             viewComponent.show(uiStage);
         } else if (NewProjectDialog.CREATE_BTN_CLICKED.equals(notification.getName())) {

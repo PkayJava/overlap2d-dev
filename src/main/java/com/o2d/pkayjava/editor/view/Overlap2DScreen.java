@@ -141,11 +141,16 @@ public class Overlap2DScreen implements Screen, InputProcessor {
 
         projectManager = facade.retrieveProxy(ProjectManager.NAME);
         // check for demo project
-        File demoDir = new File(projectManager.getRootPath() + File.separator + "examples" + File.separator + "OverlapDemo");
+        File demoDir = null;
+        if (projectManager != null) {
+            demoDir = new File(projectManager.getRootPath() + File.separator + "examples" + File.separator + "OverlapDemo");
+        }
         //if (demoDir.isDirectory() && demoDir.exists()) {
         // TODO: temp not opening the demo
         if (false) {
-            projectManager.openProjectFromPath(demoDir.getAbsolutePath() + File.separator + "project.pit");
+            if (projectManager != null) {
+                projectManager.openProjectFromPath(demoDir.getAbsolutePath() + File.separator + "project.pit");
+            }
             sandbox.loadCurrentProject();
             if (sandbox.getViewport() != null) {
                 sandbox.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

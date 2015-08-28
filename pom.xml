@@ -151,6 +151,17 @@
             <!-- <resource> <directory>source/VisEditor/UI/asset-raw</directory>
                 </resource> -->
             <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.atlas</include>
+                    <include>**/*.png</include>
+                    <include>**/*.ttf</include>
+                    <include>**/*.fnt</include>
+                    <include>**/*.json</include>
+                </includes>
+            </resource>
+            <resource>
                 <directory>source/VisEditor/UI/src</directory>
                 <includes>
                     <include>**/*.properties</include>
