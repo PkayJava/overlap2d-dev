@@ -34,7 +34,18 @@ import com.o2d.pkayjava.editor.Overlap2DFacade;
 import com.o2d.pkayjava.editor.view.ui.widget.InputFileWidget;
 
 public class NewProjectDialog extends O2DDialog {
-    public static final String CREATE_BTN_CLICKED = "com.uwsoft.editor.view.ui.dialog.NewProjectDialog" + ".CREATE_BTN_CLICKED";
+
+    private static final String TAG;
+    public static final String NAME;
+
+    public static final String CREATE_BTN_CLICKED;
+
+    static {
+        TAG = NewProjectDialog.class.getName();
+        NAME = TAG;
+        CREATE_BTN_CLICKED = NAME + "." + "CREATE_BTN_CLICKED";
+    }
+
     private static final String DEFAULT_ORIGIN_WIDTH = "1920";
     private static final String DEFAULT_ORIGIN_HEIGHT = "1200";
     private static final String DEFAULT_PPWU = "80";

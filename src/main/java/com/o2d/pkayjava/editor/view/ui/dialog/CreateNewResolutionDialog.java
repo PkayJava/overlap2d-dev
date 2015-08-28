@@ -32,7 +32,18 @@ import com.o2d.pkayjava.editor.Overlap2DFacade;
 import com.o2d.pkayjava.runtime.data.ResolutionEntryVO;
 
 public class CreateNewResolutionDialog extends O2DDialog {
-    public static final String CREATE_BTN_CLICKED = "com.uwsoft.editor.view.ui.dialog.CreateNewResolutionDialog" + ".CREATE_BTN_CLICKED";
+
+    private static final String TAG;
+    public static final String NAME;
+
+    public static final String CREATE_BTN_CLICKED;
+
+    static {
+        TAG = CreateNewResolutionDialog.class.getName();
+        NAME = TAG;
+        CREATE_BTN_CLICKED = NAME + "." + "CREATE_BTN_CLICKED";
+    }
+
     private final VisTextField nameVisTextField;
     private VisTextField widthVisTextField;
     private VisTextField heightVisTextField;

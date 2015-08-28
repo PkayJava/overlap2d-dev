@@ -38,9 +38,19 @@ import com.o2d.pkayjava.editor.utils.StandardWidgetsFactory;
  * Created by azakhary on 5/12/2015.
  */
 public class CustomVariablesDialog extends UIDraggablePanel {
-    public static final String PREFIX = "com.uwsoft.editor.view.ui.dialog.CustomVariablesDialog";
-    public static final String ADD_BUTTON_PRESSED = PREFIX + ".ADD_BUTTON_PRESSED";
-    public static final String DELETE_BUTTON_PRESSED = PREFIX + ".DELETE_BUTTON_PRESSED";
+
+    private static final String TAG;
+    public static final String NAME;
+
+    public static final String ADD_BUTTON_PRESSED;
+    public static final String DELETE_BUTTON_PRESSED;
+
+    static {
+        TAG = CustomVariablesDialog.class.getName();
+        NAME = TAG;
+        ADD_BUTTON_PRESSED = NAME + "." + "ADD_BUTTON_PRESSED";
+        DELETE_BUTTON_PRESSED = NAME + "." + "DELETE_BUTTON_PRESSED";
+    }
 
     private Overlap2DFacade facade;
 

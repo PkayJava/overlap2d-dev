@@ -39,12 +39,21 @@ import com.commons.UIDraggablePanel;
 import com.o2d.pkayjava.editor.utils.ImportUtils;
 
 public class ImportDialog extends UIDraggablePanel {
-    public static final String CLASS_NAME = "com.uwsoft.editor.view.ui.dialog.ImportDialog";
 
-    public static final String BROWSE_BTN_CLICKED = CLASS_NAME + ".BROWSE_BTN_CLICKED";
+    private static final String TAG;
+    public static final String NAME;
 
-    public static final String CANCEL_BTN_CLICKED = CLASS_NAME + ".CANCEL_BTN_CLICKED";
-    public static final String IMPORT_BTN_CLICKED = CLASS_NAME + ".IMPORT_BTN_CLICKED";
+    public static final String BROWSE_BTN_CLICKED;
+    public static final String CANCEL_BTN_CLICKED;
+    public static final String IMPORT_BTN_CLICKED;
+
+    static {
+        TAG = ImportDialog.class.getName();
+        NAME = TAG;
+        BROWSE_BTN_CLICKED = NAME + "." + "BROWSE_BTN_CLICKED";
+        CANCEL_BTN_CLICKED = NAME + "." + "CANCEL_BTN_CLICKED";
+        IMPORT_BTN_CLICKED = NAME + "." + "IMPORT_BTN_CLICKED";
+    }
 
     private Overlap2DFacade facade;
 
@@ -110,9 +119,9 @@ public class ImportDialog extends UIDraggablePanel {
     }
 
     public boolean checkDropRegionHit(Vector2 mousePos) {
-        Vector2 pos = new Vector2(mousePos.x-8, mousePos.y-31);
+        Vector2 pos = new Vector2(mousePos.x - 8, mousePos.y - 31);
         pos = dropRegion.screenToLocalCoordinates(pos);
-        if(dropRegion.hit(pos.x, pos.y, false) != null) {
+        if (dropRegion.hit(pos.x, pos.y, false) != null) {
             return true;
         }
 
@@ -163,7 +172,7 @@ public class ImportDialog extends UIDraggablePanel {
         errorLabel.clearActions();
 
         String typeText = typeNames.get(type);
-        if(isMultiple) typeText+="'s";
+        if (isMultiple) typeText += "'s";
 
         mainTable.add(new VisLabel("Currently importing: " + typeText)).left();
         mainTable.row().padBottom(5);
@@ -187,7 +196,7 @@ public class ImportDialog extends UIDraggablePanel {
 
     private void initDropListeners(VisTextButton browseBtn) {
         browseBtn.addListener(new ClickListener() {
-            public void clicked (InputEvent event, float x, float y) {
+            public void clicked(InputEvent event, float x, float y) {
                 facade.sendNotification(BROWSE_BTN_CLICKED);
             }
         });
@@ -195,12 +204,12 @@ public class ImportDialog extends UIDraggablePanel {
 
     private void initImportListeners(VisTextButton cancelBtn, VisTextButton importBtn) {
         cancelBtn.addListener(new ClickListener() {
-            public void clicked (InputEvent event, float x, float y) {
+            public void clicked(InputEvent event, float x, float y) {
                 facade.sendNotification(CANCEL_BTN_CLICKED);
             }
         });
         importBtn.addListener(new ClickListener() {
-            public void clicked (InputEvent event, float x, float y) {
+            public void clicked(InputEvent event, float x, float y) {
                 facade.sendNotification(IMPORT_BTN_CLICKED);
             }
         });
@@ -208,10 +217,10 @@ public class ImportDialog extends UIDraggablePanel {
 
     public void showError(int type) {
         String text = "";
-        if(type == ImportUtils.TYPE_UNSUPPORTED || type == ImportUtils.TYPE_UNCKNOWN) {
+        if (type == ImportUtils.TYPE_UNSUPPORTED || type == ImportUtils.TYPE_UNCKNOWN) {
             text = "unsupported file type/types";
         }
-        if(type == ImportUtils.TYPE_MIXED) {
+        if (type == ImportUtils.TYPE_MIXED) {
             text = "Multiple import types, please use one";
         }
 

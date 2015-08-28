@@ -35,8 +35,20 @@ import com.o2d.pkayjava.editor.view.ui.widget.InputFileWidget;
  * Created by sargis on 7/31/14.
  */
 public class ExportSettingsDialog extends O2DDialog {
-    public static final String SAVE_SETTINGS_BTN_CLICKED = "com.uwsoft.editor.view.ui.dialog.ExportSettingsDialog" + ".SAVE_SETTINGS_BTN_CLICKED";
-    public static final String SAVE_SETTINGS_AND_EXPORT_BTN_CLICKED = "com.uwsoft.editor.view.ui.dialog.ExportSettingsDialog" + ".SAVE_SETTINGS_AND_EXPORT_BTN_CLICKED";
+
+    private static final String TAG;
+    public static final String NAME;
+
+    public static final String SAVE_SETTINGS_BTN_CLICKED;
+    public static final String SAVE_SETTINGS_AND_EXPORT_BTN_CLICKED;
+
+    static {
+        TAG = ExportSettingsDialog.class.getName();
+        NAME = TAG;
+        SAVE_SETTINGS_BTN_CLICKED = NAME + "." + "SAVE_SETTINGS_BTN_CLICKED";
+        SAVE_SETTINGS_AND_EXPORT_BTN_CLICKED = NAME + "." + "SAVE_SETTINGS_AND_EXPORT_BTN_CLICKED";
+    }
+
     private final InputFileWidget exportSettingsInputFileWidget;
     private VisSelectBox<Integer> widthSelectBox;
     private VisSelectBox<Integer> heightSelectBox;
@@ -52,7 +64,8 @@ public class ExportSettingsDialog extends O2DDialog {
         exportSettingsInputFileWidget.setTextFieldWidth(250);
         mainTable.add(exportSettingsInputFileWidget);
         mainTable.row().padTop(10);
-        mainTable.add("Atlas Max Size:").right().top().padRight(5);;
+        mainTable.add("Atlas Max Size:").right().top().padRight(5);
+        ;
         mainTable.add(getDimensionsTable()).left();
         mainTable.row().padTop(23);
         VisTable buttonsTable = new VisTable();
