@@ -113,10 +113,14 @@ public class UILayerBoxMediator extends PanelMediator<UILayerBox> {
             setSelectedByName(notification.getBody());
         } else if (DeleteLayerCommand.DONE.equals(notification.getName())) {
             initLayerData();
-            int deletedIndex = (int) notification.getBody() - 1;
-            if (deletedIndex == -1) deletedIndex = 0;
-            viewComponent.setCurrentSelectedLayer(deletedIndex);
-            viewComponent.currentSelectedLayerIndex = deletedIndex;
+            if (notification != null && notification.getBody() != null) {
+                int deletedIndex = (int) notification.getBody() - 1;
+                if (deletedIndex == -1) {
+                    deletedIndex = 0;
+                }
+                viewComponent.setCurrentSelectedLayer(deletedIndex);
+                viewComponent.currentSelectedLayerIndex = deletedIndex;
+            }
         } else if (DeleteLayerCommand.UNDONE.equals(notification.getName())) {
             initLayerData();
             setSelectedByName(notification.getBody());

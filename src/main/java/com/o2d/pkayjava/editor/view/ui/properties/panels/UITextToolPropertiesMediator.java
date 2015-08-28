@@ -30,7 +30,9 @@ public class UITextToolPropertiesMediator extends UIAbstractPropertiesMediator<T
     public void onRegister() {
         facade = Overlap2DFacade.getInstance();
         fontManager = facade.retrieveProxy(FontManager.NAME);
-        viewComponent.setFontFamilyList(fontManager.getFontNamesFromMap());
+        if (fontManager != null) {
+            viewComponent.setFontFamilyList(fontManager.getFontNamesFromMap());
+        }
     }
 
     @Override

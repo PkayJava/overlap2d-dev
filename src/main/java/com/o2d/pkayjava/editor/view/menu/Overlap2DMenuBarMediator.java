@@ -127,11 +127,14 @@ public class Overlap2DMenuBarMediator extends SimpleMediator<Overlap2DMenuBar> {
             facade.sendNotification(Sandbox.ACTION_PASTE);
         } else if (Overlap2DMenuBar.UNDO.equals(notification.getName())) {
             CommandManager commandManager = facade.retrieveProxy(CommandManager.NAME);
-            commandManager.undoCommand();
+            if (commandManager != null) {
+                commandManager.undoCommand();
+            }
         } else if (Overlap2DMenuBar.REDO.equals(notification.getName())) {
             CommandManager commandManager = facade.retrieveProxy(CommandManager.NAME);
-            commandManager = facade.retrieveProxy(CommandManager.NAME);
-            commandManager.redoCommand();
+            if (commandManager != null) {
+                commandManager.redoCommand();
+            }
         }
     }
 

@@ -80,7 +80,9 @@ public class TransformTool extends SelectionTool implements FollowerTransformati
 
         // set cursor
         cursorManager = Overlap2DFacade.getInstance().retrieveProxy(CursorManager.NAME);
-        cursorManager.setCursor(CursorManager.CROSS);
+        if (cursorManager != null) {
+            cursorManager.setCursor(CursorManager.CROSS);
+        }
     }
 
     @Override

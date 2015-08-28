@@ -69,12 +69,12 @@ public class SelectionTool extends SimpleTool {
     private HashMap<Entity, Vector2> dragStartPositions = new HashMap<>();
     private HashMap<Entity, Vector2> dragTouchDiff = new HashMap<>();
 
-	private TransformComponent transformComponent;
+    private TransformComponent transformComponent;
 
-	private DimensionsComponent dimensionsComponent;
+    private DimensionsComponent dimensionsComponent;
 
     public SelectionTool() {
-    
+
     }
 
     @Override
@@ -89,7 +89,9 @@ public class SelectionTool extends SimpleTool {
 
         // set cursor
         CursorManager cursorManager = Overlap2DFacade.getInstance().retrieveProxy(CursorManager.NAME);
-        cursorManager.setCursor(CursorManager.NORMAL);
+        if (cursorManager != null) {
+            cursorManager.setCursor(CursorManager.NORMAL);
+        }
     }
 
     @Override
@@ -136,7 +138,7 @@ public class SelectionTool extends SimpleTool {
     public void stageMouseDoubleClick(float x, float y) {
         Entity currentView = sandbox.getCurrentViewingEntity();
         ParentNodeComponent parentNodeComponent = ComponentRetriever.get(currentView, ParentNodeComponent.class);
-        if(parentNodeComponent != null) {
+        if (parentNodeComponent != null) {
             Overlap2DFacade.getInstance().sendNotification(Sandbox.ACTION_CAMERA_CHANGE_COMPOSITE, parentNodeComponent.parentEntity);
         }
     }
@@ -148,7 +150,7 @@ public class SelectionTool extends SimpleTool {
 
         currentTouchedItemWasSelected = sandbox.getSelector().getCurrentSelection().contains(entity);
 
-        if(isEntityVisible(entity)) {
+        if (isEntityVisible(entity)) {
             // if shift is pressed we are in add/remove selection mode
             if (isShiftPressed()) {
                 //TODO block selection handling (wat?)
@@ -182,7 +184,7 @@ public class SelectionTool extends SimpleTool {
         dragStartPositions.clear();
         dragTouchDiff.clear();
         for (Entity itemInstance : sandbox.getSelector().getCurrentSelection()) {
-        	transformComponent = ComponentRetriever.get(itemInstance, TransformComponent.class);
+            transformComponent = ComponentRetriever.get(itemInstance, TransformComponent.class);
 
             dragTouchDiff.put(itemInstance, new Vector2(x - transformComponent.x, y - transformComponent.y));
             dragStartPositions.put(itemInstance, new Vector2(transformComponent.x, transformComponent.y));
@@ -206,9 +208,9 @@ public class SelectionTool extends SimpleTool {
 
         if (isShiftPressed()) {
             // check if we have a direction vector
-            if(directionVector == null) {
+            if (directionVector == null) {
                 directionVector = new Vector2();
-                if(Math.abs(x - dragMouseStartPosition.x) >= Math.abs(y - dragMouseStartPosition.y)) {
+                if (Math.abs(x - dragMouseStartPosition.x) >= Math.abs(y - dragMouseStartPosition.y)) {
                     directionVector.x = 1;
                     directionVector.y = 0;
                 } else {
@@ -230,23 +232,23 @@ public class SelectionTool extends SimpleTool {
             newY = MathUtils.floor(y / gridSize) * gridSize;
 
             if (isShiftPressed()) {
-                if(directionVector.x == 0) {
+                if (directionVector.x == 0) {
                     newX = dragMouseStartPosition.x;
                 }
-                if(directionVector.y == 0) {
+                if (directionVector.y == 0) {
                     newY = dragMouseStartPosition.y;
                 }
             }
 
             // Selection rectangles should move and follow along
             for (Entity itemInstance : sandbox.getSelector().getCurrentSelection()) {
-            	transformComponent = ComponentRetriever.get(itemInstance, TransformComponent.class);
+                transformComponent = ComponentRetriever.get(itemInstance, TransformComponent.class);
 
 
                 Vector2 diff = new Vector2(dragTouchDiff.get(itemInstance));
                 diff.x = MathUtils.floor(diff.x / gridSize) * gridSize;
-                diff.y = MathUtils.floor(diff.y/ gridSize) * gridSize;
-              
+                diff.y = MathUtils.floor(diff.y / gridSize) * gridSize;
+
                 transformComponent.x = (newX - diff.x);
                 transformComponent.y = (newY - diff.y);
                 //value.hide();
@@ -286,7 +288,7 @@ public class SelectionTool extends SimpleTool {
         sandbox.dirty = false;
 
         // if we were dragging, need to remember new position
-        if(isDragging) {
+        if (isDragging) {
             // sets item position, and puts things into undo-redo que
             Array<Object[]> payloads = new Array<>();
             for (Entity itemInstance : sandbox.getSelector().getCurrentSelection()) {
@@ -310,7 +312,7 @@ public class SelectionTool extends SimpleTool {
 
     @Override
     public void itemMouseDoubleClick(Entity item, float x, float y) {
-        if(sandbox.getSelector().selectionIsComposite()) {
+        if (sandbox.getSelector().selectionIsComposite()) {
             Overlap2DFacade.getInstance().sendNotification(Sandbox.ACTION_CAMERA_CHANGE_COMPOSITE, item);
         }
     }
@@ -323,7 +325,7 @@ public class SelectionTool extends SimpleTool {
 
     private void selectionComplete() {
         sandbox = Sandbox.getInstance();
-       
+
         Overlap2DFacade facade = Overlap2DFacade.getInstance();
         OrthographicCamera camera = Sandbox.getInstance().getCamera();
         Viewport viewport = Sandbox.getInstance().getViewport();
@@ -357,7 +359,7 @@ public class SelectionTool extends SimpleTool {
             facade.sendNotification(Sandbox.ACTION_SET_SELECTION, null);
             return;
         }
-        
+
         facade.sendNotification(Sandbox.ACTION_SET_SELECTION, curr);
     }
 
@@ -370,11 +372,11 @@ public class SelectionTool extends SimpleTool {
         boolean isControlPressed = isControlPressed();
 
         // the amount of pixels by which to move item if moving
-        float deltaMove = 1f/Sandbox.getInstance().getPixelPerWU();
+        float deltaMove = 1f / Sandbox.getInstance().getPixelPerWU();
 
         if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
             // if shift is pressed, move boxes by 20 pixels instead of one
-            deltaMove = 20f/Sandbox.getInstance().getPixelPerWU(); //pixels
+            deltaMove = 20f / Sandbox.getInstance().getPixelPerWU(); //pixels
         }
 
         if (sandbox.getGridSize() > 1) {
@@ -385,7 +387,7 @@ public class SelectionTool extends SimpleTool {
             }
         }
 
-        if(!isControlPressed) {
+        if (!isControlPressed) {
             if (keycode == Input.Keys.UP) {
                 // moving UP
                 sandbox.getSelector().moveSelectedItemsBy(0, deltaMove);

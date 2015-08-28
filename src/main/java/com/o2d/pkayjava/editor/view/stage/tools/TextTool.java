@@ -63,7 +63,9 @@ public class TextTool extends ItemDropTool {
     public void initTool() {
         super.initTool();
         CursorManager cursorManager = Overlap2DFacade.getInstance().retrieveProxy(CursorManager.NAME);
-        cursorManager.setCursor(CursorManager.TEXT_TOOL);
+        if (cursorManager != null) {
+            cursorManager.setCursor(CursorManager.TEXT_TOOL);
+        }
     }
 
     @Override

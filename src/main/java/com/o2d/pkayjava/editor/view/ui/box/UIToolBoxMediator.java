@@ -19,6 +19,7 @@
 package com.o2d.pkayjava.editor.view.ui.box;
 
 import com.badlogic.gdx.utils.Array;
+import com.o2d.pkayjava.editor.proxy.FontManager;
 import com.puremvc.patterns.mediator.SimpleMediator;
 import com.puremvc.patterns.observer.Notification;
 import com.o2d.pkayjava.editor.Overlap2DFacade;
@@ -81,10 +82,16 @@ public class UIToolBoxMediator extends SimpleMediator<UIToolBox> {
     @Override
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
-
+        FontManager fontManager = facade.retrieveProxy(FontManager.NAME);
         if (UIToolBox.TOOL_CLICKED.equals(notification.getName())) {
             currentTool = notification.getBody();
-            facade.sendNotification(TOOL_SELECTED, currentTool);
+            if (TextTool.NAME.equals(currentTool)) {
+                if (fontManager != null) {
+                    facade.sendNotification(TOOL_SELECTED, currentTool);
+                }
+            } else {
+                facade.sendNotification(TOOL_SELECTED, currentTool);
+            }
         }
     }
 

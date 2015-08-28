@@ -373,10 +373,18 @@ public class ResourceManager extends BaseProxy implements IResourceRetriever {
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = fontSize;
 
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontManager.getTTFByName(fontfamily));
-        BitmapFont font = generator.generateFont(parameter);
+        FreeTypeFontGenerator generator = null;
+        if (fontManager != null) {
+            generator = new FreeTypeFontGenerator(fontManager.getTTFByName(fontfamily));
+        }
 
-        addBitmapFont(fontfamily, parameter.size, font);
+        BitmapFont font = null;
+        if (generator != null) {
+            font = generator.generateFont(parameter);
+        }
+        if (font != null) {
+            addBitmapFont(fontfamily, parameter.size, font);
+        }
     }
 
     public HashMap<String, SpineAnimData> getProjectSpineAnimationsList() {
