@@ -2,18 +2,6 @@ package com.o2d.pkayjava.runtime.data;
 
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
-import com.o2d.pkayjava.runtime.components.LayerMapComponent;
-import com.o2d.pkayjava.runtime.components.MainItemComponent;
-import com.o2d.pkayjava.runtime.components.NodeComponent;
-import com.o2d.pkayjava.runtime.data.*;
-import com.o2d.pkayjava.runtime.data.Image9patchVO;
-import com.o2d.pkayjava.runtime.data.LightVO;
-import com.o2d.pkayjava.runtime.data.ParticleEffectVO;
-import com.o2d.pkayjava.runtime.data.SelectBoxVO;
-import com.o2d.pkayjava.runtime.data.SimpleImageVO;
-import com.o2d.pkayjava.runtime.data.SpineVO;
-import com.o2d.pkayjava.runtime.factory.EntityFactory;
-import com.o2d.pkayjava.runtime.resources.FontSizePair;
 
 import java.util.ArrayList;
 import java.util.Collections;

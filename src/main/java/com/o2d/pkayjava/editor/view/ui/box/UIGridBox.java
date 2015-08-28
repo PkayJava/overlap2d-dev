@@ -33,7 +33,17 @@ import com.o2d.pkayjava.editor.view.ui.box.UIBaseBox;
  */
 public class UIGridBox extends UIBaseBox {
 
-    public static final String GRID_SIZE_TEXT_FIELD_UPDATED = "com.uwsoft.editor.view.ui.box.UIGridBox" + ".GRID_SIZE_TEXT_FIELD_UPDATED";
+    private static final String TAG;
+    public static final String NAME;
+
+    public static final String GRID_SIZE_TEXT_FIELD_UPDATED;
+
+    static {
+        TAG = UIGridBox.class.getName();
+        NAME = TAG;
+        GRID_SIZE_TEXT_FIELD_UPDATED = NAME + "." + "GRID_SIZE_TEXT_FIELD_UPDATED";
+    }
+
     private VisValidableTextField gridSizeTextField;
 
     public UIGridBox() {

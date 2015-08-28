@@ -82,11 +82,9 @@ public class UIToolBoxMediator extends SimpleMediator<UIToolBox> {
     public void handleNotification(Notification notification) {
         super.handleNotification(notification);
 
-        switch (notification.getName()) {
-            case UIToolBox.TOOL_CLICKED:
-                currentTool = notification.getBody();
-                facade.sendNotification(TOOL_SELECTED, currentTool);
-                break;
+        if (UIToolBox.TOOL_CLICKED.equals(notification.getName())) {
+            currentTool = notification.getBody();
+            facade.sendNotification(TOOL_SELECTED, currentTool);
         }
     }
 

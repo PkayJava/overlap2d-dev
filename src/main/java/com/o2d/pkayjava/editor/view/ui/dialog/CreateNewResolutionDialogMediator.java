@@ -63,16 +63,13 @@ public class CreateNewResolutionDialogMediator extends SimpleMediator<CreateNewR
         super.handleNotification(notification);
         Sandbox sandbox = Sandbox.getInstance();
         UIStage uiStage = sandbox.getUIStage();
-        switch (notification.getName()) {
-            case UIResolutionBox.CREATE_NEW_RESOLUTION_BTN_CLICKED:
-                viewComponent.show(uiStage);
-                break;
-            case CreateNewResolutionDialog.CREATE_BTN_CLICKED:
-                ResolutionEntryVO resolutionEntryVO = notification.getBody();
-                ResolutionManager resolutionManager = facade.retrieveProxy(ResolutionManager.NAME);
-                resolutionManager.createNewResolution(resolutionEntryVO);
-                viewComponent.hide();
-                break;
+        if (UIResolutionBox.CREATE_NEW_RESOLUTION_BTN_CLICKED.equals(notification.getName())) {
+            viewComponent.show(uiStage);
+        } else if (CreateNewResolutionDialog.CREATE_BTN_CLICKED.equals(notification.getName())) {
+            ResolutionEntryVO resolutionEntryVO = notification.getBody();
+            ResolutionManager resolutionManager = facade.retrieveProxy(ResolutionManager.NAME);
+            resolutionManager.createNewResolution(resolutionEntryVO);
+            viewComponent.hide();
         }
     }
 }

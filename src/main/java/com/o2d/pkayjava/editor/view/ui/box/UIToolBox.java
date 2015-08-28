@@ -31,9 +31,16 @@ import com.o2d.pkayjava.editor.Overlap2DFacade;
 
 public class UIToolBox extends VisTable {
 
-    private static final String PREFIX = "com.uwsoft.editor.view.ui.box.UIToolBox.";
+    private static final String TAG;
+    public static final String NAME;
+    public static final String TOOL_CLICKED;
 
-    public static final String TOOL_CLICKED = PREFIX + ".TOOL_CLICKED";
+    static {
+        TAG = UIToolBox.class.getName();
+        NAME = TAG;
+        TOOL_CLICKED = NAME + "." + "TOOL_CLICKED";
+    }
+
     private final ButtonGroup<VisImageButton> toolsButtonGroup;
 
     private HashMap<String, VisImageButton> buttonMap = new HashMap<>();
@@ -43,10 +50,10 @@ public class UIToolBox extends VisTable {
     }
 
     public void createToolButtons(Array<String> toolList) {
-        for(int i = 0; i < toolList.size; i++) {
+        for (int i = 0; i < toolList.size; i++) {
             addToolButton(toolList.get(i));
             row();
-            if(i == 1) addSeparator().width(31);
+            if (i == 1) addSeparator().width(31);
         }
     }
 

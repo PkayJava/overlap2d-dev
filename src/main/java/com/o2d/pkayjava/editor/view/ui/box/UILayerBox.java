@@ -44,13 +44,28 @@ import com.o2d.pkayjava.editor.view.ui.box.UICollapsibleBox;
  */
 public class UILayerBox extends UICollapsibleBox {
 
-    public static final String LAYER_ROW_CLICKED = "com.uwsoft.editor.view.ui.box.UILayerBox" + ".LAYER_ROW_CLICKED";
-    public static final String CREATE_NEW_LAYER = "com.uwsoft.editor.view.ui.box.UILayerBox" + ".CREATE_NEW_LAYER";
-    public static final String DELETE_LAYER = "com.uwsoft.editor.view.ui.box.UILayerBox" + ".DELETE_NEW_LAYER";
-    public static final String CHANGE_LAYER_NAME = "com.uwsoft.editor.view.ui.box.UILayerBox" + ".CHANGE_LAYER_NAME";
-    public static final String LOCK_LAYER = "com.uwsoft.editor.view.ui.box.UILayerBox" + ".LOCK_LAYER";
-    public static final String HIDE_LAYER = "com.uwsoft.editor.view.ui.box.UILayerBox" + ".HIDE_LAYER";
-    public static final String LAYER_DROPPED = "com.uwsoft.editor.view.ui.box.UILayerBox" + ".LAYER_DROPPED";
+    private static final String TAG;
+    public static final String NAME;
+
+    public static final String LAYER_ROW_CLICKED;
+    public static final String CREATE_NEW_LAYER;
+    public static final String DELETE_LAYER;
+    public static final String CHANGE_LAYER_NAME;
+    public static final String LOCK_LAYER;
+    public static final String HIDE_LAYER;
+    public static final String LAYER_DROPPED;
+
+    static {
+        TAG = UILayerBox.class.getName();
+        NAME = TAG;
+        LAYER_ROW_CLICKED = NAME + "." + "LAYER_ROW_CLICKED";
+        CREATE_NEW_LAYER = NAME + "." + "CREATE_NEW_LAYER";
+        DELETE_LAYER = NAME + "." + "DELETE_NEW_LAYER";
+        CHANGE_LAYER_NAME = NAME + "." + "CHANGE_LAYER_NAME";
+        LOCK_LAYER = NAME + "." + "LOCK_LAYER";
+        HIDE_LAYER = NAME + "." + "HIDE_LAYER";
+        LAYER_DROPPED = NAME + "." + "LAYER_DROPPED";
+    }
 
     private final DragAndDrop dragAndDrop;
     public int currentSelectedLayerIndex = 0;
@@ -108,20 +123,18 @@ public class UILayerBox extends UICollapsibleBox {
         dragAndDrop = new DragAndDrop();
 
 
-
         createCollapsibleWidget(contentTable);
     }
 
     public void enableDraggingInEditedSlot() {
-        if(sourceInEdition != null)
-        {
+        if (sourceInEdition != null) {
             dragAndDrop.addSource(sourceInEdition);
             sourceInEdition = null;
         }
     }
+
     public void disableDraggingInEditedSlot() {
-        if(sourceInEdition != null)
-        {
+        if (sourceInEdition != null) {
             dragAndDrop.removeSource(sourceInEdition);
         }
     }
@@ -135,7 +148,7 @@ public class UILayerBox extends UICollapsibleBox {
     }
 
     public UILayerItem getCurrentSelectedLayer() {
-        return rows.get(rows.size-1-currentSelectedLayerIndex).uiLayerItem;
+        return rows.get(rows.size - 1 - currentSelectedLayerIndex).uiLayerItem;
     }
 
     public void clearItems() {
@@ -151,8 +164,8 @@ public class UILayerBox extends UICollapsibleBox {
     }
 
     public void setCurrentSelectedLayer(int index) {
-        if(index == -1) return;
-        UILayerItemSlot slot = rows.get(rows.size-1-index);
+        if (index == -1) return;
+        UILayerItemSlot slot = rows.get(rows.size - 1 - index);
 
         clearSelection();
         slot.getUiLayerItem().setSelected(true);
@@ -176,11 +189,9 @@ public class UILayerBox extends UICollapsibleBox {
 
                 VisTextField textField = itemSlot.getUiLayerItem().getNameField();
 
-                if(sourceInEdition != null)
-                {
+                if (sourceInEdition != null) {
                     VisTextField prevField = ((UILayerItem) sourceInEdition.getActor()).getNameField();
-                    if(textField != prevField)
-                    {
+                    if (textField != prevField) {
                         prevField.clearSelection();
                         prevField.setDisabled(true);
                         enableDraggingInEditedSlot();
@@ -194,8 +205,7 @@ public class UILayerBox extends UICollapsibleBox {
                 facade.sendNotification(LAYER_ROW_CLICKED, itemSlot.getUiLayerItem());
 
                 // Change name mode if double click
-                if(getTapCount() == 2 && !itemSlot.getUiLayerItem().getData().isLocked)
-                {
+                if (getTapCount() == 2 && !itemSlot.getUiLayerItem().getData().isLocked) {
                     sourceInEdition = sourceItem;
                     textField.setDisabled(false);
                     textField.focusField();

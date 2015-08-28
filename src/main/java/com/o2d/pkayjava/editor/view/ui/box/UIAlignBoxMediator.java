@@ -67,49 +67,36 @@ public class UIAlignBoxMediator extends PanelMediator<UIAlignBox> {
         super.handleNotification(notification);
         String alignFunctionName = "";
         int align = -1;
-        switch (notification.getName()) {
-            case UIAlignBox.ALIGN_TOP_BTN_CLICKED:
-                align = Align.top;
-                alignFunctionName = "alignSelections";
-                break;
-            case UIAlignBox.ALIGN_LEFT_BTN_CLICKED:
-                align = Align.left;
-                alignFunctionName = "alignSelections";
-                break;
-            case UIAlignBox.ALIGN_BOTTOM_BTN_CLICKED:
-                align = Align.bottom;
-                alignFunctionName = "alignSelections";
-                break;
-            case UIAlignBox.ALIGN_RIGHT_BTN_CLICKED:
-                align = Align.right;
-                alignFunctionName = "alignSelections";
-                break;
-            case UIAlignBox.ALIGN_CENTER_LEFT_BTN_CLICKED:
-                align = Align.center | Align.left;
-                alignFunctionName = "alignSelections";
-                break;
-            case UIAlignBox.ALIGN_CENTER_BOTTOM_BTN_CLICKED:
-                align = Align.center | Align.bottom;
-                alignFunctionName = "alignSelections";
-                break;
-            case UIAlignBox.ALIGN_AT_EDGE_TOP_BTN_CLICKED:
-                align = Align.top;
-                alignFunctionName = "alignSelectionsAtEdge";
-                break;
-            case UIAlignBox.ALIGN_AT_EDGE_LEFT_BTN_CLICKED:
-                align = Align.left;
-                alignFunctionName = "alignSelectionsAtEdge";
-                break;
-            case UIAlignBox.ALIGN_AT_EDGE_BOTTOM_BTN_CLICKED:
-                align = Align.bottom;
-                alignFunctionName = "alignSelectionsAtEdge";
-                break;
-            case UIAlignBox.ALIGN_AT_EDGE_RIGHT_BTN_CLICKED:
-                align = Align.right;
-                alignFunctionName = "alignSelectionsAtEdge";
-                break;
-            default:
-                return;
+        if (UIAlignBox.ALIGN_TOP_BTN_CLICKED.equals(notification.getName())) {
+            align = Align.top;
+            alignFunctionName = "alignSelections";
+        } else if (UIAlignBox.ALIGN_LEFT_BTN_CLICKED.equals(notification.getName())) {
+            align = Align.left;
+            alignFunctionName = "alignSelections";
+        } else if (UIAlignBox.ALIGN_BOTTOM_BTN_CLICKED.equals(notification.getName())) {
+            align = Align.bottom;
+            alignFunctionName = "alignSelections";
+        } else if (UIAlignBox.ALIGN_RIGHT_BTN_CLICKED.equals(notification.getName())) {
+            align = Align.right;
+            alignFunctionName = "alignSelections";
+        } else if (UIAlignBox.ALIGN_CENTER_LEFT_BTN_CLICKED.equals(notification.getName())) {
+            align = Align.center | Align.left;
+            alignFunctionName = "alignSelections";
+        } else if (UIAlignBox.ALIGN_CENTER_BOTTOM_BTN_CLICKED.equals(notification.getName())) {
+            align = Align.center | Align.bottom;
+            alignFunctionName = "alignSelections";
+        } else if (UIAlignBox.ALIGN_AT_EDGE_TOP_BTN_CLICKED.equals(notification.getName())) {
+            align = Align.top;
+            alignFunctionName = "alignSelectionsAtEdge";
+        } else if (UIAlignBox.ALIGN_AT_EDGE_LEFT_BTN_CLICKED.equals(notification.getName())) {
+            align = Align.left;
+            alignFunctionName = "alignSelectionsAtEdge";
+        } else if (UIAlignBox.ALIGN_AT_EDGE_BOTTOM_BTN_CLICKED.equals(notification.getName())) {
+            align = Align.bottom;
+            alignFunctionName = "alignSelectionsAtEdge";
+        } else if (UIAlignBox.ALIGN_AT_EDGE_RIGHT_BTN_CLICKED.equals(notification.getName())) {
+            align = Align.right;
+            alignFunctionName = "alignSelectionsAtEdge";
         }
         delegateAlignFunction(alignFunctionName, align);
     }

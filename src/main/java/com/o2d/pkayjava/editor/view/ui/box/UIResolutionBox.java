@@ -34,10 +34,24 @@ import com.o2d.pkayjava.editor.proxy.ResolutionManager;
 import com.o2d.pkayjava.runtime.data.ResolutionEntryVO;
 
 public class UIResolutionBox extends VisTable {
-    public static final String CREATE_NEW_RESOLUTION_BTN_CLICKED = "com.uwsoft.editor.view.ui.box.UIResolutionBox" + ".CREATE_NEW_RESOLUTION_BTN_CLICKED";
-    public static final String CHANGE_RESOLUTION_BTN_CLICKED = "com.uwsoft.editor.view.ui.box.UIResolutionBox" + ".CHANGE_RESOLUTION_BTN_CLICKED";
-    public static final String DELETE_RESOLUTION_BTN_CLICKED = "com.uwsoft.editor.view.ui.box.UIResolutionBox" + ".DELETE_RESOLUTION_BTN_CLICKED";
-    public static final String REPACK_BTN_CLICKED = "com.uwsoft.editor.view.ui.box.UIResolutionBox" + ".REPACK_BTN_CLICKED";
+
+    private static final String TAG;
+    public static final String NAME;
+
+    public static final String CREATE_NEW_RESOLUTION_BTN_CLICKED;
+    public static final String CHANGE_RESOLUTION_BTN_CLICKED;
+    public static final String DELETE_RESOLUTION_BTN_CLICKED;
+    public static final String REPACK_BTN_CLICKED;
+
+    static {
+        TAG = UIResolutionBox.class.getName();
+        NAME = TAG;
+        CREATE_NEW_RESOLUTION_BTN_CLICKED = NAME + "." + "CREATE_NEW_RESOLUTION_BTN_CLICKED";
+        CHANGE_RESOLUTION_BTN_CLICKED = NAME + "." + "CHANGE_RESOLUTION_BTN_CLICKED";
+        DELETE_RESOLUTION_BTN_CLICKED = NAME + "." + "DELETE_RESOLUTION_BTN_CLICKED";
+        REPACK_BTN_CLICKED = NAME + "." + "REPACK_BTN_CLICKED";
+    }
+
     //    private final String currentResolutionName;
     private final Overlap2DFacade facade;
     private final ResolutionManager resolutionManager;
@@ -112,13 +126,10 @@ public class UIResolutionBox extends VisTable {
         public void clicked(InputEvent event, float x, float y) {
             super.clicked(event, x, y);
             Overlap2DFacade facade = Overlap2DFacade.getInstance();
-            switch (btnClicked) {
-                case DELETE_RESOLUTION_BTN_CLICKED:
-                    facade.sendNotification(btnClicked, visSelectBox.getSelected());
-                    break;
-                case REPACK_BTN_CLICKED:
-                    facade.sendNotification(btnClicked);
-                    break;
+            if (DELETE_RESOLUTION_BTN_CLICKED.equals(btnClicked)) {
+                facade.sendNotification(btnClicked, visSelectBox.getSelected());
+            } else if (REPACK_BTN_CLICKED.equals(btnClicked)) {
+                facade.sendNotification(btnClicked);
             }
         }
     }

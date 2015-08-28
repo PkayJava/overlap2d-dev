@@ -31,33 +31,49 @@ import com.o2d.pkayjava.editor.view.ui.box.UICollapsibleBox;
  */
 public class UIAlignBox extends UICollapsibleBox {
 
-    private static final String prefix = "com.uwsoft.editor.view.ui.box.UIAlignBox.ALIGN_";
+    private static final String TAG;
+    public static final String NAME;
 
     //Simple Align
     private static final int ALIGN_TOP = 0;
-    public static final String ALIGN_TOP_BTN_CLICKED = prefix + ALIGN_TOP;
+    public static final String ALIGN_TOP_BTN_CLICKED;
     private static final int ALIGN_LEFT = 1;
-    public static final String ALIGN_LEFT_BTN_CLICKED = prefix + ALIGN_LEFT;
+    public static final String ALIGN_LEFT_BTN_CLICKED;
     private static final int ALIGN_BOTTOM = 2;
-    public static final String ALIGN_BOTTOM_BTN_CLICKED = prefix + ALIGN_BOTTOM;
+    public static final String ALIGN_BOTTOM_BTN_CLICKED;
     private static final int ALIGN_RIGHT = 3;
-    public static final String ALIGN_RIGHT_BTN_CLICKED = prefix + ALIGN_RIGHT;
+    public static final String ALIGN_RIGHT_BTN_CLICKED;
 
     //Center Align
     private static final int ALIGN_CENTER_VERTICAL = 4;
-    public static final String ALIGN_CENTER_LEFT_BTN_CLICKED = prefix + ALIGN_CENTER_VERTICAL;
+    public static final String ALIGN_CENTER_LEFT_BTN_CLICKED;
     private static final int ALIGN_CENTER_HORISONTAL = 5;
-    public static final String ALIGN_CENTER_BOTTOM_BTN_CLICKED = prefix + ALIGN_CENTER_HORISONTAL;
+    public static final String ALIGN_CENTER_BOTTOM_BTN_CLICKED;
 
     //At Edge Align
     private static final int ALIGN_AT_EDGE_TOP = 6;
-    public static final String ALIGN_AT_EDGE_TOP_BTN_CLICKED = prefix + ALIGN_AT_EDGE_TOP;
+    public static final String ALIGN_AT_EDGE_TOP_BTN_CLICKED;
     private static final int ALIGN_AT_EDGE_LEFT = 7;
-    public static final String ALIGN_AT_EDGE_LEFT_BTN_CLICKED = prefix + ALIGN_AT_EDGE_LEFT;
+    public static final String ALIGN_AT_EDGE_LEFT_BTN_CLICKED;
     private static final int ALIGN_AT_EDGE_BOTTOM = 8;
-    public static final String ALIGN_AT_EDGE_BOTTOM_BTN_CLICKED = prefix + ALIGN_AT_EDGE_BOTTOM;
+    public static final String ALIGN_AT_EDGE_BOTTOM_BTN_CLICKED;
     private static final int ALIGN_AT_EDGE_RIGHT = 9;
-    public static final String ALIGN_AT_EDGE_RIGHT_BTN_CLICKED = prefix + ALIGN_AT_EDGE_RIGHT;
+    public static final String ALIGN_AT_EDGE_RIGHT_BTN_CLICKED;
+
+    static {
+        TAG = UIAlignBox.class.getName();
+        NAME = TAG;
+        ALIGN_TOP_BTN_CLICKED = NAME + "." + "ALIGN_TOP_BTN_CLICKED";
+        ALIGN_LEFT_BTN_CLICKED = NAME + "." + "ALIGN_LEFT_BTN_CLICKED";
+        ALIGN_BOTTOM_BTN_CLICKED = NAME + "." + "ALIGN_BOTTOM_BTN_CLICKED";
+        ALIGN_RIGHT_BTN_CLICKED = NAME + "." + "ALIGN_RIGHT_BTN_CLICKED";
+        ALIGN_CENTER_LEFT_BTN_CLICKED = NAME + "." + "ALIGN_CENTER_LEFT_BTN_CLICKED";
+        ALIGN_CENTER_BOTTOM_BTN_CLICKED = NAME + "." + "ALIGN_CENTER_BOTTOM_BTN_CLICKED";
+        ALIGN_AT_EDGE_TOP_BTN_CLICKED = NAME + "." + "ALIGN_AT_EDGE_TOP_BTN_CLICKED";
+        ALIGN_AT_EDGE_LEFT_BTN_CLICKED = NAME + "." + "ALIGN_AT_EDGE_LEFT_BTN_CLICKED";
+        ALIGN_AT_EDGE_BOTTOM_BTN_CLICKED = NAME + "." + "ALIGN_AT_EDGE_BOTTOM_BTN_CLICKED";
+        ALIGN_AT_EDGE_RIGHT_BTN_CLICKED = NAME + "." + "ALIGN_AT_EDGE_RIGHT_BTN_CLICKED";
+    }
 
     //
     private final Overlap2DFacade faced;

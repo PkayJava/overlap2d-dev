@@ -1,12 +1,6 @@
 package com.o2d.pkayjava.runtime.data;
 
 import com.badlogic.ashley.core.Entity;
-import com.o2d.pkayjava.runtime.components.DimensionsComponent;
-import com.o2d.pkayjava.runtime.components.MainItemComponent;
-import com.o2d.pkayjava.runtime.data.*;
-import com.o2d.pkayjava.runtime.data.CompositeVO;
-import com.o2d.pkayjava.runtime.data.MainItemVO;
-import com.o2d.pkayjava.runtime.utils.ComponentRetriever;
 
 public class CompositeItemVO extends com.o2d.pkayjava.runtime.data.MainItemVO {
 

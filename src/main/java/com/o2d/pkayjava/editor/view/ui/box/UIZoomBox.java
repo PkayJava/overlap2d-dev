@@ -35,10 +35,18 @@ import com.o2d.pkayjava.editor.view.ui.widget.EditableSelectBox;
  */
 public class UIZoomBox extends UIBaseBox {
 
-    private static final String prefix = "com.uwsoft.editor.view.ui.box.UIZoomBox";
+    private static final String TAG;
+    public static final String NAME;
 
-    public static final String ZOOM_SHIFT_REQUESTED = prefix + "ZOOM_SHIFT_REQUESTED";
-    public static final String ZOOM_VALUE_CHANGED = prefix + "ZOOM_VALUE_CHANGED";
+    public static final String ZOOM_SHIFT_REQUESTED;
+    public static final String ZOOM_VALUE_CHANGED;
+
+    static {
+        TAG = UIZoomBox.class.getName();
+        NAME = TAG;
+        ZOOM_SHIFT_REQUESTED = NAME + "." + "ZOOM_SHIFT_REQUESTED";
+        ZOOM_VALUE_CHANGED = NAME + "." + "ZOOM_VALUE_CHANGED";
+    }
 
     private final Skin skin;
     private VisTextField percentValueField;
@@ -90,11 +98,11 @@ public class UIZoomBox extends UIBaseBox {
 
     public String getCurrentZoom() {
         String percent = percentValueField.getText();
-        if(!percent.substring(percent.length()-1, percent.length()).equals("%")) {
-            percent+="%";
+        if (!percent.substring(percent.length() - 1, percent.length()).equals("%")) {
+            percent += "%";
             percentValueField.setText(percent);
         }
-        return percent.substring(0, percent.length()-1);
+        return percent.substring(0, percent.length() - 1);
     }
 
     public void setCurrentZoom(String currentZoom) {

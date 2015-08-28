@@ -42,11 +42,22 @@ import com.o2d.pkayjava.editor.utils.runtime.EntityUtils;
 import com.o2d.pkayjava.editor.view.ui.box.UICollapsibleBox;
 
 public class UIItemsTreeBox extends UICollapsibleBox {
-    public static final String ITEMS_SELECTED = "com.uwsoft.editor.view.ui.box.UIItemsTreeBox." + ".ITEMS_SELECTED";
+
+    private static final String TAG;
+    public static final String NAME;
+
+    public static final String ITEMS_SELECTED;
+
+    static {
+        TAG = UIItemsTreeBox.class.getName();
+        NAME = TAG;
+        ITEMS_SELECTED = NAME + "." + "ITEMS_SELECTED";
+    }
+
     private final Overlap2DFacade facade;
     private final VisTable treeTable;
     private VisTree tree;
-    
+
     private ComponentMapper<MainItemComponent> mainItemMapper;
     private MainItemComponent mainItemComponent;
 
@@ -111,7 +122,7 @@ public class UIItemsTreeBox extends UICollapsibleBox {
 
         NodeComponent nodeComponent = ComponentRetriever.get(entity, NodeComponent.class);
 
-        if(nodeComponent != null) {
+        if (nodeComponent != null) {
             for (Entity item : nodeComponent.children) {
                 if (EntityUtils.getType(entity) == EntityFactory.COMPOSITE_TYPE) {
                     addTreeRoot(item, node);
@@ -150,7 +161,7 @@ public class UIItemsTreeBox extends UICollapsibleBox {
 
         for (int entityId : EntityUtils.getEntityId(selection)) {
             for (Node n : allSceneRootNodes) {
-                if(n.getObject().equals(entityId)) {
+                if (n.getObject().equals(entityId)) {
                     tree.getSelection().add(n);
                     break;
                 }
@@ -165,7 +176,7 @@ public class UIItemsTreeBox extends UICollapsibleBox {
 
         for (int entityId : EntityUtils.getEntityId(selection)) {
             for (Node n : allSceneRootNodes) {
-                if(n.getObject().equals(entityId)) {
+                if (n.getObject().equals(entityId)) {
                     tree.getSelection().remove(n);
                     break;
                 }
@@ -175,7 +186,7 @@ public class UIItemsTreeBox extends UICollapsibleBox {
 
 
     private class TreeChangeListener extends ClickListener {
-        public void clicked (InputEvent event, float x, float y) {
+        public void clicked(InputEvent event, float x, float y) {
             Selection<Node> selection = tree.getSelection();
             selection.remove(rootNode);
             facade.sendNotification(ITEMS_SELECTED, selection);
