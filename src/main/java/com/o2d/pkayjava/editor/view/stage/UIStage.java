@@ -37,7 +37,7 @@ public class UIStage extends Stage {
     public UIMainTable uiMainTable;
     public Group contextMenuContainer;
 
-	public Group midUI;
+    public Group midUI;
 
 
     public UIStage() {
@@ -58,13 +58,23 @@ public class UIStage extends Stage {
         addActor(midUI);
 
         RulersUIMediator rulersUIMediator = facade.retrieveMediator(RulersUIMediator.NAME);
-        Actor rulersGroup = rulersUIMediator.getViewComponent();
+        Actor rulersGroup = null;
+        if (rulersUIMediator != null) {
+            rulersGroup = rulersUIMediator.getViewComponent();
+        }
 
         FollowersUIMediator followersUIMediator = facade.retrieveMediator(FollowersUIMediator.NAME);
-        Group followersGroup = followersUIMediator.getViewComponent();
+        Group followersGroup = null;
+        if (followersUIMediator != null) {
+            followersGroup = followersUIMediator.getViewComponent();
+        }
 
-        midUI.addActor(followersGroup);
-        midUI.addActor(rulersGroup);
+        if (followersGroup != null) {
+            midUI.addActor(followersGroup);
+        }
+        if (rulersGroup != null) {
+            midUI.addActor(rulersGroup);
+        }
 
         contextMenuContainer = new Group();
         uiMainTable = new UIMainTable();
@@ -111,8 +121,8 @@ public class UIStage extends Stage {
     }
 
     public LayerItemVO getCurrentSelectedLayer() {
-    	return null;
-    	//TODO fix and uncomment
+        return null;
+        //TODO fix and uncomment
 //        UILayerBoxMediator mediator = facade.retrieveMediator(UILayerBoxMediator.NAME);
 //        int selectedLayerIndex = mediator.getCurrentSelectedLayerIndex();
 //        LayerItemVO layerVO = Sandbox.getInstance().sceneControl.getCurrentScene().dataVO.composite.layers.get(selectedLayerIndex);

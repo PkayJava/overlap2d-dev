@@ -196,8 +196,10 @@ public class Sandbox {
         projectManager = facade.retrieveProxy(ProjectManager.NAME);
         resourceManager = facade.retrieveProxy(ResourceManager.NAME);
 
-        com.o2d.pkayjava.editor.view.stage.UIStageMediator uiStageMediator = facade.retrieveMediator(UIStageMediator.NAME);
-        uiStage = uiStageMediator.getViewComponent();
+        UIStageMediator uiStageMediator = facade.retrieveMediator(UIStageMediator.NAME);
+        if(uiStageMediator!= null) {
+            uiStage = uiStageMediator.getViewComponent();
+        }
 
         sceneLoader = new SceneLoader(resourceManager);
         // adding spine as external component

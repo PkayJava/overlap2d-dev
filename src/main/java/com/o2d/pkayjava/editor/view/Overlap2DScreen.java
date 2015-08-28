@@ -95,11 +95,17 @@ public class Overlap2DScreen implements Screen, InputProcessor {
             batch.end();
         } else {
             if (sandboxBackUI != null) sandboxBackUI.render(deltaTime);
-            engine.update(deltaTime);
+            if (engine != null) {
+                engine.update(deltaTime);
+            }
         }
 
-        uiStage.act(deltaTime);
-        uiStage.draw();
+        if (uiStage != null) {
+            uiStage.act(deltaTime);
+        }
+        if (uiStage != null) {
+            uiStage.draw();
+        }
     }
 
     public void disableDrawingBgLogo() {
@@ -159,7 +165,9 @@ public class Overlap2DScreen implements Screen, InputProcessor {
         }
         multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(this);
-        multiplexer.addProcessor(uiStage);
+        if (uiStage != null) {
+            multiplexer.addProcessor(uiStage);
+        }
         multiplexer.addProcessor(new SandboxInputAdapter());
         Gdx.input.setInputProcessor(multiplexer);
     }
@@ -171,7 +179,9 @@ public class Overlap2DScreen implements Screen, InputProcessor {
 
     @Override
     public void resize(int width, int height) {
-        uiStage.resize(width, height);
+        if (uiStage != null) {
+            uiStage.resize(width, height);
+        }
         if (Sandbox.getInstance().getViewport() != null) {
             Sandbox.getInstance().getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         }

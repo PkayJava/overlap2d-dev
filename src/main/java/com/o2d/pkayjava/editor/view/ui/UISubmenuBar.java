@@ -36,24 +36,44 @@ public class UISubmenuBar extends VisTable {
         setBackground(skin.getDrawable("sub-menu-bg"));
 
         //hierarchy
-        UICompositeHierarchyMediator uiCompositeHierarchyMediator = facade.retrieveMediator(com.o2d.pkayjava.editor.view.ui.box.UICompositeHierarchyMediator.NAME);
-        UICompositeHierarchy uiCompositeHierarchy = uiCompositeHierarchyMediator.getViewComponent();
-        add(uiCompositeHierarchy).left().expand().fill().padRight(6);
+        UICompositeHierarchyMediator uiCompositeHierarchyMediator = facade.retrieveMediator(UICompositeHierarchyMediator.NAME);
+        UICompositeHierarchy uiCompositeHierarchy = null;
+        if (uiCompositeHierarchyMediator != null) {
+            uiCompositeHierarchy = uiCompositeHierarchyMediator.getViewComponent();
+        }
+        if (uiCompositeHierarchy != null) {
+            add(uiCompositeHierarchy).left().expand().fill().padRight(6);
+        }
 
         //grid
-        com.o2d.pkayjava.editor.view.ui.box.UIGridBoxMediator uiGridBoxMediator = facade.retrieveMediator(com.o2d.pkayjava.editor.view.ui.box.UIGridBoxMediator.NAME);
-        com.o2d.pkayjava.editor.view.ui.box.UIGridBox uiGridBox = uiGridBoxMediator.getViewComponent();
-        add(uiGridBox).padRight(8);
+        UIGridBoxMediator uiGridBoxMediator = facade.retrieveMediator(UIGridBoxMediator.NAME);
+        UIGridBox uiGridBox = null;
+        if (uiGridBoxMediator != null) {
+            uiGridBox = uiGridBoxMediator.getViewComponent();
+        }
+        if (uiGridBox != null) {
+            add(uiGridBox).padRight(8);
+        }
         //
 
         //grid
-        UIZoomBoxMediator uiZoomBoxMediator = facade.retrieveMediator(com.o2d.pkayjava.editor.view.ui.box.UIZoomBoxMediator.NAME);
-        UIZoomBox uiZoomBox = uiZoomBoxMediator.getViewComponent();
-        add(uiZoomBox).padRight(8);
+        UIZoomBoxMediator uiZoomBoxMediator = facade.retrieveMediator(UIZoomBoxMediator.NAME);
+        UIZoomBox uiZoomBox = null;
+        if (uiZoomBoxMediator != null) {
+            uiZoomBox = uiZoomBoxMediator.getViewComponent();
+        }
+        if (uiZoomBox != null) {
+            add(uiZoomBox).padRight(8);
+        }
 
         //resolution box
-        UIResolutionBoxMediator uiResolutionBoxMediator = facade.retrieveMediator(com.o2d.pkayjava.editor.view.ui.box.UIResolutionBoxMediator.NAME);
-        UIResolutionBox uiResolutionBox = uiResolutionBoxMediator.getViewComponent();
-        add(uiResolutionBox);
+        UIResolutionBoxMediator uiResolutionBoxMediator = facade.retrieveMediator(UIResolutionBoxMediator.NAME);
+        UIResolutionBox uiResolutionBox = null;
+        if (uiResolutionBoxMediator != null) {
+            uiResolutionBox = uiResolutionBoxMediator.getViewComponent();
+        }
+        if (uiResolutionBox != null) {
+            add(uiResolutionBox);
+        }
     }
 }

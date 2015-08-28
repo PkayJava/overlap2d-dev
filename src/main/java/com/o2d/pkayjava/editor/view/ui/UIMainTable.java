@@ -74,12 +74,21 @@ public class UIMainTable extends VisTable {
     private void initLeftBoxesPanel() {
         VisTable leftBoxesPanel = new VisTable();
         UIAlignBoxMediator uiAlignBoxMediator = facade.retrieveMediator(UIAlignBoxMediator.NAME);
-        UIAlignBox uiAlignBox = uiAlignBoxMediator.getViewComponent();
-        leftBoxesPanel.add(uiAlignBox).expandX().fillX();
+        UIAlignBox uiAlignBox = null;
+        if (uiAlignBoxMediator != null) {
+            uiAlignBox = uiAlignBoxMediator.getViewComponent();
+        }
+        if (uiAlignBox != null) {
+            leftBoxesPanel.add(uiAlignBox).expandX().fillX();
+        }
         leftBoxesPanel.row();
         UIItemsTreeBoxMediator uiItemsTreeBoxMediator = facade.retrieveMediator(UIItemsTreeBoxMediator.NAME);
-        itemsBox = uiItemsTreeBoxMediator.getViewComponent();
-        leftBoxesPanel.add(itemsBox).expandX().fillX().maxHeight(600).top();
+        if (uiItemsTreeBoxMediator != null) {
+            itemsBox = uiItemsTreeBoxMediator.getViewComponent();
+        }
+        if (itemsBox != null) {
+            leftBoxesPanel.add(itemsBox).expandX().fillX().maxHeight(600).top();
+        }
         middleTable.add(leftBoxesPanel).top().left().expand().padTop(15).padLeft(16);
     }
 
@@ -93,20 +102,35 @@ public class UIMainTable extends VisTable {
 
         //PropertyBox
         UIMultiPropertyBoxMediator multiPropertyBoxMediator = facade.retrieveMediator(UIMultiPropertyBoxMediator.NAME);
-        UIMultiPropertyBox multiPropertyBox = multiPropertyBoxMediator.getViewComponent();
-        rightPanel.add(multiPropertyBox).top();
+        UIMultiPropertyBox multiPropertyBox = null;
+        if (multiPropertyBoxMediator != null) {
+            multiPropertyBox = multiPropertyBoxMediator.getViewComponent();
+        }
+        if (multiPropertyBox != null) {
+            rightPanel.add(multiPropertyBox).top();
+        }
         rightPanel.row();
 
         //ResourcesBox
         UIResourcesBoxMediator resourceBoxMediator = facade.retrieveMediator(UIResourcesBoxMediator.NAME);
-        UIResourcesBox resourceBox = resourceBoxMediator.getViewComponent();
-        rightPanel.add(resourceBox).top();
+        UIResourcesBox resourceBox = null;
+        if (resourceBoxMediator != null) {
+            resourceBox = resourceBoxMediator.getViewComponent();
+        }
+        if (resourceBox != null) {
+            rightPanel.add(resourceBox).top();
+        }
         rightPanel.row();
 
         //LayerBox
         UILayerBoxMediator layerBoxMediator = facade.retrieveMediator(UILayerBoxMediator.NAME);
-        UILayerBox layerBox = layerBoxMediator.getViewComponent();
-        rightPanel.add(layerBox).top();
+        UILayerBox layerBox = null;
+        if (layerBoxMediator != null) {
+            layerBox = layerBoxMediator.getViewComponent();
+        }
+        if (layerBox != null) {
+            rightPanel.add(layerBox).top();
+        }
 
         //
         middleTable.add(rightPanel).top().right().expand().padTop(2);
@@ -118,8 +142,13 @@ public class UIMainTable extends VisTable {
         toolsPanel.background("toolbar-bg");
         //
         UIToolBoxMediator uiToolBoxMediator = facade.retrieveMediator(UIToolBoxMediator.NAME);
-        UIToolBox uiToolBox = uiToolBoxMediator.getViewComponent();
-        toolsPanel.add(uiToolBox).top().expandY().padTop(4);
+        UIToolBox uiToolBox = null;
+        if (uiToolBoxMediator != null) {
+            uiToolBox = uiToolBoxMediator.getViewComponent();
+        }
+        if (uiToolBox != null) {
+            toolsPanel.add(uiToolBox).top().expandY().padTop(4);
+        }
         //
         middleTable.add(toolsPanel).top().left().width(40).height(Gdx.graphics.getHeight()).expandY();
     }
@@ -127,8 +156,13 @@ public class UIMainTable extends VisTable {
 
     private void initMenuBar() {
         Overlap2DMenuBarMediator overlap2DMenuBarMediator = facade.retrieveMediator(Overlap2DMenuBarMediator.NAME);
-        Overlap2DMenuBar menuBar = overlap2DMenuBarMediator.getViewComponent();
+        Overlap2DMenuBar menuBar = null;
+        if (overlap2DMenuBarMediator != null) {
+            menuBar = overlap2DMenuBarMediator.getViewComponent();
+        }
         topTable.add(new O2DLogo()).left();
-        topTable.add(menuBar.getTable().padLeft(24)).fillX().expandX();
+        if (menuBar != null) {
+            topTable.add(menuBar.getTable().padLeft(24)).fillX().expandX();
+        }
     }
 }

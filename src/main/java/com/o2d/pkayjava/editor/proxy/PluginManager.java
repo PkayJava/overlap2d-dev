@@ -82,7 +82,9 @@ public class PluginManager extends BaseProxy implements PluginAPI {
 
     public void setDropDownItemName(String action, String name) {
         UIDropDownMenuMediator dropDownMenuMediator = facade.retrieveMediator(UIDropDownMenuMediator.NAME);
-        dropDownMenuMediator.getViewComponent().setActionName(action, name);
+        if (dropDownMenuMediator != null) {
+            dropDownMenuMediator.getViewComponent().setActionName(action, name);
+        }
     }
 
     @Override
@@ -116,6 +118,8 @@ public class PluginManager extends BaseProxy implements PluginAPI {
 
     public void addMenuItem(String menu, String subMenuName, String notificationName) {
         Overlap2DMenuBarMediator overlap2DMenuBarMediator = facade.retrieveMediator(Overlap2DMenuBarMediator.NAME);
-        overlap2DMenuBarMediator.addMenuItem(menu, subMenuName, notificationName);
+        if (overlap2DMenuBarMediator != null) {
+            overlap2DMenuBarMediator.addMenuItem(menu, subMenuName, notificationName);
+        }
     }
 }

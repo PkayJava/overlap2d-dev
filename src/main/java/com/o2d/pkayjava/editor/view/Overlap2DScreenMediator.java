@@ -68,18 +68,32 @@ public class Overlap2DScreenMediator extends SimpleMediator<Overlap2DScreen> {
             facade = Overlap2DFacade.getInstance();
             SandboxMediator sandboxMediator = facade.retrieveMediator(SandboxMediator.NAME);
 
-            Engine engine = sandboxMediator.getViewComponent().getEngine();
-
-            getViewComponent().setEngine(engine);
+            Engine engine = null;
+            if (sandboxMediator != null) {
+                engine = sandboxMediator.getViewComponent().getEngine();
+            }
+            if (engine != null) {
+                getViewComponent().setEngine(engine);
+            }
             viewComponent.show();
         } else if (SceneDataManager.SCENE_LOADED.equals(notification.getName())) {
             SandboxMediator sandboxMediator = facade.retrieveMediator(SandboxMediator.NAME);
-            Engine engine = sandboxMediator.getViewComponent().getEngine();
+            Engine engine = null;
+            if (sandboxMediator != null) {
+                engine = sandboxMediator.getViewComponent().getEngine();
+            }
             facade = Overlap2DFacade.getInstance();
             sandboxMediator = facade.retrieveMediator(SandboxMediator.NAME);
-            engine = sandboxMediator.getViewComponent().getEngine();
-            SandboxBackUI sandboxBackUI = new SandboxBackUI(engine.getSystem(Overlap2dRenderer.class).batch);
-            getViewComponent().setBackUI(sandboxBackUI);
+            if (sandboxMediator != null) {
+                engine = sandboxMediator.getViewComponent().getEngine();
+            }
+            SandboxBackUI sandboxBackUI = null;
+            if (engine != null) {
+                sandboxBackUI = new SandboxBackUI(engine.getSystem(Overlap2dRenderer.class).batch);
+            }
+            if (sandboxBackUI != null) {
+                getViewComponent().setBackUI(sandboxBackUI);
+            }
             getViewComponent().disableDrawingBgLogo();
         } else if (Overlap2D.PAUSE.equals(notification.getName())) {
             viewComponent.pause();
