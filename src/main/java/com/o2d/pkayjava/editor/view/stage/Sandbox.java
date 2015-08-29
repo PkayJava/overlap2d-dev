@@ -42,11 +42,10 @@ import com.o2d.pkayjava.editor.view.stage.input.InputListener;
 import com.o2d.pkayjava.editor.view.ui.widget.actors.basic.PixelRect;
 import com.o2d.pkayjava.runtime.SceneLoader;
 import com.o2d.pkayjava.runtime.components.ViewPortComponent;
-import com.o2d.pkayjava.runtime.data.CompositeItemVO;
-import com.o2d.pkayjava.runtime.data.CompositeVO;
-import com.o2d.pkayjava.runtime.data.LayerItemVO;
-import com.o2d.pkayjava.runtime.data.SceneVO;
+import com.o2d.pkayjava.runtime.data.*;
 import com.o2d.pkayjava.runtime.extensions.spine.SpineItemType;
+import com.o2d.pkayjava.runtime.resources.IResourceLoader;
+import com.o2d.pkayjava.runtime.resources.IResourceRetriever;
 import com.o2d.pkayjava.runtime.systems.PhysicsSystem;
 import com.o2d.pkayjava.runtime.systems.render.Overlap2dRenderer;
 import com.o2d.pkayjava.runtime.utils.ComponentRetriever;
@@ -197,7 +196,7 @@ public class Sandbox {
         resourceManager = facade.retrieveProxy(ResourceManager.NAME);
 
         UIStageMediator uiStageMediator = facade.retrieveMediator(UIStageMediator.NAME);
-        if(uiStageMediator!= null) {
+        if (uiStageMediator != null) {
             uiStage = uiStageMediator.getViewComponent();
         }
 
@@ -595,6 +594,17 @@ public class Sandbox {
     }
 
     public int getPixelPerWU() {
-        return sceneLoader.getRm().getProjectVO().pixelToWorld;
+        IResourceRetriever resourceRetriever = null;
+        if (sceneLoader != null) {
+            resourceRetriever = sceneLoader.getRm();
+        }
+        ProjectInfoVO projectInfoVO = null;
+        if (resourceRetriever != null) {
+            projectInfoVO = resourceRetriever.getProjectVO();
+        }
+        if (projectInfoVO != null) {
+            return projectInfoVO.pixelToWorld;
+        }
+        return 10;
     }
 }

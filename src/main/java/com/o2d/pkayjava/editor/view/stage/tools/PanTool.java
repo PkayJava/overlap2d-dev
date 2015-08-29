@@ -22,7 +22,7 @@ public class PanTool extends SimpleTool {
     public static final String SCENE_PANNED;
 
     static {
-        TAG = PointLightTool.class.getName();
+        TAG = PanTool.class.getName();
         NAME = TAG;
         SCENE_PANNED = NAME + "." + "SCENE_PANNED";
     }

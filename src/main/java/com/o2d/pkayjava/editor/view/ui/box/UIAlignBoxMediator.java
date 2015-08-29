@@ -97,6 +97,8 @@ public class UIAlignBoxMediator extends PanelMediator<UIAlignBox> {
         } else if (UIAlignBox.ALIGN_AT_EDGE_RIGHT_BTN_CLICKED.equals(notification.getName())) {
             align = Align.right;
             alignFunctionName = "alignSelectionsAtEdge";
+        } else {
+            return;
         }
         delegateAlignFunction(alignFunctionName, align);
     }

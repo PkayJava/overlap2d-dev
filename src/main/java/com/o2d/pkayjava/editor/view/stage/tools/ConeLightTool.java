@@ -23,8 +23,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.o2d.pkayjava.editor.factory.ItemFactory;
 import com.o2d.pkayjava.runtime.data.LightVO;
 import com.o2d.pkayjava.runtime.factory.EntityFactory;
-import com.o2d.pkayjava.editor.view.stage.tools.*;
-import com.o2d.pkayjava.editor.view.stage.tools.ItemDropTool;
 
 /**
  * Created by azakhary on 4/30/2015.
