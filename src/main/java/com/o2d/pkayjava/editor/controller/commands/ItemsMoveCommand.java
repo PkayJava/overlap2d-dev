@@ -43,7 +43,7 @@ public class ItemsMoveCommand extends EntityModifyRevertableCommand {
 
         Array<Object[]> payload = getNotification().getBody();
 
-        for(int i = 0; i < payload.size; i++) {
+        for (int i = 0; i < payload.size; i++) {
             Object[] itemData = payload.get(i);
 
             Entity entity = (Entity) itemData[0];
@@ -51,14 +51,14 @@ public class ItemsMoveCommand extends EntityModifyRevertableCommand {
 
             TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
 
-            Vector2 prevLocation = new Vector2(transformComponent.x, transformComponent.y);
-            if(itemData.length > 2) {
+            Vector2 prevLocation = new Vector2(transformComponent.getX(), transformComponent.getY());
+            if (itemData.length > 2) {
                 prevLocation = (Vector2) itemData[2];
             }
             prevLocations.put(EntityUtils.getEntityId(entity), prevLocation);
 
-            transformComponent.x = newLocation.x;
-            transformComponent.y = newLocation.y;
+            transformComponent.setX(newLocation.x);
+            transformComponent.setY(newLocation.y);
 
             // pining UI to update current item properties tools
             Overlap2DFacade.getInstance().sendNotification(Overlap2D.ITEM_DATA_UPDATED, entity);
@@ -74,8 +74,8 @@ public class ItemsMoveCommand extends EntityModifyRevertableCommand {
             Entity entity = EntityUtils.getByUniqueId(entityUniqueId);
 
             TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
-            transformComponent.x = prevLocation.x;
-            transformComponent.y = prevLocation.y;
+            transformComponent.setX(prevLocation.x);
+            transformComponent.setY(prevLocation.y);
 
             // pining UI to update current item properties tools
             Overlap2DFacade.getInstance().sendNotification(Overlap2D.ITEM_DATA_UPDATED, entity);

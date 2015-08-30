@@ -24,7 +24,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
+import com.o2d.pkayjava.editor.Overlap2DFacade;
+import com.o2d.pkayjava.editor.controller.commands.AddComponentToItemCommand;
+import com.o2d.pkayjava.editor.controller.commands.AddToLibraryCommand;
+import com.o2d.pkayjava.editor.utils.runtime.ComponentCloner;
+import com.o2d.pkayjava.editor.utils.runtime.EntityUtils;
 import com.o2d.pkayjava.editor.view.stage.Sandbox;
+import com.o2d.pkayjava.editor.view.ui.properties.UIItemPropertiesMediator;
 import com.o2d.pkayjava.editor.view.ui.widget.components.color.ColorPickerAdapter;
 import com.o2d.pkayjava.editor.view.ui.widget.components.color.CustomColorPicker;
 import com.o2d.pkayjava.runtime.components.*;
@@ -43,7 +49,7 @@ import java.util.Map;
 /**
  * Created by azakhary on 4/15/2015.
  */
-public class UIBasicItemPropertiesMediator extends com.o2d.pkayjava.editor.view.ui.properties.UIItemPropertiesMediator<Entity, UIBasicItemProperties> {
+public class UIBasicItemPropertiesMediator extends UIItemPropertiesMediator<Entity, UIBasicItemProperties> {
     private static final String TAG;
     public static final String NAME;
 
@@ -119,7 +125,7 @@ public class UIBasicItemPropertiesMediator extends com.o2d.pkayjava.editor.view.
         } else if (UIBasicItemProperties.LINKING_CHANGED.equals(notification.getName())) {
             boolean isLinked = notification.getBody();
             if (!isLinked) {
-                facade.sendNotification(Sandbox.ACTION_ADD_TO_LIBRARY, com.o2d.pkayjava.editor.controller.commands.AddToLibraryCommand.payloadUnLink(observableReference));
+                facade.sendNotification(Sandbox.ACTION_ADD_TO_LIBRARY, AddToLibraryCommand.payloadUnLink(observableReference));
             } else {
                 facade.sendNotification(Sandbox.SHOW_ADD_LIBRARY_DIALOG, observableReference);
             }
@@ -130,7 +136,7 @@ public class UIBasicItemPropertiesMediator extends com.o2d.pkayjava.editor.view.
                     return;
                 }
                 Component component = (Component) ClassReflection.newInstance(componentClass);
-                facade.sendNotification(Sandbox.ACTION_ADD_COMPONENT, com.o2d.pkayjava.editor.controller.commands.AddComponentToItemCommand.payload(observableReference, component));
+                facade.sendNotification(Sandbox.ACTION_ADD_COMPONENT, AddComponentToItemCommand.payload(observableReference, component));
             } catch (ReflectionException ignored) {
             }
         }
@@ -142,7 +148,7 @@ public class UIBasicItemPropertiesMediator extends com.o2d.pkayjava.editor.view.
         dimensionComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
         tintComponent = ComponentRetriever.get(entity, TintComponent.class);
 
-        if (com.o2d.pkayjava.editor.utils.runtime.EntityUtils.getType(observableReference) == EntityFactory.COMPOSITE_TYPE) {
+        if (EntityUtils.getType(observableReference) == EntityFactory.COMPOSITE_TYPE) {
             if (mainItemComponent.libraryLink != null && mainItemComponent.libraryLink.length() > 0) {
                 viewComponent.setLinkage(true, mainItemComponent.libraryLink);
             } else {
@@ -150,16 +156,16 @@ public class UIBasicItemPropertiesMediator extends com.o2d.pkayjava.editor.view.
             }
         }
 
-        viewComponent.setItemType(itemTypeMap.get("ENTITY_" + com.o2d.pkayjava.editor.utils.runtime.EntityUtils.getType(entity)), mainItemComponent.uniqueId);
+        viewComponent.setItemType(itemTypeMap.get("ENTITY_" + EntityUtils.getType(entity)), mainItemComponent.uniqueId);
         viewComponent.setIdBoxValue(mainItemComponent.itemIdentifier);
-        viewComponent.setXValue(String.format(Locale.ENGLISH, "%.2f", transformComponent.x));
-        viewComponent.setYValue(String.format(Locale.ENGLISH, "%.2f", transformComponent.y));
+        viewComponent.setXValue(String.format(Locale.ENGLISH, "%.2f", transformComponent.getX()));
+        viewComponent.setYValue(String.format(Locale.ENGLISH, "%.2f", transformComponent.getY()));
 
         viewComponent.setWidthValue(String.format(Locale.ENGLISH, "%.2f", dimensionComponent.width));
         viewComponent.setHeightValue(String.format(Locale.ENGLISH, "%.2f", dimensionComponent.height));
-        viewComponent.setRotationValue(transformComponent.rotation + "");
-        viewComponent.setScaleXValue(transformComponent.scaleX + "");
-        viewComponent.setScaleYValue(transformComponent.scaleY + "");
+        viewComponent.setRotationValue(transformComponent.getRotation() + "");
+        viewComponent.setScaleXValue(transformComponent.getScaleX() + "");
+        viewComponent.setScaleYValue(transformComponent.getScaleY() + "");
         viewComponent.setTintColor(tintComponent.color);
 
         // non components
@@ -180,22 +186,22 @@ public class UIBasicItemPropertiesMediator extends com.o2d.pkayjava.editor.view.
     protected void translateViewToItemData() {
         Entity entity = observableReference;
 
-        transformComponent = com.o2d.pkayjava.editor.utils.runtime.ComponentCloner.get(ComponentRetriever.get(entity, TransformComponent.class));
-        mainItemComponent = com.o2d.pkayjava.editor.utils.runtime.ComponentCloner.get(ComponentRetriever.get(entity, MainItemComponent.class));
-        dimensionComponent = com.o2d.pkayjava.editor.utils.runtime.ComponentCloner.get(ComponentRetriever.get(entity, DimensionsComponent.class));
-        tintComponent = com.o2d.pkayjava.editor.utils.runtime.ComponentCloner.get(ComponentRetriever.get(entity, TintComponent.class));
+        transformComponent = ComponentCloner.get(ComponentRetriever.get(entity, TransformComponent.class));
+        mainItemComponent = ComponentCloner.get(ComponentRetriever.get(entity, MainItemComponent.class));
+        dimensionComponent = ComponentCloner.get(ComponentRetriever.get(entity, DimensionsComponent.class));
+        tintComponent = ComponentCloner.get(ComponentRetriever.get(entity, TintComponent.class));
 
         mainItemComponent.itemIdentifier = viewComponent.getIdBoxValue();
-        transformComponent.x = NumberUtils.toFloat(viewComponent.getXValue(), transformComponent.x);
-        transformComponent.y = NumberUtils.toFloat(viewComponent.getYValue(), transformComponent.y);
+        transformComponent.setX(NumberUtils.toFloat(viewComponent.getXValue(), transformComponent.getX()));
+        transformComponent.setY(NumberUtils.toFloat(viewComponent.getYValue(), transformComponent.getY()));
 
         dimensionComponent.width = NumberUtils.toFloat(viewComponent.getWidthValue());
         dimensionComponent.height = NumberUtils.toFloat(viewComponent.getHeightValue());
 
         // TODO: manage width and height
-        transformComponent.rotation = NumberUtils.toFloat(viewComponent.getRotationValue(), transformComponent.rotation);
-        transformComponent.scaleX = (viewComponent.getFlipH() ? -1 : 1) * NumberUtils.toFloat(viewComponent.getScaleXValue(), transformComponent.scaleX);
-        transformComponent.scaleY = (viewComponent.getFlipV() ? -1 : 1) * NumberUtils.toFloat(viewComponent.getScaleYValue(), transformComponent.scaleY);
+        transformComponent.setRotation(NumberUtils.toFloat(viewComponent.getRotationValue(), transformComponent.getRotation()));
+        transformComponent.setScaleX((viewComponent.getFlipH() ? -1 : 1) * NumberUtils.toFloat(viewComponent.getScaleXValue(), transformComponent.getScaleX()));
+        transformComponent.setScaleY((viewComponent.getFlipV() ? -1 : 1) * NumberUtils.toFloat(viewComponent.getScaleYValue(), transformComponent.getScaleY()));
         Color color = viewComponent.getTintColor();
         tintComponent.color.set(color);
 
@@ -207,6 +213,6 @@ public class UIBasicItemPropertiesMediator extends com.o2d.pkayjava.editor.view.
         Object[] payload = new Object[2];
         payload[0] = entity;
         payload[1] = componentsToUpdate;
-        com.o2d.pkayjava.editor.Overlap2DFacade.getInstance().sendNotification(Sandbox.ACTION_UPDATE_ITEM_DATA, payload);
+        Overlap2DFacade.getInstance().sendNotification(Sandbox.ACTION_UPDATE_ITEM_DATA, payload);
     }
 }

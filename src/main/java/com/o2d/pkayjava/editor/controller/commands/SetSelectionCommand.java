@@ -18,22 +18,21 @@
 
 package com.o2d.pkayjava.editor.controller.commands;
 
+import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.utils.Array;
+import com.o2d.pkayjava.editor.utils.runtime.EntityUtils;
+import com.o2d.pkayjava.editor.view.stage.Sandbox;
+import com.o2d.pkayjava.runtime.components.NodeComponent;
+import com.o2d.pkayjava.runtime.utils.ComponentRetriever;
+
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.utils.Array;
-import com.o2d.pkayjava.editor.controller.commands.RevertableCommand;
-import com.o2d.pkayjava.editor.view.stage.Sandbox;
-import com.o2d.pkayjava.runtime.components.NodeComponent;
-import com.o2d.pkayjava.runtime.utils.ComponentRetriever;
-import com.o2d.pkayjava.editor.utils.runtime.EntityUtils;
-
 /**
  * Created by azakhary on 5/14/2015.
  */
-public class SetSelectionCommand extends com.o2d.pkayjava.editor.controller.commands.RevertableCommand {
+public class SetSelectionCommand extends RevertableCommand {
 
     private static final String TAG;
     public static final String NAME;
@@ -49,8 +48,8 @@ public class SetSelectionCommand extends com.o2d.pkayjava.editor.controller.comm
 
     @Override
     public void doAction() {
-        HashSet<Entity> previousSelection = new HashSet<>(com.o2d.pkayjava.editor.view.stage.Sandbox.getInstance().getSelector().getSelectedItems());
-        previousSelectionIds = com.o2d.pkayjava.editor.utils.runtime.EntityUtils.getEntityId(previousSelection);
+        HashSet<Entity> previousSelection = new HashSet<>(Sandbox.getInstance().getSelector().getSelectedItems());
+        previousSelectionIds = EntityUtils.getEntityId(previousSelection);
 
         Set<Entity> items = getNotification().getBody();
 
@@ -80,7 +79,7 @@ public class SetSelectionCommand extends com.o2d.pkayjava.editor.controller.comm
 
     @Override
     public void undoAction() {
-        com.o2d.pkayjava.editor.view.stage.Sandbox.getInstance().getSelector().setSelections(com.o2d.pkayjava.editor.utils.runtime.EntityUtils.getByUniqueId(previousSelectionIds), true);
+        Sandbox.getInstance().getSelector().setSelections(EntityUtils.getByUniqueId(previousSelectionIds), true);
         facade.sendNotification(DONE);
     }
 }

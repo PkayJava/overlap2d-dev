@@ -53,7 +53,7 @@ public class EntityUtils {
     public static Array<Integer> getEntityId(Iterable<Entity> entities) {
         Array<Integer> entityIds = new Array<>();
         int iterator = 0;
-        for(Entity entity: entities) {
+        for (Entity entity : entities) {
             MainItemComponent mainItemComponent = ComponentRetriever.get(entity, MainItemComponent.class);
             entityIds.add(mainItemComponent.uniqueId);
         }
@@ -64,9 +64,10 @@ public class EntityUtils {
     public static Entity getByUniqueId(Integer id) {
         return com.o2d.pkayjava.editor.view.stage.Sandbox.getInstance().getSceneControl().sceneLoader.entityFactory.getEntityByUniqueId(id);
     }
+
     public static HashSet<Entity> getByUniqueId(Array<Integer> ids) {
         HashSet<Entity> entities = new HashSet<>();
-        for(Integer id: ids) {
+        for (Integer id : ids) {
             Entity entity = com.o2d.pkayjava.editor.view.stage.Sandbox.getInstance().getSceneControl().sceneLoader.entityFactory.getEntityByUniqueId(id);
             entities.add(entity);
         }
@@ -76,7 +77,7 @@ public class EntityUtils {
     public static HashMap<Integer, Collection<Component>> cloneEntities(Set<Entity> entities) {
         HashMap<Integer, Collection<Component>> data = new HashMap<>();
 
-        for(Entity entity: entities) {
+        for (Entity entity : entities) {
             Collection<Component> components = cloneEntityComponents(entity);
             data.put(EntityUtils.getEntityId(entity), components);
         }
@@ -87,7 +88,7 @@ public class EntityUtils {
     public static Entity cloneEntity(Entity entity) {
         Entity newEntity = new Entity();
         Collection<Component> components = cloneEntityComponents(entity);
-        for(Component component: components) {
+        for (Component component : components) {
             newEntity.add(ComponentCloner.get(component));
         }
 
@@ -101,23 +102,23 @@ public class EntityUtils {
 
     public static Vector2 getPosition(Entity entity) {
         TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
-        return new Vector2(transformComponent.x, transformComponent.y);
+        return new Vector2(transformComponent.getX(), transformComponent.getY());
     }
 
     public static Vector2 getRightTopPoint(Set<Entity> entities) {
-        if(entities.size() == 0) return null;
+        if (entities.size() == 0) return null;
 
         Vector2 rightTopPoint = getPosition(entities.stream().findFirst().get());
 
-        for(Entity entity: entities) {
+        for (Entity entity : entities) {
             TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
             DimensionsComponent dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
 
-            if(rightTopPoint.x < transformComponent.x+dimensionsComponent.width) {
-                rightTopPoint.x = transformComponent.x+dimensionsComponent.width;
+            if (rightTopPoint.x < transformComponent.getX() + dimensionsComponent.width) {
+                rightTopPoint.x = transformComponent.getX() + dimensionsComponent.width;
             }
-            if(rightTopPoint.y < transformComponent.y+dimensionsComponent.height) {
-                rightTopPoint.y = transformComponent.y+dimensionsComponent.height;
+            if (rightTopPoint.y < transformComponent.getY() + dimensionsComponent.height) {
+                rightTopPoint.y = transformComponent.getY() + dimensionsComponent.height;
             }
         }
 
@@ -125,17 +126,17 @@ public class EntityUtils {
     }
 
     public static Vector2 getLeftBottomPoint(Set<Entity> entities) {
-        if(entities.size() == 0) return null;
+        if (entities.size() == 0) return null;
 
         Vector2 leftBottomPoint = getPosition(entities.stream().findFirst().get());
 
-        for(Entity entity: entities) {
+        for (Entity entity : entities) {
             TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
-            if(leftBottomPoint.x > transformComponent.x) {
-                leftBottomPoint.x = transformComponent.x;
+            if (leftBottomPoint.x > transformComponent.getX()) {
+                leftBottomPoint.x = transformComponent.getX();
             }
-            if(leftBottomPoint.y > transformComponent.y) {
-                leftBottomPoint.y = transformComponent.y;
+            if (leftBottomPoint.y > transformComponent.getY()) {
+                leftBottomPoint.y = transformComponent.getY();
             }
         }
 
@@ -143,7 +144,7 @@ public class EntityUtils {
     }
 
     public static void changeParent(HashSet<Entity> entities, Entity parent) {
-        for(Entity entity: entities) {
+        for (Entity entity : entities) {
             ParentNodeComponent parentNodeComponent = ComponentRetriever.get(entity, ParentNodeComponent.class);
 
             //remove me from previous parent children list
@@ -176,9 +177,9 @@ public class EntityUtils {
     public static Array<Entity> getByLibraryLink(String link) {
         Array<Entity> result = new Array<>();
         ImmutableArray<Entity> composites = Sandbox.getInstance().getEngine().getEntitiesFor(Family.all(NodeComponent.class).get());
-        for(Entity composite: composites) {
+        for (Entity composite : composites) {
             MainItemComponent mainItemComponent = ComponentRetriever.get(composite, MainItemComponent.class);
-            if(mainItemComponent.libraryLink.equals(link)) {
+            if (mainItemComponent.libraryLink.equals(link)) {
                 result.add(composite);
             }
         }

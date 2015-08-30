@@ -36,13 +36,17 @@ public class ItemTransformCommand extends EntityModifyRevertableCommand {
         TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
         DimensionsComponent dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
 
-        if(newPos != null) transformComponent.x = newPos.x;
-        if(newPos != null) transformComponent.y = newPos.y;
-        if(newSize != null) dimensionsComponent.width = newSize.x;
-        if(newSize != null) dimensionsComponent.height = newSize.y;
-        if(newScale != null) transformComponent.scaleX = newScale.x;
-        if(newScale != null) transformComponent.scaleY = newScale.y;
-        if(newRotation != null) transformComponent.rotation = newRotation;
+        if (newPos != null) {
+            transformComponent.setX(newPos.x);
+        }
+        if (newPos != null) {
+            transformComponent.setY(newPos.y);
+        }
+        if (newSize != null) dimensionsComponent.width = newSize.x;
+        if (newSize != null) dimensionsComponent.height = newSize.y;
+        if (newScale != null) transformComponent.setScaleX(newScale.x);
+        if (newScale != null) transformComponent.setScaleY(newScale.y);
+        if (newRotation != null) transformComponent.setRotation(newRotation);
 
         Overlap2DFacade.getInstance().sendNotification(Overlap2D.ITEM_DATA_UPDATED, entity);
     }
@@ -61,13 +65,13 @@ public class ItemTransformCommand extends EntityModifyRevertableCommand {
         TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
         DimensionsComponent dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
 
-        transformComponent.x = prevPos.x;
-        transformComponent.y = prevPos.y;
+        transformComponent.setX(prevPos.x);
+        transformComponent.setY(prevPos.y);
         dimensionsComponent.width = prevSize.x;
         dimensionsComponent.height = prevSize.y;
-        transformComponent.scaleX = prevScale.x;
-        transformComponent.scaleY = prevScale.y;
-        transformComponent.rotation = prevRotation;
+        transformComponent.setScaleX(prevScale.x);
+        transformComponent.setScaleY(prevScale.y);
+        transformComponent.setRotation(prevRotation);
 
         Overlap2DFacade.getInstance().sendNotification(Overlap2D.ITEM_DATA_UPDATED, entity);
     }

@@ -35,20 +35,36 @@ public class EntityBounds extends Rectangle {
     public EntityBounds(Entity entity) {
         TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
         DimensionsComponent dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
-        x = transformComponent.x;
-        y = transformComponent.y;
+        x = transformComponent.getX();
+        y = transformComponent.getY();
         width = dimensionsComponent.width;
         height = dimensionsComponent.height;
 
-        scaleX = transformComponent.scaleX;
-        scaleY = transformComponent.scaleY;
+        scaleX = transformComponent.getScaleX();
+        scaleY = transformComponent.getScaleY();
     }
 
-    public float getVisualX() {return Math.min(getX(), getX() + getWidth() * scaleX);}
-    public float getVisualY() {return Math.min(getY(), getY() + getHeight() * scaleY);}
-    public float getVisualWidth() {return Math.abs(getWidth() * scaleX);}
-    public float getVisualHeight() {return Math.abs(getHeight() * scaleY);}
+    public float getVisualX() {
+        return Math.min(getX(), getX() + getWidth() * scaleX);
+    }
 
-    public float getVisualRightX() {return Math.max(getX(), getX() + getWidth() * scaleX);}
-    public float getVisualTopY() {return Math.max(getY(), getY() + getHeight() * scaleY);}
+    public float getVisualY() {
+        return Math.min(getY(), getY() + getHeight() * scaleY);
+    }
+
+    public float getVisualWidth() {
+        return Math.abs(getWidth() * scaleX);
+    }
+
+    public float getVisualHeight() {
+        return Math.abs(getHeight() * scaleY);
+    }
+
+    public float getVisualRightX() {
+        return Math.max(getX(), getX() + getWidth() * scaleX);
+    }
+
+    public float getVisualTopY() {
+        return Math.max(getY(), getY() + getHeight() * scaleY);
+    }
 }

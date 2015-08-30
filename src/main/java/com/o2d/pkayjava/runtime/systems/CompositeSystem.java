@@ -42,35 +42,35 @@ public class CompositeSystem extends IteratingSystem {
             transformComponent = transformMapper.get(entity);
             DimensionsComponent childDimentionsComponent = dimensionsMapper.get(entity);
             if (i == 0) {
-                if (transformComponent.scaleX > 0 && childDimentionsComponent.width * transformComponent.scaleX > 0) {
-                    lowerX = transformComponent.x;
-                    upperX = transformComponent.x + childDimentionsComponent.width * transformComponent.scaleX;
+                if (transformComponent.getScaleX() > 0 && childDimentionsComponent.width * transformComponent.getScaleX() > 0) {
+                    lowerX = transformComponent.getX();
+                    upperX = transformComponent.getX() + childDimentionsComponent.width * transformComponent.getScaleX();
                 } else {
-                    upperX = transformComponent.x;
-                    lowerX = transformComponent.x + childDimentionsComponent.width * transformComponent.scaleX;
+                    upperX = transformComponent.getX();
+                    lowerX = transformComponent.getX() + childDimentionsComponent.width * transformComponent.getScaleX();
                 }
 
-                if (transformComponent.scaleY > 0 && childDimentionsComponent.height * transformComponent.scaleY > 0) {
-                    lowerY = transformComponent.y;
-                    upperY = transformComponent.y + childDimentionsComponent.height * transformComponent.scaleY;
+                if (transformComponent.getScaleY() > 0 && childDimentionsComponent.height * transformComponent.getScaleY() > 0) {
+                    lowerY = transformComponent.getY();
+                    upperY = transformComponent.getY() + childDimentionsComponent.height * transformComponent.getScaleY();
                 } else {
-                    upperY = transformComponent.y;
-                    lowerY = transformComponent.y + childDimentionsComponent.height * transformComponent.scaleY;
+                    upperY = transformComponent.getY();
+                    lowerY = transformComponent.getY() + childDimentionsComponent.height * transformComponent.getScaleY();
                 }
             }
-            if (transformComponent.scaleX > 0 && childDimentionsComponent.width > 0) {
-                if (lowerX > transformComponent.x) lowerX = transformComponent.x;
-                if (upperX < transformComponent.x + childDimentionsComponent.width * transformComponent.scaleX) upperX = transformComponent.x + childDimentionsComponent.width * transformComponent.scaleX;
+            if (transformComponent.getScaleX() > 0 && childDimentionsComponent.width > 0) {
+                if (lowerX > transformComponent.getX()) lowerX = transformComponent.getX();
+                if (upperX < transformComponent.getX() + childDimentionsComponent.width * transformComponent.getScaleX()) upperX = transformComponent.getX() + childDimentionsComponent.width * transformComponent.getScaleX();
             } else {
-                if (upperX < transformComponent.x) upperX = transformComponent.x;
-                if (lowerX > transformComponent.x + childDimentionsComponent.width * transformComponent.scaleX) lowerX = transformComponent.x + childDimentionsComponent.width * transformComponent.scaleX;
+                if (upperX < transformComponent.getX()) upperX = transformComponent.getX();
+                if (lowerX > transformComponent.getX() + childDimentionsComponent.width * transformComponent.getScaleX()) lowerX = transformComponent.getX() + childDimentionsComponent.width * transformComponent.getScaleX();
             }
-            if (transformComponent.scaleY > 0 && childDimentionsComponent.height * transformComponent.scaleY > 0) {
-                if (lowerY > transformComponent.y) lowerY = transformComponent.y;
-                if (upperY < transformComponent.y + childDimentionsComponent.height * transformComponent.scaleY) upperY = transformComponent.y + childDimentionsComponent.height * transformComponent.scaleY;
+            if (transformComponent.getScaleY() > 0 && childDimentionsComponent.height * transformComponent.getScaleY() > 0) {
+                if (lowerY > transformComponent.getY()) lowerY = transformComponent.getY();
+                if (upperY < transformComponent.getY() + childDimentionsComponent.height * transformComponent.getScaleY()) upperY = transformComponent.getY() + childDimentionsComponent.height * transformComponent.getScaleY();
             } else {
-                if (upperY < transformComponent.y) upperY = transformComponent.y;
-                if (lowerY > transformComponent.y + childDimentionsComponent.height * transformComponent.scaleY) lowerY = transformComponent.y + childDimentionsComponent.height * transformComponent.scaleY;
+                if (upperY < transformComponent.getY()) upperY = transformComponent.getY();
+                if (lowerY > transformComponent.getY() + childDimentionsComponent.height * transformComponent.getScaleY()) lowerY = transformComponent.getY() + childDimentionsComponent.height * transformComponent.getScaleY();
             }
 
         }

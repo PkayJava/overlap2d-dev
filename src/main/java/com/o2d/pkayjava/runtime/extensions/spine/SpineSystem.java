@@ -24,6 +24,6 @@ public class SpineSystem extends IteratingSystem {
         spineObjectComponent.skeleton.updateWorldTransform(); //
         spineObjectComponent.state.update(deltaTime); // Update the animation time.
         spineObjectComponent.state.apply(spineObjectComponent.skeleton); // Poses skeleton using current animations. This sets the bones' local SRT.
-        spineObjectComponent.skeleton.setPosition(transformComponent.x - spineObjectComponent.minX, transformComponent.y - spineObjectComponent.minY);
+        spineObjectComponent.skeleton.setPosition(transformComponent.getX() - spineObjectComponent.minX, transformComponent.getY() - spineObjectComponent.minY);
     }
 }

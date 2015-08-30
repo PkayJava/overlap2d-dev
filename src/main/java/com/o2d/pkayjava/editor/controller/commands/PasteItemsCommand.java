@@ -51,24 +51,24 @@ public class PasteItemsCommand extends EntityModifyRevertableCommand {
     public void doAction() {
         Object[] payload = (Object[]) Sandbox.getInstance().retrieveFromClipboard();
 
-        if(payload == null) {
+        if (payload == null) {
             cancel();
             return;
         }
 
         Vector2 cameraPrevPosition = (Vector2) payload[0];
-        Vector2 cameraCurrPosition = new Vector2(Sandbox.getInstance().getCamera().position.x,Sandbox.getInstance().getCamera().position.y);
+        Vector2 cameraCurrPosition = new Vector2(Sandbox.getInstance().getCamera().position.x, Sandbox.getInstance().getCamera().position.y);
 
         Vector2 diff = cameraCurrPosition.sub(cameraPrevPosition);
 
-        Json json =  new Json();
+        Json json = new Json();
         CompositeVO compositeVO = json.fromJson(CompositeVO.class, (String) payload[1]);
         forceIdChange(compositeVO);
         Set<Entity> newEntitiesList = createEntitiesFromVO(compositeVO);
         for (Entity entity : newEntitiesList) {
             TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
-            transformComponent.x += diff.x;
-            transformComponent.y += diff.y;
+            transformComponent.setX(transformComponent.getX() + diff.x);
+            transformComponent.setY(transformComponent.getY() + diff.y);
             ZIndexComponent zIndexComponent = ComponentRetriever.get(entity, ZIndexComponent.class);
             UILayerBoxMediator layerBoxMediator = facade.retrieveMediator(UILayerBoxMediator.NAME);
             zIndexComponent.layerName = layerBoxMediator.getCurrentSelectedLayerName();
@@ -90,7 +90,7 @@ public class PasteItemsCommand extends EntityModifyRevertableCommand {
 
     public static void forceIdChange(CompositeVO compositeVO) {
         ArrayList<MainItemVO> items = compositeVO.getAllItems();
-        for(MainItemVO item: items) {
+        for (MainItemVO item : items) {
             item.uniqueId = -1;
         }
     }

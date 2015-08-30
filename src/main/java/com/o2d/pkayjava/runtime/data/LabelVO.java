@@ -6,7 +6,7 @@ import com.o2d.pkayjava.runtime.components.label.LabelComponent;
 import com.o2d.pkayjava.runtime.data.*;
 import com.o2d.pkayjava.runtime.data.MainItemVO;
 
-public class LabelVO extends com.o2d.pkayjava.runtime.data.MainItemVO {
+public class LabelVO extends MainItemVO {
 	
 	public String 	text 	= "Label";
 	public String	style	=  "";
@@ -36,8 +36,8 @@ public class LabelVO extends com.o2d.pkayjava.runtime.data.MainItemVO {
 	@Override
 	public void loadFromEntity(Entity entity) {
 		super.loadFromEntity(entity);
-		com.o2d.pkayjava.runtime.components.label.LabelComponent labelComponent = entity.getComponent(com.o2d.pkayjava.runtime.components.label.LabelComponent.class);
-		com.o2d.pkayjava.runtime.components.DimensionsComponent dimensionsComponent = entity.getComponent(com.o2d.pkayjava.runtime.components.DimensionsComponent.class);
+		LabelComponent labelComponent = entity.getComponent(LabelComponent.class);
+		DimensionsComponent dimensionsComponent = entity.getComponent(DimensionsComponent.class);
 		text = labelComponent.getText().toString();
 		style = labelComponent.fontName;
 		size = labelComponent.fontSize;

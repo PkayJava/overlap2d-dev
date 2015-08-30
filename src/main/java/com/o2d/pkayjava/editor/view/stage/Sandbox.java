@@ -605,6 +605,6 @@ public class Sandbox {
         if (projectInfoVO != null) {
             return projectInfoVO.pixelToWorld;
         }
-        return 10;
+        return 1;
     }
 }

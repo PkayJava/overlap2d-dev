@@ -39,12 +39,12 @@ public class MoveCommandBuilder {
 
     public void setX(Entity entity, float x) {
         TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
-        setXY(entity, x, transformComponent.y);
+        setXY(entity, x, transformComponent.getY());
     }
 
     public void setY(Entity entity, float y) {
         TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
-        setXY(entity, transformComponent.x, y);
+        setXY(entity, transformComponent.getX(), y);
     }
 
     public void setXY(Entity entity, float x, float y) {

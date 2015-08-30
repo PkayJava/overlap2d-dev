@@ -16,47 +16,47 @@ import com.o2d.pkayjava.runtime.utils.ComponentRetriever;
 
 public class PhysicsSystem extends IteratingSystem {
 
-	protected ComponentMapper<TransformComponent> transformComponentMapper = ComponentMapper.getFor(TransformComponent.class);
+    protected ComponentMapper<TransformComponent> transformComponentMapper = ComponentMapper.getFor(TransformComponent.class);
 
-	private World world;
+    private World world;
 
-	public PhysicsSystem(World world) {
-		super(Family.all(PhysicsBodyComponent.class).get());
-		this.world = world;
-	}
+    public PhysicsSystem(World world) {
+        super(Family.all(PhysicsBodyComponent.class).get());
+        this.world = world;
+    }
 
-	@Override
-	protected void processEntity(Entity entity, float deltaTime) {
-		TransformComponent transformComponent =  transformComponentMapper.get(entity);
+    @Override
+    protected void processEntity(Entity entity, float deltaTime) {
+        TransformComponent transformComponent = transformComponentMapper.get(entity);
 
-		processBody(entity);
+        processBody(entity);
 
-		PhysicsBodyComponent physicsBodyComponent = ComponentRetriever.get(entity, PhysicsBodyComponent.class);
-		Body body = physicsBodyComponent.body;
-		transformComponent.x = body.getPosition().x/ PhysicsBodyLoader.getScale();
-		transformComponent.y = body.getPosition().y/ PhysicsBodyLoader.getScale();
-		transformComponent.rotation = body.getAngle() * MathUtils.radiansToDegrees;
-	}
+        PhysicsBodyComponent physicsBodyComponent = ComponentRetriever.get(entity, PhysicsBodyComponent.class);
+        Body body = physicsBodyComponent.body;
+        transformComponent.setX(body.getPosition().x / PhysicsBodyLoader.getScale());
+        transformComponent.setY(body.getPosition().y / PhysicsBodyLoader.getScale());
+        transformComponent.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
+    }
 
-	protected void processBody(Entity entity) {
-		PhysicsBodyComponent physicsBodyComponent = ComponentRetriever.get(entity, PhysicsBodyComponent.class);
-		PolygonComponent polygonComponent = ComponentRetriever.get(entity, PolygonComponent.class);
+    protected void processBody(Entity entity) {
+        PhysicsBodyComponent physicsBodyComponent = ComponentRetriever.get(entity, PhysicsBodyComponent.class);
+        PolygonComponent polygonComponent = ComponentRetriever.get(entity, PolygonComponent.class);
         TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
 
-		if(polygonComponent == null && physicsBodyComponent.body != null) {
-			world.destroyBody(physicsBodyComponent.body);
-			physicsBodyComponent.body = null;
-		}
+        if (polygonComponent == null && physicsBodyComponent.body != null) {
+            world.destroyBody(physicsBodyComponent.body);
+            physicsBodyComponent.body = null;
+        }
 
-		if(physicsBodyComponent.body == null && polygonComponent != null) {
-			if(polygonComponent.vertices == null) return;
+        if (physicsBodyComponent.body == null && polygonComponent != null) {
+            if (polygonComponent.vertices == null) return;
 
-			PhysicsBodyComponent bodyPropertiesComponent = ComponentRetriever.get(entity, PhysicsBodyComponent.class);
-			physicsBodyComponent.body = PhysicsBodyLoader.getInstance().createBody(world, bodyPropertiesComponent, polygonComponent.vertices, new Vector2(1, 1));
+            PhysicsBodyComponent bodyPropertiesComponent = ComponentRetriever.get(entity, PhysicsBodyComponent.class);
+            physicsBodyComponent.body = PhysicsBodyLoader.getInstance().createBody(world, bodyPropertiesComponent, polygonComponent.vertices, new Vector2(1, 1));
 
-            physicsBodyComponent.body.setTransform(new Vector2(transformComponent.x * PhysicsBodyLoader.getScale(), transformComponent.y * PhysicsBodyLoader.getScale()), physicsBodyComponent.body.getAngle());
-			physicsBodyComponent.body.setUserData(entity);
-		}
-	}
+            physicsBodyComponent.body.setTransform(new Vector2(transformComponent.getX() * PhysicsBodyLoader.getScale(), transformComponent.getY() * PhysicsBodyLoader.getScale()), physicsBodyComponent.body.getAngle());
+            physicsBodyComponent.body.setUserData(entity);
+        }
+    }
 
 }

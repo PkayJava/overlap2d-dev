@@ -231,4 +231,8 @@ public class ItemFactory {
 
         return entity;
     }
+
+    public Entity createGameObject(Vector2 position) {
+        return null;
+    }
 }

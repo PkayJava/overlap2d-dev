@@ -18,9 +18,6 @@
 
 package com.o2d.pkayjava.editor.view.stage;
 
-import java.awt.Cursor;
-import java.util.HashMap;
-
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
@@ -29,8 +26,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.SnapshotArray;
-import com.puremvc.patterns.mediator.SimpleMediator;
-import com.puremvc.patterns.observer.Notification;
 import com.o2d.pkayjava.editor.Overlap2D;
 import com.o2d.pkayjava.editor.Overlap2DFacade;
 import com.o2d.pkayjava.editor.controller.commands.AddComponentToItemCommand;
@@ -39,7 +34,6 @@ import com.o2d.pkayjava.editor.controller.commands.RemoveComponentFromItemComman
 import com.o2d.pkayjava.editor.factory.ItemFactory;
 import com.o2d.pkayjava.editor.proxy.CommandManager;
 import com.o2d.pkayjava.editor.proxy.SceneDataManager;
-import com.o2d.pkayjava.editor.view.stage.Sandbox;
 import com.o2d.pkayjava.editor.view.stage.input.EntityClickListener;
 import com.o2d.pkayjava.editor.view.stage.input.InputListenerComponent;
 import com.o2d.pkayjava.editor.view.stage.tools.*;
@@ -47,6 +41,11 @@ import com.o2d.pkayjava.editor.view.ui.box.UIToolBoxMediator;
 import com.o2d.pkayjava.runtime.components.NodeComponent;
 import com.o2d.pkayjava.runtime.components.ViewPortComponent;
 import com.o2d.pkayjava.runtime.utils.ComponentRetriever;
+import com.puremvc.patterns.mediator.SimpleMediator;
+import com.puremvc.patterns.observer.Notification;
+
+import java.awt.*;
+import java.util.HashMap;
 
 /**
  * Created by sargis on 4/20/15.

@@ -21,15 +21,13 @@ package com.o2d.pkayjava.editor.controller.commands;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.utils.Array;
 import com.o2d.pkayjava.editor.Overlap2DFacade;
-import com.o2d.pkayjava.editor.controller.commands.*;
-import com.o2d.pkayjava.editor.controller.commands.EntityModifyRevertableCommand;
 import com.o2d.pkayjava.editor.factory.ItemFactory;
+import com.o2d.pkayjava.editor.utils.runtime.EntityUtils;
+import com.o2d.pkayjava.editor.view.stage.Sandbox;
+import com.o2d.pkayjava.editor.view.ui.FollowersUIMediator;
 import com.o2d.pkayjava.runtime.components.NodeComponent;
 import com.o2d.pkayjava.runtime.components.ZIndexComponent;
 import com.o2d.pkayjava.runtime.utils.ComponentRetriever;
-import com.o2d.pkayjava.editor.view.ui.FollowersUIMediator;
-import com.o2d.pkayjava.editor.utils.runtime.EntityUtils;
-import com.o2d.pkayjava.editor.view.stage.Sandbox;
 
 import java.util.HashSet;
 

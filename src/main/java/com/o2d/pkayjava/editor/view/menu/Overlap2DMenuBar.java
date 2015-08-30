@@ -21,24 +21,26 @@ package com.o2d.pkayjava.editor.view.menu;
 import java.io.File;
 import java.util.ArrayList;
 
+import com.o2d.pkayjava.editor.Overlap2DFacade;
+import com.o2d.pkayjava.editor.data.manager.PreferencesManager;
+import com.o2d.pkayjava.editor.event.MenuItemListener;
+import com.o2d.pkayjava.editor.view.menu.Overlap2DMenuBarMediator;
+import com.o2d.pkayjava.editor.view.ui.widget.CustomMenu;
+import com.o2d.pkayjava.editor.view.ui.widget.CustomMenuBar;
 import org.apache.commons.lang3.SystemUtils;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.MenuItem;
 import com.kotcrab.vis.ui.widget.PopupMenu;
-import com.o2d.pkayjava.editor.data.manager.PreferencesManager;
-import com.o2d.pkayjava.editor.Overlap2DFacade;
-import com.o2d.pkayjava.editor.event.MenuItemListener;
 import com.o2d.pkayjava.runtime.data.SceneVO;
-import com.o2d.pkayjava.editor.view.ui.widget.CustomMenu;
-import com.o2d.pkayjava.editor.view.ui.widget.CustomMenuBar;
 
-public class Overlap2DMenuBar extends com.o2d.pkayjava.editor.view.ui.widget.CustomMenuBar {
+public class Overlap2DMenuBar extends CustomMenuBar {
 
     private static final String TAG;
     public static final String NAME;
 
+    // File Menu
     public static final String FILE_MENU;
     public static final String NEW_PROJECT;
     public static final String OPEN_PROJECT;
@@ -52,15 +54,21 @@ public class Overlap2DMenuBar extends com.o2d.pkayjava.editor.view.ui.widget.Cus
     public static final String NEW_SCENE;
     public static final String SELECT_SCENE;
     public static final String DELETE_CURRENT_SCENE;
-    //
+
+    // Edit Menu
     public static final String EDIT_MENU;
     public static final String CUT;
     public static final String COPY;
     public static final String PAST;
     public static final String UNDO;
     public static final String REDO;
-    //
 
+    // GameObject Menu
+    public static final String GAME_OBJECT_MENU;
+    public static final String CREATE_EMPTY;
+    public static final String CREATE_EMPTY_CHILD;
+
+    // Window Menu
     public static final String WINDOW_MENU;
     public static final String SPRITE_ANIMATIONS_EDITOR_OPEN;
     public static final String CUSTOM_VARIABLES_EDITOR_OPEN;
@@ -70,46 +78,62 @@ public class Overlap2DMenuBar extends com.o2d.pkayjava.editor.view.ui.widget.Cus
     static {
         TAG = Overlap2DMenuBarMediator.class.getName();
         NAME = TAG;
+
+        // File Menu
         FILE_MENU = NAME + "." + "FILE_MENU";
-        NEW_PROJECT = NAME + "." + "NEW_PROJECT";
-        OPEN_PROJECT = NAME + "." + "OPEN_PROJECT";
-        SAVE_PROJECT = NAME + "." + "SAVE_PROJECT";
-        IMPORT_TO_LIBRARY = NAME + "." + "IMPORT_TO_LIBRARY";
-        RECENT_PROJECTS = NAME + "." + "RECENT_PROJECTS";
-        CLEAR_RECENTS = NAME + "." + "CLEAR_RECENTS";
-        EXPORT = NAME + "." + "EXPORT";
-        EXPORT_SETTINGS = NAME + "." + "EXPORT_SETTINGS";
+        NEW_PROJECT = FILE_MENU + "." + "NEW_PROJECT";
+        OPEN_PROJECT = FILE_MENU + "." + "OPEN_PROJECT";
+        SAVE_PROJECT = FILE_MENU + "." + "SAVE_PROJECT";
+        IMPORT_TO_LIBRARY = FILE_MENU + "." + "IMPORT_TO_LIBRARY";
+        RECENT_PROJECTS = FILE_MENU + "." + "RECENT_PROJECTS";
+        CLEAR_RECENTS = FILE_MENU + "." + "CLEAR_RECENTS";
+        EXPORT = FILE_MENU + "." + "EXPORT";
+        EXPORT_SETTINGS = FILE_MENU + "." + "EXPORT_SETTINGS";
         EXIT = NAME + "." + "EXIT";
-        NEW_SCENE = NAME + "." + "NEW_SCENE";
-        SELECT_SCENE = NAME + "." + "SELECT_SCENE";
-        DELETE_CURRENT_SCENE = NAME + "." + "DELETE_CURRENT_SCENE";
+        NEW_SCENE = FILE_MENU + "." + "NEW_SCENE";
+        SELECT_SCENE = FILE_MENU + "." + "SELECT_SCENE";
+        DELETE_CURRENT_SCENE = FILE_MENU + "." + "DELETE_CURRENT_SCENE";
+
+        // Edit Menu
         EDIT_MENU = NAME + "." + "EDIT_MENU";
-        CUT = NAME + "." + "CUT";
-        COPY = NAME + "." + "COPY";
-        PAST = NAME + "." + "PAST";
-        UNDO = NAME + "." + "UNDO";
-        REDO = NAME + "." + "REDO";
+        CUT = EDIT_MENU + "." + "CUT";
+        COPY = EDIT_MENU + "." + "COPY";
+        PAST = EDIT_MENU + "." + "PAST";
+        UNDO = EDIT_MENU + "." + "UNDO";
+        REDO = EDIT_MENU + "." + "REDO";
+
+        // GameObject Menu
+        GAME_OBJECT_MENU = NAME + "." + "GAME_OBJECT_MENU";
+        CREATE_EMPTY = GAME_OBJECT_MENU + "." + "CREATE_EMPTY";
+        CREATE_EMPTY_CHILD = GAME_OBJECT_MENU + "." + "CREATE_EMPTY_CHILD";
+
+        // Window Menu
         WINDOW_MENU = NAME + "." + "WINDOW_MENU";
-        SPRITE_ANIMATIONS_EDITOR_OPEN = NAME + "." + "SPRITE_ANIMATIONS_EDITOR_OPEN";
-        CUSTOM_VARIABLES_EDITOR_OPEN = NAME + "." + "CUSTOM_VARIABLES_EDITOR_OPEN";
-        RECENT_LIST_MODIFIED = NAME + "." + "RECENT_LIST_MODIFIED";
+        SPRITE_ANIMATIONS_EDITOR_OPEN = WINDOW_MENU + "." + "SPRITE_ANIMATIONS_EDITOR_OPEN";
+        CUSTOM_VARIABLES_EDITOR_OPEN = WINDOW_MENU + "." + "CUSTOM_VARIABLES_EDITOR_OPEN";
+        RECENT_LIST_MODIFIED = WINDOW_MENU + "." + "RECENT_LIST_MODIFIED";
     }
 
     private final FileMenu fileMenu;
     private final String maskKey;
     private final EditMenu editMenu;
+    private final GameObjectMenu gameObjectMenu;
     private final WindowMenu windowMenu;
-    private final com.o2d.pkayjava.editor.Overlap2DFacade facade;
+    private final Overlap2DFacade facade;
 
     public Overlap2DMenuBar() {
-        facade = com.o2d.pkayjava.editor.Overlap2DFacade.getInstance();
+        facade = Overlap2DFacade.getInstance();
         maskKey = SystemUtils.IS_OS_MAC_OSX || SystemUtils.IS_OS_MAC ? "Cmd" : "Ctrl";
         fileMenu = new FileMenu();
         editMenu = new EditMenu();
+        gameObjectMenu = new GameObjectMenu();
         windowMenu = new WindowMenu();
+
+
 //        getTable().debug();
         addMenu(fileMenu);
         addMenu(editMenu);
+        addMenu(gameObjectMenu);
         addMenu(windowMenu);
         setProjectOpen(false);
     }
@@ -141,8 +165,8 @@ public class Overlap2DMenuBar extends com.o2d.pkayjava.editor.view.ui.widget.Cus
 
         public WindowMenu() {
             super("Window");
-            customVars = new MenuItem("Custom Variables", new com.o2d.pkayjava.editor.event.MenuItemListener(CUSTOM_VARIABLES_EDITOR_OPEN, null, WINDOW_MENU));
-            animations = new MenuItem("Sprite Animations", new com.o2d.pkayjava.editor.event.MenuItemListener(SPRITE_ANIMATIONS_EDITOR_OPEN, null, WINDOW_MENU));
+            customVars = new MenuItem("Custom Variables", new MenuItemListener(CUSTOM_VARIABLES_EDITOR_OPEN, null, WINDOW_MENU));
+            animations = new MenuItem("Sprite Animations", new MenuItemListener(SPRITE_ANIMATIONS_EDITOR_OPEN, null, WINDOW_MENU));
             addItem(customVars);
             addItem(animations);
         }
@@ -165,11 +189,11 @@ public class Overlap2DMenuBar extends com.o2d.pkayjava.editor.view.ui.widget.Cus
 
         public EditMenu() {
             super("Edit");
-            cut = new MenuItem("Cut", new com.o2d.pkayjava.editor.event.MenuItemListener(CUT, null, EDIT_MENU)).setShortcut(maskKey + " + X");
-            copy = new MenuItem("Copy", new com.o2d.pkayjava.editor.event.MenuItemListener(COPY, null, EDIT_MENU)).setShortcut(maskKey + " + C");
-            paste = new MenuItem("Paste", new com.o2d.pkayjava.editor.event.MenuItemListener(PAST, null, EDIT_MENU)).setShortcut(maskKey + " + P");
-            undo = new MenuItem("Undo", new com.o2d.pkayjava.editor.event.MenuItemListener(UNDO, null, EDIT_MENU)).setShortcut(maskKey + " + Z");
-            redo = new MenuItem("Redo", new com.o2d.pkayjava.editor.event.MenuItemListener(REDO, null, EDIT_MENU)).setShortcut(maskKey + " + Shift + Z");
+            cut = new MenuItem("Cut", new MenuItemListener(CUT, null, EDIT_MENU)).setShortcut(maskKey + " + X");
+            copy = new MenuItem("Copy", new MenuItemListener(COPY, null, EDIT_MENU)).setShortcut(maskKey + " + C");
+            paste = new MenuItem("Paste", new MenuItemListener(PAST, null, EDIT_MENU)).setShortcut(maskKey + " + P");
+            undo = new MenuItem("Undo", new MenuItemListener(UNDO, null, EDIT_MENU)).setShortcut(maskKey + " + Z");
+            redo = new MenuItem("Redo", new MenuItemListener(REDO, null, EDIT_MENU)).setShortcut(maskKey + " + Shift + Z");
             addItem(cut);
             addItem(copy);
             addItem(paste);
@@ -187,6 +211,19 @@ public class Overlap2DMenuBar extends com.o2d.pkayjava.editor.view.ui.widget.Cus
 
     }
 
+    private class GameObjectMenu extends O2DMenu {
+
+        private final MenuItem createEmpty;
+        private final MenuItem createEmptyChild;
+
+        public GameObjectMenu() {
+            super("GameObject");
+            createEmpty = new MenuItem("Create Empty", new MenuItemListener(CREATE_EMPTY, null, GAME_OBJECT_MENU));
+            createEmptyChild = new MenuItem("Create Empty Child", new MenuItemListener(CREATE_EMPTY_CHILD, null, GAME_OBJECT_MENU));
+            addItem(createEmpty);
+            addItem(createEmptyChild);
+        }
+    }
 
     private class FileMenu extends O2DMenu {
 
@@ -204,9 +241,9 @@ public class Overlap2DMenuBar extends com.o2d.pkayjava.editor.view.ui.widget.Cus
 
         public FileMenu() {
             super("File");
-            saveProject = new MenuItem("Save Project", new com.o2d.pkayjava.editor.event.MenuItemListener(SAVE_PROJECT, null, FILE_MENU));
-            addItem(new MenuItem("New Project", new com.o2d.pkayjava.editor.event.MenuItemListener(NEW_PROJECT, null, FILE_MENU)));
-            addItem(new MenuItem("Open Project", new com.o2d.pkayjava.editor.event.MenuItemListener(OPEN_PROJECT, null, FILE_MENU)));
+            saveProject = new MenuItem("Save Project", new MenuItemListener(SAVE_PROJECT, null, FILE_MENU));
+            addItem(new MenuItem("New Project", new MenuItemListener(NEW_PROJECT, null, FILE_MENU)));
+            addItem(new MenuItem("Open Project", new MenuItemListener(OPEN_PROJECT, null, FILE_MENU)));
             addItem(saveProject);
             //
             scenesMenuItem = new MenuItem("Scenes");
@@ -216,9 +253,9 @@ public class Overlap2DMenuBar extends com.o2d.pkayjava.editor.view.ui.widget.Cus
             addItem(scenesMenuItem);
             //
             addSeparator();
-            importToLibrary = new MenuItem("Import Resources", new com.o2d.pkayjava.editor.event.MenuItemListener(IMPORT_TO_LIBRARY, null, FILE_MENU));
-            export = new MenuItem("Export", new com.o2d.pkayjava.editor.event.MenuItemListener(EXPORT, null, FILE_MENU));
-            exportSettings = new MenuItem("Export Settings", new com.o2d.pkayjava.editor.event.MenuItemListener(EXPORT_SETTINGS, null, FILE_MENU));
+            importToLibrary = new MenuItem("Import Resources", new MenuItemListener(IMPORT_TO_LIBRARY, null, FILE_MENU));
+            export = new MenuItem("Export", new MenuItemListener(EXPORT, null, FILE_MENU));
+            exportSettings = new MenuItem("Export Settings", new MenuItemListener(EXPORT_SETTINGS, null, FILE_MENU));
             addItem(importToLibrary);
             addItem(export);
             addItem(exportSettings);
@@ -229,18 +266,18 @@ public class Overlap2DMenuBar extends com.o2d.pkayjava.editor.view.ui.widget.Cus
             recentProjectsMenuItem.setSubMenu(recentProjectsPopupMenu);
             addItem(recentProjectsMenuItem);
             recentProjectsMenuItems = new Array<>();
-            com.o2d.pkayjava.editor.data.manager.PreferencesManager prefs = com.o2d.pkayjava.editor.data.manager.PreferencesManager.getInstance();
+            PreferencesManager prefs = PreferencesManager.getInstance();
             prefs.buildRecentHistory();
             reInitRecent(prefs.getRecentHistory());
             //
             addSeparator();
-            addItem(new MenuItem("Exit", new com.o2d.pkayjava.editor.event.MenuItemListener(EXIT, null, FILE_MENU)));
+            addItem(new MenuItem("Exit", new MenuItemListener(EXIT, null, FILE_MENU)));
             sceneMenuItems = new Array<>();
         }
 
         public void addScenes(ArrayList<SceneVO> scenes) {
             for (SceneVO sceneVO : scenes) {
-                MenuItem menuItem = new MenuItem(sceneVO.sceneName, new com.o2d.pkayjava.editor.event.MenuItemListener(SELECT_SCENE, sceneVO.sceneName, FILE_MENU));
+                MenuItem menuItem = new MenuItem(sceneVO.sceneName, new MenuItemListener(SELECT_SCENE, sceneVO.sceneName, FILE_MENU));
                 sceneMenuItems.add(menuItem);
                 scenesPopupMenu.addItem(menuItem);
             }
@@ -249,8 +286,8 @@ public class Overlap2DMenuBar extends com.o2d.pkayjava.editor.view.ui.widget.Cus
         public void reInitScenes(ArrayList<SceneVO> scenes) {
             sceneMenuItems.clear();
             scenesPopupMenu.clear();
-            scenesPopupMenu.addItem(new MenuItem("Create New Scene", new com.o2d.pkayjava.editor.event.MenuItemListener(NEW_SCENE, null, FILE_MENU)));
-            scenesPopupMenu.addItem(new MenuItem("Delete Current Scene", new com.o2d.pkayjava.editor.event.MenuItemListener(DELETE_CURRENT_SCENE, null, FILE_MENU)));
+            scenesPopupMenu.addItem(new MenuItem("Create New Scene", new MenuItemListener(NEW_SCENE, null, FILE_MENU)));
+            scenesPopupMenu.addItem(new MenuItem("Delete Current Scene", new MenuItemListener(DELETE_CURRENT_SCENE, null, FILE_MENU)));
             scenesPopupMenu.addSeparator();
             addScenes(scenes);
         }
@@ -263,7 +300,7 @@ public class Overlap2DMenuBar extends com.o2d.pkayjava.editor.view.ui.widget.Cus
 
         public void addRecent(ArrayList<String> paths) {
             for (String path : paths) {
-                MenuItem menuItem = new MenuItem(getFolderName(path), new com.o2d.pkayjava.editor.event.MenuItemListener(RECENT_PROJECTS, path, FILE_MENU));
+                MenuItem menuItem = new MenuItem(getFolderName(path), new MenuItemListener(RECENT_PROJECTS, path, FILE_MENU));
                 recentProjectsMenuItems.add(menuItem);
                 recentProjectsPopupMenu.addItem(menuItem);
             }
@@ -279,7 +316,7 @@ public class Overlap2DMenuBar extends com.o2d.pkayjava.editor.view.ui.widget.Cus
                 recentProjectsPopupMenu.addSeparator();
             }
 
-            MenuItem menuItem = new MenuItem("Clear list", new com.o2d.pkayjava.editor.event.MenuItemListener(CLEAR_RECENTS, null, FILE_MENU));
+            MenuItem menuItem = new MenuItem("Clear list", new MenuItemListener(CLEAR_RECENTS, null, FILE_MENU));
             recentProjectsMenuItems.add(menuItem);
             recentProjectsPopupMenu.addItem(menuItem);
         }
@@ -307,7 +344,7 @@ public class Overlap2DMenuBar extends com.o2d.pkayjava.editor.view.ui.widget.Cus
 //        }
     }
 
-    class O2DMenu extends com.o2d.pkayjava.editor.view.ui.widget.CustomMenu {
+    private class O2DMenu extends CustomMenu {
 
         public O2DMenu(String title) {
             super(title);
@@ -318,13 +355,13 @@ public class Overlap2DMenuBar extends com.o2d.pkayjava.editor.view.ui.widget.Cus
 
     public void addMenuItem(String menu, String subMenuName, String notificationName) {
         if (menu.equals(FILE_MENU)) {
-            fileMenu.addItem(new MenuItem(subMenuName, new com.o2d.pkayjava.editor.event.MenuItemListener(notificationName, null, menu)));
+            fileMenu.addItem(new MenuItem(subMenuName, new MenuItemListener(notificationName, null, menu)));
         }
         if (menu.equals(EDIT_MENU)) {
-            editMenu.addItem(new MenuItem(subMenuName, new com.o2d.pkayjava.editor.event.MenuItemListener(notificationName, null, menu)));
+            editMenu.addItem(new MenuItem(subMenuName, new MenuItemListener(notificationName, null, menu)));
         }
         if (menu.equals(WINDOW_MENU)) {
-            windowMenu.addItem(new MenuItem(subMenuName, new com.o2d.pkayjava.editor.event.MenuItemListener(notificationName, null, menu)));
+            windowMenu.addItem(new MenuItem(subMenuName, new MenuItemListener(notificationName, null, menu)));
         }
     }
 }

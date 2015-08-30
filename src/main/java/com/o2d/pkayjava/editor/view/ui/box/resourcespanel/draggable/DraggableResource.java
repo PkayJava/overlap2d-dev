@@ -53,7 +53,7 @@ public class DraggableResource extends DragAndDrop {
                 Actor dragActor = viewComponent.getDragActor();
 
                 OrthographicCamera runtimeCamera = Sandbox.getInstance().getCamera();
-                dragActor.setScale(1f/runtimeCamera.zoom);
+                dragActor.setScale(1f / runtimeCamera.zoom);
 
                 ResourcePayloadObject payloadData = viewComponent.getPayloadData();
                 payloadData.xOffset = runtimeCamera.zoom * dragActor.getWidth() / 2f;
@@ -81,11 +81,11 @@ public class DraggableResource extends DragAndDrop {
     }
 
     private void drop(Payload payload, Vector2 vector2) {
-        ResourcePayloadObject resourcePayloadObject = (ResourcePayloadObject) payload.getObject();
-        ResourceManager resourceManager = Overlap2DFacade.getInstance().retrieveProxy(ResourceManager.NAME);
-
-        vector2.sub(resourcePayloadObject.xOffset/resourceManager.getProjectVO().pixelToWorld, resourcePayloadObject.yOffset/resourceManager.getProjectVO().pixelToWorld);
-        factoryFunction.apply(resourcePayloadObject.name, vector2);
+//        ResourcePayloadObject resourcePayloadObject = (ResourcePayloadObject) payload.getObject();
+//        ResourceManager resourceManager = Overlap2DFacade.getInstance().retrieveProxy(ResourceManager.NAME);
+//
+//        vector2.sub(resourcePayloadObject.xOffset / resourceManager.getProjectVO().pixelToWorld, resourcePayloadObject.yOffset / resourceManager.getProjectVO().pixelToWorld);
+//        factoryFunction.apply(resourcePayloadObject.name, vector2);
     }
 
     public DraggableResourceView getViewComponent() {

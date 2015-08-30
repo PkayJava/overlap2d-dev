@@ -51,7 +51,7 @@ public class AddToLibraryCommand extends com.o2d.pkayjava.editor.controller.comm
         MainItemComponent mainItemComponent = ComponentRetriever.get(item, MainItemComponent.class);
 
         if(createdLibraryItemName.length() > 0) {
-            com.o2d.pkayjava.editor.proxy.ProjectManager projectManager = com.o2d.pkayjava.editor.Overlap2DFacade.getInstance().retrieveProxy(com.o2d.pkayjava.editor.proxy.ProjectManager.NAME);
+            ProjectManager projectManager = Overlap2DFacade.getInstance().retrieveProxy(ProjectManager.NAME);
             HashMap<String, CompositeItemVO> libraryItems = projectManager.currentProjectInfoVO.libraryItems;
 
             if (libraryItems.containsKey(createdLibraryItemName)) {
@@ -70,12 +70,12 @@ public class AddToLibraryCommand extends com.o2d.pkayjava.editor.controller.comm
             // unlink it
             mainItemComponent.libraryLink = "";
         }
-        facade.sendNotification(com.o2d.pkayjava.editor.Overlap2D.ITEM_DATA_UPDATED);
+        facade.sendNotification(Overlap2D.ITEM_DATA_UPDATED);
     }
 
     @Override
     public void undoAction() {
-        com.o2d.pkayjava.editor.proxy.ProjectManager projectManager = com.o2d.pkayjava.editor.Overlap2DFacade.getInstance().retrieveProxy(com.o2d.pkayjava.editor.proxy.ProjectManager.NAME);
+        ProjectManager projectManager = Overlap2DFacade.getInstance().retrieveProxy(ProjectManager.NAME);
         HashMap<String, CompositeItemVO> libraryItems = projectManager.currentProjectInfoVO.libraryItems;
 
         if(createdLibraryItemName.length() > 0) {
@@ -86,10 +86,10 @@ public class AddToLibraryCommand extends com.o2d.pkayjava.editor.controller.comm
             }
             facade.sendNotification(com.o2d.pkayjava.editor.Overlap2D.LIBRARY_LIST_UPDATED);
         } else {
-            Entity entity = com.o2d.pkayjava.editor.utils.runtime.EntityUtils.getByUniqueId(entityId);
+            Entity entity = EntityUtils.getByUniqueId(entityId);
             MainItemComponent mainItemComponent = ComponentRetriever.get(entity, MainItemComponent.class);
             mainItemComponent.libraryLink = prevName;
-            facade.sendNotification(com.o2d.pkayjava.editor.Overlap2D.ITEM_DATA_UPDATED);
+            facade.sendNotification(Overlap2D.ITEM_DATA_UPDATED);
         }
     }
 

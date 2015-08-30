@@ -12,26 +12,26 @@ import com.o2d.pkayjava.runtime.utils.ComponentRetriever;
 
 public class PhysicsAdjustSystem extends PhysicsSystem {
 
-	private Vector2 transformVec = new Vector2();
-	
-	public PhysicsAdjustSystem(World world) {
-		super(world);
-	}
+    private Vector2 transformVec = new Vector2();
 
-	@Override
-	protected void processEntity(Entity entity, float deltaTime) {
-		
-		TransformComponent transformComponent =  transformComponentMapper.get(entity);
-		processBody(entity);
+    public PhysicsAdjustSystem(World world) {
+        super(world);
+    }
 
-		PhysicsBodyComponent physicsBodyComponent = ComponentRetriever.get(entity, PhysicsBodyComponent.class);
+    @Override
+    protected void processEntity(Entity entity, float deltaTime) {
 
-		if(physicsBodyComponent.body == null) return;
+        TransformComponent transformComponent = transformComponentMapper.get(entity);
+        processBody(entity);
 
-		transformVec.x = transformComponent.x * PhysicsBodyLoader.getScale();
-		transformVec.y = transformComponent.y * PhysicsBodyLoader.getScale();
-		physicsBodyComponent.body.setTransform(transformVec, transformComponent.rotation * MathUtils.degreesToRadians);
-		
-	}
+        PhysicsBodyComponent physicsBodyComponent = ComponentRetriever.get(entity, PhysicsBodyComponent.class);
+
+        if (physicsBodyComponent.body == null) return;
+
+        transformVec.x = transformComponent.getX() * PhysicsBodyLoader.getScale();
+        transformVec.y = transformComponent.getY() * PhysicsBodyLoader.getScale();
+        physicsBodyComponent.body.setTransform(transformVec, transformComponent.getRotation() * MathUtils.degreesToRadians);
+
+    }
 
 }

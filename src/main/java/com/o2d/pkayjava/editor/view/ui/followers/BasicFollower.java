@@ -64,22 +64,23 @@ public abstract class BasicFollower extends Group {
 
         int pixelPerWU = sandbox.sceneControl.sceneLoader.getRm().getProjectVO().pixelToWorld;
 
-    	Vector2 position = Pools.obtain(Vector2.class);
-        position.x = 0; position.y = 0;
+        Vector2 position = Pools.obtain(Vector2.class);
+        position.x = 0;
+        position.y = 0;
         TransformMathUtils.localToAscendantCoordinates(sandbox.getCurrentViewingEntity(), entity, position);
         position = Sandbox.getInstance().worldToScreen(position);
 
         setX((int) (position.x));
         setY((int) (position.y));
-        setWidth(pixelPerWU * dimensionsComponent.width * transformComponent.scaleX / camera.zoom);
-        setHeight(pixelPerWU * dimensionsComponent.height * transformComponent.scaleY / camera.zoom);
+        setWidth(pixelPerWU * dimensionsComponent.width * transformComponent.getScaleX() / camera.zoom);
+        setHeight(pixelPerWU * dimensionsComponent.height * transformComponent.getScaleY() / camera.zoom);
 
         Pools.free(position);
 
         //setOrigin(transformComponent.originX, transformComponent.originY);
-        setRotation(transformComponent.rotation);
+        setRotation(transformComponent.getRotation());
 
-        if(subFollowers != null) {
+        if (subFollowers != null) {
             for (SubFollower follower : subFollowers) {
                 follower.update();
             }
@@ -107,16 +108,16 @@ public abstract class BasicFollower extends Group {
     }
 
     @Override
-    public Actor hit (float x, float y, boolean touchable) {
+    public Actor hit(float x, float y, boolean touchable) {
         Actor hitActor = super.hit(x, y, touchable);
-        if(hitActor == null) return null;
-        if(hitActor.equals(this)) return null;
+        if (hitActor == null) return null;
+        if (hitActor.equals(this)) return null;
 
         return hitActor;
     }
 
     public void handleNotification(Notification notification) {
-        for(SubFollower follower: subFollowers) {
+        for (SubFollower follower : subFollowers) {
             follower.handleNotification(notification);
         }
     }
@@ -135,8 +136,8 @@ public abstract class BasicFollower extends Group {
     }
 
     public SubFollower getSubFollower(Class clazz) {
-        for(SubFollower subFollower: subFollowers) {
-            if(subFollower.getClass() == clazz) {
+        for (SubFollower subFollower : subFollowers) {
+            if (subFollower.getClass() == clazz) {
                 return subFollower;
             }
         }
@@ -146,7 +147,7 @@ public abstract class BasicFollower extends Group {
 
     public void removeSubFollower(Class clazz) {
         SubFollower subFollower = getSubFollower(clazz);
-        if(subFollower != null) {
+        if (subFollower != null) {
             removeSubFollower(subFollower);
         }
     }
@@ -157,7 +158,7 @@ public abstract class BasicFollower extends Group {
     }
 
     public void clearSubFollowers() {
-        for(SubFollower subFollower: subFollowers) {
+        for (SubFollower subFollower : subFollowers) {
             subFollower.remove();
         }
         subFollowers.clear();

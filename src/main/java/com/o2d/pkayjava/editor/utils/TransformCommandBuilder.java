@@ -27,10 +27,10 @@ public class TransformCommandBuilder {
         payload.add(prevData);
         payload.add(new Object[4]);
 
-        setPos(1, transformComponent.x, transformComponent.y);
+        setPos(1, transformComponent.getX(), transformComponent.getY());
         setSize(1, dimensionsComponent.width, dimensionsComponent.height);
-        setScale(1, transformComponent.scaleX, transformComponent.scaleY);
-        setRotation(1, transformComponent.rotation);
+        setScale(1, transformComponent.getScaleX(), transformComponent.getScaleY());
+        setRotation(1, transformComponent.getRotation());
 
     }
 

@@ -186,8 +186,8 @@ public class SelectionTool extends SimpleTool {
         for (Entity itemInstance : sandbox.getSelector().getCurrentSelection()) {
             transformComponent = ComponentRetriever.get(itemInstance, TransformComponent.class);
 
-            dragTouchDiff.put(itemInstance, new Vector2(x - transformComponent.x, y - transformComponent.y));
-            dragStartPositions.put(itemInstance, new Vector2(transformComponent.x, transformComponent.y));
+            dragTouchDiff.put(itemInstance, new Vector2(x - transformComponent.getX(), y - transformComponent.getY()));
+            dragStartPositions.put(itemInstance, new Vector2(transformComponent.getX(), transformComponent.getY()));
         }
 
         dragMouseStartPosition = new Vector2(x, y);
@@ -249,8 +249,8 @@ public class SelectionTool extends SimpleTool {
                 diff.x = MathUtils.floor(diff.x / gridSize) * gridSize;
                 diff.y = MathUtils.floor(diff.y / gridSize) * gridSize;
 
-                transformComponent.x = (newX - diff.x);
-                transformComponent.y = (newY - diff.y);
+                transformComponent.setX(newX - diff.x);
+                transformComponent.setY(newY - diff.y);
                 //value.hide();
 
                 // pining UI to update current item properties tools
@@ -293,7 +293,7 @@ public class SelectionTool extends SimpleTool {
             Array<Object[]> payloads = new Array<>();
             for (Entity itemInstance : sandbox.getSelector().getCurrentSelection()) {
                 transformComponent = ComponentRetriever.get(itemInstance, TransformComponent.class);
-                Vector2 newPosition = new Vector2(transformComponent.x, transformComponent.y);
+                Vector2 newPosition = new Vector2(transformComponent.getX(), transformComponent.getY());
                 Vector2 oldPosition = dragStartPositions.get(itemInstance);
 
                 Object payload[] = new Object[3];
@@ -347,7 +347,7 @@ public class SelectionTool extends SimpleTool {
 
             //if (!freeItems.get(i).isLockedByLayer() && Intersector.overlaps(sR, new Rectangle(entity.getX(), entity.getY(), entity.getWidth(), entity.getHeight()))) {
             if (isEntityVisible(entity) &&
-                    Intersector.overlaps(sR, tmp.set(transformComponent.x, transformComponent.y, dimensionsComponent.width, dimensionsComponent.height))) {
+                    Intersector.overlaps(sR, tmp.set(transformComponent.getX(), transformComponent.getY(), dimensionsComponent.width, dimensionsComponent.height))) {
                 curr.add(entity);
             }
         }

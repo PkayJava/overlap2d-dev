@@ -32,7 +32,7 @@ import com.o2d.pkayjava.editor.view.SceneControlMediator;
 public class ItemControlMediator {
 
     private SceneControlMediator sceneControl;
-    
+
     private TransformComponent transformComponent;
     private ZIndexComponent zIndexComponent;
 
@@ -41,9 +41,9 @@ public class ItemControlMediator {
     }
 
 
-    public void itemZIndexChange( Set<Entity> currentSelection, boolean isUp) {
+    public void itemZIndexChange(Set<Entity> currentSelection, boolean isUp) {
         for (Entity item : currentSelection) {
-        	zIndexComponent = ComponentRetriever.get(item, ZIndexComponent.class);
+            zIndexComponent = ComponentRetriever.get(item, ZIndexComponent.class);
 
             int ammount = 1;
             if (!isUp) ammount = -1;
@@ -55,13 +55,13 @@ public class ItemControlMediator {
     }
 
     public void moveItemBy(Entity entity, float x, float y) {
-    	transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
-    	transformComponent.x+=x;
-    	transformComponent.y+=y;
+        transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
+        transformComponent.setX(transformComponent.getX() + x);
+        transformComponent.setY(transformComponent.getY() + y);
     }
 
     public void removeItem(Entity entity) {
-    	//TODO and uncomment
+        //TODO and uncomment
 //        actor.remove();
 //        sceneControl.getCurrentScene().removeItem(item);
 //        item.dispose();

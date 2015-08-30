@@ -15,41 +15,41 @@ import com.o2d.pkayjava.runtime.systems.render.logic.Drawable;
 
 public class LabelDrawableLogic implements com.o2d.pkayjava.runtime.systems.render.logic.Drawable {
 
-	private ComponentMapper<com.o2d.pkayjava.runtime.components.label.LabelComponent> labelComponentMapper;
-	private ComponentMapper<com.o2d.pkayjava.runtime.components.TintComponent> tintComponentMapper;
-	private ComponentMapper<com.o2d.pkayjava.runtime.components.DimensionsComponent> dimensionsComponentMapper;
-	private ComponentMapper<com.o2d.pkayjava.runtime.components.TransformComponent> transformMapper;
+    private ComponentMapper<com.o2d.pkayjava.runtime.components.label.LabelComponent> labelComponentMapper;
+    private ComponentMapper<com.o2d.pkayjava.runtime.components.TintComponent> tintComponentMapper;
+    private ComponentMapper<com.o2d.pkayjava.runtime.components.DimensionsComponent> dimensionsComponentMapper;
+    private ComponentMapper<com.o2d.pkayjava.runtime.components.TransformComponent> transformMapper;
 
-	private final Color tmpColor = new Color();
+    private final Color tmpColor = new Color();
 
-	public LabelDrawableLogic() {
-		labelComponentMapper = ComponentMapper.getFor(com.o2d.pkayjava.runtime.components.label.LabelComponent.class);
-		tintComponentMapper = ComponentMapper.getFor(com.o2d.pkayjava.runtime.components.TintComponent.class);
-		dimensionsComponentMapper = ComponentMapper.getFor(com.o2d.pkayjava.runtime.components.DimensionsComponent.class);
-		transformMapper = ComponentMapper.getFor(com.o2d.pkayjava.runtime.components.TransformComponent.class);
-	}
-	
-	@Override
-	public void draw(Batch batch, Entity entity) {
-		com.o2d.pkayjava.runtime.components.TransformComponent entityTransformComponent = transformMapper.get(entity);
-		com.o2d.pkayjava.runtime.components.label.LabelComponent labelComponent = labelComponentMapper.get(entity);
-		com.o2d.pkayjava.runtime.components.DimensionsComponent dimenstionsComponent = dimensionsComponentMapper.get(entity);
-		com.o2d.pkayjava.runtime.components.TintComponent tint = tintComponentMapper.get(entity);
+    public LabelDrawableLogic() {
+        labelComponentMapper = ComponentMapper.getFor(com.o2d.pkayjava.runtime.components.label.LabelComponent.class);
+        tintComponentMapper = ComponentMapper.getFor(com.o2d.pkayjava.runtime.components.TintComponent.class);
+        dimensionsComponentMapper = ComponentMapper.getFor(com.o2d.pkayjava.runtime.components.DimensionsComponent.class);
+        transformMapper = ComponentMapper.getFor(com.o2d.pkayjava.runtime.components.TransformComponent.class);
+    }
 
-		tmpColor.set(tint.color);
+    @Override
+    public void draw(Batch batch, Entity entity) {
+        com.o2d.pkayjava.runtime.components.TransformComponent entityTransformComponent = transformMapper.get(entity);
+        com.o2d.pkayjava.runtime.components.label.LabelComponent labelComponent = labelComponentMapper.get(entity);
+        com.o2d.pkayjava.runtime.components.DimensionsComponent dimenstionsComponent = dimensionsComponentMapper.get(entity);
+        com.o2d.pkayjava.runtime.components.TintComponent tint = tintComponentMapper.get(entity);
 
-		if (labelComponent.style.background != null) {
-			batch.setColor(tmpColor);
-			labelComponent.style.background.draw(batch, entityTransformComponent.x, entityTransformComponent.y, dimenstionsComponent.width, dimenstionsComponent.height);
-			//System.out.println("LAbel BG");
-		}
+        tmpColor.set(tint.color);
 
-		if(labelComponent.style.fontColor != null) tmpColor.mul(labelComponent.style.fontColor);
-		//tmpColor.a *= TODO consider parent alpha
+        if (labelComponent.style.background != null) {
+            batch.setColor(tmpColor);
+            labelComponent.style.background.draw(batch, entityTransformComponent.getX(), entityTransformComponent.getY(), dimenstionsComponent.width, dimenstionsComponent.height);
+            //System.out.println("LAbel BG");
+        }
 
-		labelComponent.cache.tint(tmpColor);
-		labelComponent.cache.setPosition(entityTransformComponent.x, entityTransformComponent.y);
-		labelComponent.cache.draw(batch);
-	}
+        if (labelComponent.style.fontColor != null) tmpColor.mul(labelComponent.style.fontColor);
+        //tmpColor.a *= TODO consider parent alpha
+
+        labelComponent.cache.tint(tmpColor);
+        labelComponent.cache.setPosition(entityTransformComponent.getX(), entityTransformComponent.getY());
+        labelComponent.cache.draw(batch);
+    }
 
 }

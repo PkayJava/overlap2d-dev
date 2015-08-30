@@ -19,63 +19,63 @@ import com.o2d.pkayjava.runtime.data.LightVO.LightType;
 import com.o2d.pkayjava.runtime.physics.PhysicsBodyLoader;
 
 public class LightSystem extends IteratingSystem {
-	private ComponentMapper<LightObjectComponent> lightObjectComponentMapper = ComponentMapper.getFor(LightObjectComponent.class);
+    private ComponentMapper<LightObjectComponent> lightObjectComponentMapper = ComponentMapper.getFor(LightObjectComponent.class);
     private ComponentMapper<TransformComponent> transformComponentMapper = ComponentMapper.getFor(TransformComponent.class);
     private ComponentMapper<ParentNodeComponent> parentNodeComponentMapper = ComponentMapper.getFor(ParentNodeComponent.class);
     private ComponentMapper<TintComponent> tintComponentMapper = ComponentMapper.getFor(TintComponent.class);
 
-	public LightSystem() {
-		super(Family.all(LightObjectComponent.class).get());
-	}
+    public LightSystem() {
+        super(Family.all(LightObjectComponent.class).get());
+    }
 
-	@Override
-	protected void processEntity(Entity entity, float deltaTime) {
-		LightObjectComponent lightObjectComponent = lightObjectComponentMapper.get(entity);
-		TransformComponent transformComponent = transformComponentMapper.get(entity);
-		TintComponent tintComponent = tintComponentMapper.get(entity);
-		Light light = lightObjectComponent.lightObject;
+    @Override
+    protected void processEntity(Entity entity, float deltaTime) {
+        LightObjectComponent lightObjectComponent = lightObjectComponentMapper.get(entity);
+        TransformComponent transformComponent = transformComponentMapper.get(entity);
+        TintComponent tintComponent = tintComponentMapper.get(entity);
+        Light light = lightObjectComponent.lightObject;
 
-		ParentNodeComponent parentNodeComponent = parentNodeComponentMapper.get(entity);
-		
-		float relativeX = transformComponent.x;
-		float relativeY = transformComponent.y;
-		float relativeRotation = 0;
-		
-		Entity parentEntity = parentNodeComponent.parentEntity;
-		TransformComponent parentTransformComponent = transformComponentMapper.get(parentEntity);
-		while (parentEntity != null) {
-			relativeX+=parentTransformComponent.x;
-			relativeY+=parentTransformComponent.y;
-			relativeRotation+=parentTransformComponent.rotation;
-			parentNodeComponent = parentNodeComponentMapper.get(parentEntity);
-			if(parentNodeComponent == null){
-				break;
-			}
-			parentEntity = parentNodeComponent.parentEntity;
-		}
-		
-		if(light != null){
-			
-			float yy = 0;
-			float xx = 0;
-			
-			if(relativeRotation != 0){
-				xx = transformComponent.x*MathUtils.cosDeg(relativeRotation) - transformComponent.y*MathUtils.sinDeg(relativeRotation);
-				yy = transformComponent.y*MathUtils.cosDeg(relativeRotation) + transformComponent.x*MathUtils.sinDeg(relativeRotation);
-				yy=transformComponent.y-yy;
-				xx=transformComponent.x-xx;
-			}
-			light.setPosition((relativeX-xx)*PhysicsBodyLoader.getScale(), (relativeY-yy)*PhysicsBodyLoader.getScale());
-			light.setSoftnessLength(lightObjectComponent.softnessLength);
-		}
+        ParentNodeComponent parentNodeComponent = parentNodeComponentMapper.get(entity);
 
-		if(lightObjectComponent.getType() == LightType.CONE){
-			light.setDirection(lightObjectComponent.directionDegree+relativeRotation);
-		}
-		
-		
-		if (lightObjectComponent.getType() == LightType.POINT) {
-			lightObjectComponent.lightObject.setColor(new Color(tintComponent.color));
+        float relativeX = transformComponent.getX();
+        float relativeY = transformComponent.getY();
+        float relativeRotation = 0;
+
+        Entity parentEntity = parentNodeComponent.parentEntity;
+        TransformComponent parentTransformComponent = transformComponentMapper.get(parentEntity);
+        while (parentEntity != null) {
+            relativeX += parentTransformComponent.getX();
+            relativeY += parentTransformComponent.getY();
+            relativeRotation += parentTransformComponent.getRotation();
+            parentNodeComponent = parentNodeComponentMapper.get(parentEntity);
+            if (parentNodeComponent == null) {
+                break;
+            }
+            parentEntity = parentNodeComponent.parentEntity;
+        }
+
+        if (light != null) {
+
+            float yy = 0;
+            float xx = 0;
+
+            if (relativeRotation != 0) {
+                xx = transformComponent.getX() * MathUtils.cosDeg(relativeRotation) - transformComponent.getY() * MathUtils.sinDeg(relativeRotation);
+                yy = transformComponent.getY() * MathUtils.cosDeg(relativeRotation) + transformComponent.getX() * MathUtils.sinDeg(relativeRotation);
+                yy = transformComponent.getY() - yy;
+                xx = transformComponent.getX() - xx;
+            }
+            light.setPosition((relativeX - xx) * PhysicsBodyLoader.getScale(), (relativeY - yy) * PhysicsBodyLoader.getScale());
+            light.setSoftnessLength(lightObjectComponent.softnessLength);
+        }
+
+        if (lightObjectComponent.getType() == LightType.CONE) {
+            light.setDirection(lightObjectComponent.directionDegree + relativeRotation);
+        }
+
+
+        if (lightObjectComponent.getType() == LightType.POINT) {
+            lightObjectComponent.lightObject.setColor(new Color(tintComponent.color));
             // TODO Physics and resolution part
             lightObjectComponent.lightObject.setDistance(lightObjectComponent.distance * PhysicsBodyLoader.getScale());
             lightObjectComponent.lightObject.setStaticLight(lightObjectComponent.isStatic);
@@ -83,14 +83,14 @@ public class LightSystem extends IteratingSystem {
             lightObjectComponent.lightObject.setXray(lightObjectComponent.isXRay);
 
         } else {
-        	lightObjectComponent.lightObject.setColor(new Color(tintComponent.color));
+            lightObjectComponent.lightObject.setColor(new Color(tintComponent.color));
             lightObjectComponent.lightObject.setDistance(lightObjectComponent.distance * PhysicsBodyLoader.getScale());
             lightObjectComponent.lightObject.setStaticLight(lightObjectComponent.isStatic);
             lightObjectComponent.lightObject.setDirection(lightObjectComponent.directionDegree);
             ((ConeLight) lightObjectComponent.lightObject).setConeDegree(lightObjectComponent.coneDegree);
             lightObjectComponent.lightObject.setXray(lightObjectComponent.isXRay);
         }
-		
-	}
+
+    }
 
 }

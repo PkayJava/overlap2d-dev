@@ -142,11 +142,11 @@ public class TransformTool extends SelectionTool implements FollowerTransformati
             // get mouse stage coordinates
 
             Vector2 mousePoint = sandbox.screenToWorld(x, y);
-            Vector2 originPoint = new Vector2(transformComponent.x + transformComponent.originX, transformComponent.y + transformComponent.originY);
+            Vector2 originPoint = new Vector2(transformComponent.getX() + transformComponent.getOriginX(), transformComponent.getY() + transformComponent.getOriginY());
             mousePoint.sub(originPoint);
 
             lastTransformAngle = mousePoint.angle();
-            lastEntityAngle = transformComponent.rotation;
+            lastEntityAngle = transformComponent.getRotation();
 
         }
 
@@ -161,19 +161,19 @@ public class TransformTool extends SelectionTool implements FollowerTransformati
         TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
         DimensionsComponent dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
 
-        float newX = transformComponent.x;
-        float newY = transformComponent.y;
-        float newWidth = dimensionsComponent.width * transformComponent.scaleX;
-        float newHeight = dimensionsComponent.height * transformComponent.scaleY;
+        float newX = transformComponent.getX();
+        float newY = transformComponent.getY();
+        float newWidth = dimensionsComponent.width * transformComponent.getScaleX();
+        float newHeight = dimensionsComponent.height * transformComponent.getScaleY();
 
-        float tmpAdjustmentX = transformComponent.originX * (transformComponent.scaleX - 1);
-        float tmpAdjustmentY = transformComponent.originY * (transformComponent.scaleY - 1);
+        float tmpAdjustmentX = transformComponent.getOriginX() * (transformComponent.getScaleX() - 1);
+        float tmpAdjustmentY = transformComponent.getOriginY() * (transformComponent.getScaleY() - 1);
 
-        final float cos = MathUtils.cosDeg(transformComponent.rotation);
-        final float sin = MathUtils.sinDeg(transformComponent.rotation);
+        final float cos = MathUtils.cosDeg(transformComponent.getRotation());
+        final float sin = MathUtils.sinDeg(transformComponent.getRotation());
 
-        float difX = (transformComponent.x - mousePointStage.x);
-        float difY = (transformComponent.y - mousePointStage.y);
+        float difX = (transformComponent.getX() - mousePointStage.x);
+        float difY = (transformComponent.getY() - mousePointStage.y);
 
         difX = (difX * cos + difY * sin);
         difY = (difX * -sin + difY * cos);
@@ -226,12 +226,12 @@ public class TransformTool extends SelectionTool implements FollowerTransformati
 
         // Rotating
         if (anchor >= NormalSelectionFollower.ROTATION_LT && anchor <= NormalSelectionFollower.ROTATION_LB) {
-            Vector2 originPoint = new Vector2(transformComponent.x + transformComponent.originX, transformComponent.y + transformComponent.originY);
+            Vector2 originPoint = new Vector2(transformComponent.getX() + transformComponent.getOriginX(), transformComponent.getY() + transformComponent.getOriginY());
             mousePointStage.sub(originPoint);
             float currentAngle = mousePointStage.angle();
             float angleDiff = currentAngle - lastTransformAngle;
             float newRotation = lastEntityAngle + angleDiff;
-            transformComponent.rotation = newRotation;
+            transformComponent.setRotation(newRotation);
 
             commandBuilder.setRotation(newRotation);
         }
@@ -242,18 +242,18 @@ public class TransformTool extends SelectionTool implements FollowerTransformati
         commandBuilder.setScale(newScaleX, newScaleY);
         commandBuilder.setPos(newX, newY);
 
-        transformComponent.scaleX = newScaleX;
-        transformComponent.scaleY = newScaleY;
-        transformComponent.x = newX;
-        transformComponent.y = newY;
+        transformComponent.setScaleX(newScaleX);
+        transformComponent.setScaleY(newScaleY);
+        transformComponent.setX(newX);
+        transformComponent.setY(newY);
     }
 
     private void ninePatchAnchorDraggedLogic(Vector2 mousePointStage, int anchor, Entity entity) {
         TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
         DimensionsComponent dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
 
-        float newX = transformComponent.x;
-        float newY = transformComponent.y;
+        float newX = transformComponent.getX();
+        float newY = transformComponent.getY();
         float newWidth = dimensionsComponent.width;
         float newHeight = dimensionsComponent.height;
 
@@ -263,7 +263,7 @@ public class TransformTool extends SelectionTool implements FollowerTransformati
 
         switch (anchor) {
             case NormalSelectionFollower.L:
-                newWidth = dimensionsComponent.width + (transformComponent.x - mousePointStage.x);
+                newWidth = dimensionsComponent.width + (transformComponent.getX() - mousePointStage.x);
                 if (newWidth < minWidth) {
                     newX = mousePointStage.x - (minWidth - newWidth);
                     newWidth = minWidth;
@@ -272,13 +272,13 @@ public class TransformTool extends SelectionTool implements FollowerTransformati
                 }
                 break;
             case NormalSelectionFollower.R:
-                newWidth = dimensionsComponent.width + (mousePointStage.x - (transformComponent.x + dimensionsComponent.width));
+                newWidth = dimensionsComponent.width + (mousePointStage.x - (transformComponent.getX() + dimensionsComponent.width));
                 if (newWidth < minWidth) {
                     newWidth = minWidth;
                 }
                 break;
             case NormalSelectionFollower.B:
-                newHeight = dimensionsComponent.height + (transformComponent.y - mousePointStage.y);
+                newHeight = dimensionsComponent.height + (transformComponent.getY() - mousePointStage.y);
                 if (newHeight < minHeight) {
                     newY = mousePointStage.y - (minHeight - newHeight);
                     newHeight = minHeight;
@@ -287,14 +287,14 @@ public class TransformTool extends SelectionTool implements FollowerTransformati
                 }
                 break;
             case NormalSelectionFollower.T:
-                newHeight = dimensionsComponent.height + (mousePointStage.y - (transformComponent.y + dimensionsComponent.height));
+                newHeight = dimensionsComponent.height + (mousePointStage.y - (transformComponent.getY() + dimensionsComponent.height));
                 if (newHeight < minHeight) {
                     newHeight = minHeight;
                 }
                 break;
             case NormalSelectionFollower.LT:
-                newWidth = dimensionsComponent.width + (transformComponent.x - mousePointStage.x);
-                newHeight = dimensionsComponent.height + (mousePointStage.y - (transformComponent.y + dimensionsComponent.height));
+                newWidth = dimensionsComponent.width + (transformComponent.getX() - mousePointStage.x);
+                newHeight = dimensionsComponent.height + (mousePointStage.y - (transformComponent.getY() + dimensionsComponent.height));
                 if (newWidth < minWidth) {
                     newX = mousePointStage.x - (minWidth - newWidth);
                     newWidth = minWidth;
@@ -306,8 +306,8 @@ public class TransformTool extends SelectionTool implements FollowerTransformati
                 }
                 break;
             case NormalSelectionFollower.RT:
-                newWidth = dimensionsComponent.width + (mousePointStage.x - (transformComponent.x + dimensionsComponent.width));
-                newHeight = dimensionsComponent.height + (mousePointStage.y - (transformComponent.y + dimensionsComponent.height));
+                newWidth = dimensionsComponent.width + (mousePointStage.x - (transformComponent.getX() + dimensionsComponent.width));
+                newHeight = dimensionsComponent.height + (mousePointStage.y - (transformComponent.getY() + dimensionsComponent.height));
                 if (newHeight < minHeight) {
                     newHeight = minHeight;
                 }
@@ -316,8 +316,8 @@ public class TransformTool extends SelectionTool implements FollowerTransformati
                 }
                 break;
             case NormalSelectionFollower.RB:
-                newWidth = dimensionsComponent.width + (mousePointStage.x - (transformComponent.x + dimensionsComponent.width));
-                newHeight = dimensionsComponent.height + (transformComponent.y - mousePointStage.y);
+                newWidth = dimensionsComponent.width + (mousePointStage.x - (transformComponent.getX() + dimensionsComponent.width));
+                newHeight = dimensionsComponent.height + (transformComponent.getY() - mousePointStage.y);
                 if (newWidth < minWidth) {
                     newWidth = minWidth;
                 }
@@ -329,8 +329,8 @@ public class TransformTool extends SelectionTool implements FollowerTransformati
                 }
                 break;
             case NormalSelectionFollower.LB:
-                newWidth = dimensionsComponent.width + (transformComponent.x - mousePointStage.x);
-                newHeight = dimensionsComponent.height + (transformComponent.y - mousePointStage.y);
+                newWidth = dimensionsComponent.width + (transformComponent.getX() - mousePointStage.x);
+                newHeight = dimensionsComponent.height + (transformComponent.getY() - mousePointStage.y);
                 if (newWidth < minWidth) {
                     newX = mousePointStage.x - (minWidth - newWidth);
                     newWidth = minWidth;
@@ -350,8 +350,8 @@ public class TransformTool extends SelectionTool implements FollowerTransformati
         commandBuilder.setPos(newX, newY);
         commandBuilder.setSize(newWidth, newHeight);
 
-        transformComponent.x = newX;
-        transformComponent.y = newY;
+        transformComponent.setX(newX);
+        transformComponent.setY(newY);
         dimensionsComponent.width = newWidth;
         dimensionsComponent.height = newHeight;
     }

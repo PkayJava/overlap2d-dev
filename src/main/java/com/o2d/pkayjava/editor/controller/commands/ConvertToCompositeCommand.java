@@ -61,10 +61,10 @@ public class ConvertToCompositeCommand extends EntityModifyRevertableCommand {
         HashSet<Entity> entities = (HashSet<Entity>) sandbox.getSelector().getSelectedItems();
         UILayerBoxMediator layerBoxMediator = facade.retrieveMediator(UILayerBoxMediator.NAME);
 
-        if(layersBackup == null) {
+        if (layersBackup == null) {
             // backup layer data
             layersBackup = new HashMap<>();
-            for(Entity entity: entities) {
+            for (Entity entity : entities) {
                 ZIndexComponent zIndexComponent = ComponentRetriever.get(entity, ZIndexComponent.class);
                 int tmpId = EntityUtils.getEntityId(entity);
                 layersBackup.put(tmpId, zIndexComponent.layerName);
@@ -86,10 +86,10 @@ public class ConvertToCompositeCommand extends EntityModifyRevertableCommand {
         EntityUtils.changeParent(entities, entity);
 
         //reposition children
-        for(Entity childEntity: entities) {
+        for (Entity childEntity : entities) {
             TransformComponent transformComponent = ComponentRetriever.get(childEntity, TransformComponent.class);
-            transformComponent.x -= position.x;
-            transformComponent.y -=position.y;
+            transformComponent.setX(transformComponent.getX() - position.x);
+            transformComponent.setY(transformComponent.getY() - position.y);
 
             // put it on default layer
             ZIndexComponent zIndexComponent = ComponentRetriever.get(childEntity, ZIndexComponent.class);
@@ -128,10 +128,10 @@ public class ConvertToCompositeCommand extends EntityModifyRevertableCommand {
         EntityUtils.changeParent(children, oldParentEntity);
 
         //reposition children
-        for(Entity tmpEntity: children) {
+        for (Entity tmpEntity : children) {
             TransformComponent transformComponent = ComponentRetriever.get(tmpEntity, TransformComponent.class);
-            transformComponent.x+=positionDiff.x;
-            transformComponent.y+=positionDiff.y;
+            transformComponent.setX(transformComponent.getX() + positionDiff.x);
+            transformComponent.setY(transformComponent.getY() + positionDiff.y);
 
             // put layer data back
             ZIndexComponent zIndexComponent = ComponentRetriever.get(entity, ZIndexComponent.class);

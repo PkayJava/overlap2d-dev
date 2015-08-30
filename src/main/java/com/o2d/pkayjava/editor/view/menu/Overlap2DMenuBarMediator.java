@@ -18,6 +18,7 @@
 
 package com.o2d.pkayjava.editor.view.menu;
 
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.kotcrab.vis.ui.util.dialog.DialogUtils;
@@ -86,6 +87,8 @@ public class Overlap2DMenuBarMediator extends SimpleMediator<Overlap2DMenuBar> {
                 //General
                 ProjectManager.PROJECT_OPENED,
                 Overlap2DMenuBar.RECENT_LIST_MODIFIED
+                //GameObject
+
         };
     }
 
@@ -99,15 +102,26 @@ public class Overlap2DMenuBarMediator extends SimpleMediator<Overlap2DMenuBar> {
             viewComponent.reInitRecent(prefs.getRecentHistory());
         }
 
-        if (type == null) {
+        if (type == null || "".equals(type)) {
             handleGeneralNotification(notification);
             return;
         }
         if (Overlap2DMenuBar.FILE_MENU.equals(type)) {
-
             handleFileMenuNotification(notification);
         } else if (Overlap2DMenuBar.EDIT_MENU.equals(type)) {
             handleEditMenuNotification(notification);
+        } else if (Overlap2DMenuBar.GAME_OBJECT_MENU.equals(type)) {
+            handleGameObjectMenuNotification(notification);
+        }
+    }
+
+    private void handleGameObjectMenuNotification(Notification notification) {
+        if (Overlap2DMenuBar.CREATE_EMPTY.equals(notification.getName())) {
+//            Entity entity = entityFactory.createEntity(sandbox.getCurrentViewingEntity(), vo);
+//            Overlap2DFacade.getInstance().sendNotification(Sandbox.ACTION_CREATE_ITEM, entity);
+        } else if (Overlap2DMenuBar.CREATE_EMPTY_CHILD.equals(notification.getName())) {
+//            Entity entity = entityFactory.createEntity(sandbox.getCurrentViewingEntity(), vo);
+//            Overlap2DFacade.getInstance().sendNotification(Sandbox.ACTION_CREATE_ITEM, entity);
         }
     }
 
@@ -118,7 +132,6 @@ public class Overlap2DMenuBarMediator extends SimpleMediator<Overlap2DMenuBar> {
     }
 
     private void handleEditMenuNotification(Notification notification) {
-        Sandbox sandbox = Sandbox.getInstance();
         if (Overlap2DMenuBar.CUT.equals(notification.getName())) {
             facade.sendNotification(Sandbox.ACTION_CUT);
         } else if (Overlap2DMenuBar.COPY.equals(notification.getName())) {

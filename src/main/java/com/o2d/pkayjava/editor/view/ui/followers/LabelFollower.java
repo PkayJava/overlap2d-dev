@@ -36,7 +36,7 @@ import java.util.HashMap;
 /**
  * Created by azakhary on 5/20/2015.
  */
-public class LabelFollower extends NormalSelectionFollower implements FollowerTransformationListener{
+public class LabelFollower extends NormalSelectionFollower implements FollowerTransformationListener {
 
     HashMap<Integer, LabelAnchorListener> anchorListeners;
 
@@ -48,7 +48,7 @@ public class LabelFollower extends NormalSelectionFollower implements FollowerTr
     public void create() {
         super.create();
         anchorListeners = new HashMap<>();
-        for(int i = 0; i < miniRects.length; i++) {
+        for (int i = 0; i < miniRects.length; i++) {
             LabelAnchorListener listener = new LabelAnchorListener(this, this, i);
             anchorListeners.put(i, listener);
             miniRects[i].addListener(listener);
@@ -64,7 +64,7 @@ public class LabelFollower extends NormalSelectionFollower implements FollowerTr
 
     @Override
     public void setFollowerListener(FollowerTransformationListener listener) {
-        for(int i = 0; i < miniRects.length; i++) {
+        for (int i = 0; i < miniRects.length; i++) {
             anchorListeners.get(i).setListenerTransform(listener);
         }
     }
@@ -78,7 +78,7 @@ public class LabelFollower extends NormalSelectionFollower implements FollowerTr
         super.setMode(mode);
         transformGroup.setVisible(true);
         miniRects[ORIGIN].setVisible(false);
-        if(mode == SelectionMode.transform) {
+        if (mode == SelectionMode.transform) {
             miniRects[ORIGIN].setVisible(true);
         }
     }
@@ -99,8 +99,8 @@ public class LabelFollower extends NormalSelectionFollower implements FollowerTr
         TransformComponent transformComponent = ComponentRetriever.get(follower.getEntity(), TransformComponent.class);
         DimensionsComponent dimensionsComponent = ComponentRetriever.get(follower.getEntity(), DimensionsComponent.class);
 
-        float newX = transformComponent.x;
-        float newY = transformComponent.y;
+        float newX = transformComponent.getX();
+        float newY = transformComponent.getY();
         float newWidth = dimensionsComponent.width;
         float newHeight = dimensionsComponent.height;
 
@@ -108,41 +108,41 @@ public class LabelFollower extends NormalSelectionFollower implements FollowerTr
             case NormalSelectionFollower.LB:
                 newX = x;
                 newY = y;
-                newWidth = newWidth + (transformComponent.x - x);
-                newHeight = newHeight + (transformComponent.y - y);
+                newWidth = newWidth + (transformComponent.getX() - x);
+                newHeight = newHeight + (transformComponent.getY() - y);
                 break;
             case NormalSelectionFollower.L:
                 newX = x;
-                newWidth = newWidth + (transformComponent.x - x);
+                newWidth = newWidth + (transformComponent.getX() - x);
                 break;
             case NormalSelectionFollower.LT:
                 newX = x;
-                newWidth = newWidth + (transformComponent.x - x);
-                newHeight = y - transformComponent.y;
+                newWidth = newWidth + (transformComponent.getX() - x);
+                newHeight = y - transformComponent.getY();
                 break;
             case NormalSelectionFollower.T:
-                newHeight = y - transformComponent.y;
+                newHeight = y - transformComponent.getY();
                 break;
             case NormalSelectionFollower.B:
                 newY = y;
-                newHeight = newHeight + (transformComponent.y - y);
+                newHeight = newHeight + (transformComponent.getY() - y);
                 break;
             case NormalSelectionFollower.RB:
                 newY = y;
-                newWidth = x - transformComponent.x;
-                newHeight = newHeight + (transformComponent.y - y);
+                newWidth = x - transformComponent.getX();
+                newHeight = newHeight + (transformComponent.getY() - y);
                 break;
             case NormalSelectionFollower.R:
-                newWidth = x - transformComponent.x;
+                newWidth = x - transformComponent.getX();
                 break;
             case NormalSelectionFollower.RT:
-                newHeight = y - transformComponent.y;
-                newWidth = x - transformComponent.x;
+                newHeight = y - transformComponent.getY();
+                newWidth = x - transformComponent.getX();
                 break;
         }
 
-        transformComponent.x = newX;
-        transformComponent.y = newY;
+        transformComponent.setX(newX);
+        transformComponent.setY(newY);
         dimensionsComponent.width = newWidth;
         dimensionsComponent.height = newHeight;
 
